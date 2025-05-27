@@ -12,8 +12,8 @@ add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 # Include libheif headers
-target_include_directories(${PROJECT_NAME} PRIVATE
-  ${LIBHEIF_DIR}/include
+target_include_directories(${PROJECT_NAME} BEFORE PRIVATE
+  ${LIBHEIF_DIR}/libheif/api/
 )
 
 # Link against libheif target

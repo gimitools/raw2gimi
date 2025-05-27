@@ -1,8 +1,8 @@
 #include <iostream>
 #include <libheif/heif.h> // built from source
-// #include <libheif/heif_experimental.h>
-// #include <libheif/heif_properties.h>
-// #include <libheif/heif_tai_timestamps.h>
+#include <libheif/heif_experimental.h>
+#include <libheif/heif_properties.h>
+#include <libheif/heif_tai_timestamps.h>
 // #include <libraw/libraw.h> // sudo apt install libraw-dev
 
 using namespace std;
