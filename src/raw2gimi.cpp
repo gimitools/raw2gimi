@@ -1,4 +1,4 @@
-#include "gimifier.h"
+#include "raw2gimi.h"
 #include "image_factory.h"
 
 // CLI API
