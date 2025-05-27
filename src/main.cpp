@@ -1,3 +1,4 @@
+#include "main_args.h" // Custom header for argument parsing
 #include <iostream>
 #include <libheif/heif.h> // built from source
 #include <libheif/heif_experimental.h>
@@ -12,9 +13,12 @@ static void print_versions() {
   cout << "LibHEIF version: " << heif_get_version() << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char *argv[]) {
 
   print_versions();
+
+  // Parse Options
+  MainArgs args(argc, argv);
 
   return 0;
 }
