@@ -1,9 +1,9 @@
 #include "main_args.h"
 
-class Gimifier {
+class Raw2Gimi {
 public:
   // CLI API
-  static void create_image_from_memory(MainArgs);
+  static void write_image_from_memory(MainArgs);
 
 protected:
   // Primary Functions

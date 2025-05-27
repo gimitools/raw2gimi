@@ -2,7 +2,7 @@
 #include "image_factory.h"
 
 // CLI API
-void Gimifier::create_image_from_memory(MainArgs args) {
+void Raw2Gimi::write_image_from_memory(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
   heif_compression_format compression = args.extract_compression();
@@ -19,7 +19,7 @@ void Gimifier::create_image_from_memory(MainArgs args) {
 }
 
 // Primary Functions
-heif_context *Gimifier::encode_image_from_memory(heif_compression_format codec, uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth) {
+heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth) {
   // Create Image
   ImageFactory image_factory(width, height, chroma, colorspace, bit_depth);
   heif_image *img = image_factory.create_image_in_memory("solid");
@@ -36,7 +36,7 @@ heif_context *Gimifier::encode_image_from_memory(heif_compression_format codec, 
 
 // Helper Functions
 
-void Gimifier::he(struct heif_error error) {
+void Raw2Gimi::he(struct heif_error error) {
   if (error.code) {
     printf("ERROR! - subcode: %d  Message: %s\n", error.subcode, error.message);
     exit(error.code);

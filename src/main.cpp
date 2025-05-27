@@ -1,4 +1,5 @@
 #include "main_args.h" // Custom header for argument parsing
+#include "raw2gimi.h"
 #include <iostream>
 #include <libheif/heif.h> // built from source
 #include <libheif/heif_experimental.h>
@@ -16,8 +17,8 @@ static void print_versions() {
 bool execute_action(string action, MainArgs args) {
   if (action == "heif_to_heif" || action.empty()) {
 
-  } else if (action == "create_image_from_memory") {
-
+  } else if (action == "write_image_from_memory") {
+    Raw2Gimi::write_image_from_memory(args);
   } else {
     return false; // action not found
   }
