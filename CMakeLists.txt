@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(raw_to_gimi)
+project(raw2gimi)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
