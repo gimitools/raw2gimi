@@ -13,12 +13,30 @@ static void print_versions() {
   cout << "LibHEIF version: " << heif_get_version() << endl;
 }
 
+bool execute_action(string action, MainArgs args) {
+  if (action == "heif_to_heif" || action.empty()) {
+
+  } else {
+    return false; // action not found
+  }
+  return true; // action found
+}
+
 int main(int argc, const char *argv[]) {
 
   print_versions();
 
   // Parse Options
   MainArgs args(argc, argv);
+  bool action_found = false;
+  string action = args.action;
+
+  action_found = execute_action(action, args);
+
+  // End of Program
+  if (!action_found) {
+    cout << "Action not found: " << action << endl;
+  }
 
   return 0;
 }
