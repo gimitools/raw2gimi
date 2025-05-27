@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(raw_to_gimi)
 
-# set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
 
 # Add libheif submodule
-set(BUILD_TESTING OFF CACHE BOOL "Disable libheif tests") # Disable tests in libheif (easier to compile)
 set(LIBHEIF_DIR submodules/libheif)
 add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 
