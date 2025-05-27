@@ -13,6 +13,7 @@ public:
   MainArgs() = default;
 
 public:
+  string extract_output_filename();
   heif_compression_format extract_compression();
   heif_colorspace extract_colorspace();
   heif_chroma extract_chroma();

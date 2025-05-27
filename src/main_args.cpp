@@ -46,6 +46,13 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   // }
 }
 
+string MainArgs::extract_output_filename() {
+  if (output_filename.empty()) {
+    return "out/output.heif"; // default output filename
+  }
+  return output_filename;
+}
+
 heif_compression_format MainArgs::extract_compression() {
   if (encoding == "unc" || encoding == "uncompressed") {
     return heif_compression_uncompressed;

@@ -10,12 +10,13 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   heif_chroma chroma = args.extract_chroma();
   int bit_depth = args.extract_bit_depth();
   string pixel_algorithm = args.pixel_algorithm;
+  string output_filename = args.extract_output_filename();
 
   heif_context *ctx = encode_image_from_memory(compression, width, height, chroma, colorspace, bit_depth);
 
   // WRITE
-  he(heif_context_write_to_file(ctx, args.output_filename.c_str()));
-  cout << "Created: " << args.output_filename << endl;
+  he(heif_context_write_to_file(ctx, output_filename.c_str()));
+  cout << "Created: " << output_filename << endl;
 }
 
 // Primary Functions
@@ -29,7 +30,7 @@ heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, 
   heif_encoder *encoder;
   heif_image_handle *handle;
   he(heif_context_get_encoder_for_format(ctx, codec, &encoder));
-  heif_context_encode_image(ctx, img, encoder, nullptr, &handle);
+  he(heif_context_encode_image(ctx, img, encoder, nullptr, &handle));
 
   return ctx;
 }
