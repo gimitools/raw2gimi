@@ -16,6 +16,8 @@ static void print_versions() {
 bool execute_action(string action, MainArgs args) {
   if (action == "heif_to_heif" || action.empty()) {
 
+  } else if (action == "create_image_from_memory") {
+
   } else {
     return false; // action not found
   }
