@@ -20,7 +20,7 @@ gimi::Image FileReader::decode_with_libraw(const string &input_filename) {
   uint16_t *bayer_data = libraw.imgdata.rawdata.raw_image;
   int width2 = libraw.imgdata.sizes.raw_width;
   int height2 = libraw.imgdata.sizes.raw_height;
-  auto x = libraw.imgdata.idata.cdesc; // CFA pattern (e.g., "RGGB")
+  const char *cdesc = libraw.imgdata.idata.cdesc; // CFA pattern (e.g., "RGGB", "RGBG")
 
   // Colorize
   re(libraw.dcraw_process());
