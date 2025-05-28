@@ -3,8 +3,9 @@
 
 using namespace std;
 
-void FileReader::read_file(string input_filename) {
+gimi::Image FileReader::read_file(string input_filename) {
   gimi::Image image = libraw_decode(input_filename);
+  return image;
 }
 
 gimi::Image FileReader::libraw_decode(const string &input_filename) {

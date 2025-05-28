@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include <vector>
 
@@ -13,6 +15,7 @@ public:
   void set_rgb_interleaved_8bit_data(const vector<uint8_t> &data);
 
 protected:
+public:
   uint32_t m_width;       // Width of the band
   uint32_t m_height;      // Height of the band
   uint32_t m_bit_depth;   // Bit depth of the band
