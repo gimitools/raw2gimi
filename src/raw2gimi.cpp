@@ -50,7 +50,7 @@ heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, 
 
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
   const gimi::Image image = FileReader::read_file(input_filename);
-  // gimi::FileWriter::write_image_to_file(image, output_filename);
+  gimi::FileWriter::write_image_to_file(image, output_filename);
 }
 
 // Helper Functions
