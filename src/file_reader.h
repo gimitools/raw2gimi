@@ -8,5 +8,5 @@ public:
 
 protected:
   static gimi::Image decode_with_libraw(const string &input_filename);
-  static void check_libraw_error(int ret, const string &message);
+  static void re(int ret); // libraw error handling
 };

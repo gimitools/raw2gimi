@@ -8,29 +8,30 @@ void FileReader::read_file(string input_filename) {
 }
 
 gimi::Image FileReader::decode_with_libraw(const string &input_filename) {
-  cout << "Decoding file: " << input_filename << endl;
 
-  LibRaw libRaw;
+  // Open File
+  LibRaw libraw;
+  re(libraw.open_file(input_filename.c_str()));
+
+  // Decode
+  re(libraw.unpack());
+
+  // Bayer Data (TODO)
+  uint16_t *bayer_data = libraw.imgdata.rawdata.raw_image;
+  int width2 = libraw.imgdata.sizes.raw_width;
+  int height2 = libraw.imgdata.sizes.raw_height;
+  auto x = libraw.imgdata.idata.cdesc; // CFA pattern (e.g., "RGGB")
+
+  // Colorize
+  re(libraw.dcraw_process());
   int ret;
-
-  ret = libRaw.open_file(input_filename.c_str());
-  check_libraw_error(ret, "Failed to open RAW file");
-
-  ret = libRaw.unpack();
-  check_libraw_error(ret, "Failed to unpack RAW data");
-
-  ret = libRaw.dcraw_process();
-  check_libraw_error(ret, "Failed to process RAW data");
-
-  libraw_processed_image_t *libraw_image = libRaw.dcraw_make_mem_image(&ret);
-  check_libraw_error(ret, "Failed to get processed image");
-
-  cout << "Image decoded: " << libraw_image->width << "x" << libraw_image->height
-       << ", colors: " << libraw_image->colors << ", bits: " << libraw_image->bits << endl;
+  libraw_processed_image_t *libraw_image = libraw.dcraw_make_mem_image(&ret);
+  re(ret);
 
   uint32_t width = libraw_image->width;
   uint32_t height = libraw_image->height;
   uint32_t bit_depth = libraw_image->bits;
+  uint32_t colors = libraw_image->colors;
   gimi::Image image(width, height, bit_depth);
 
   // Free the image memory
@@ -39,9 +40,9 @@ gimi::Image FileReader::decode_with_libraw(const string &input_filename) {
   return image;
 }
 
-void FileReader::check_libraw_error(int ret, const string &message) {
+void FileReader::re(int ret) {
   if (ret != LIBRAW_SUCCESS) {
-    cerr << message << ": " << libraw_strerror(ret) << endl;
+    cerr << "LibRaw Error: " << libraw_strerror(ret) << endl;
     exit(1);
   }
 }
