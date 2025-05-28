@@ -38,12 +38,9 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
     exit(0);
   }
 
-  input_filename = urls[0];
-  if (urls.size() >= 2) {
-    output_filename = urls[1];
-  }
-  // if (urls.size() >= 3) {
-  //   args.action = urls[2];
+  // input_filename = urls[0];
+  // if (urls.size() >= 2) {
+  //   output_filename = urls[1];
   // }
 }
 

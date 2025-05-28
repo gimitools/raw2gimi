@@ -4,6 +4,10 @@
 using namespace std;
 
 void FileReader::read_file(string input_filename) {
+  decode_with_libraw(input_filename);
+}
+
+void FileReader::decode_with_libraw(string input_filename) {
   cout << "Decoding file: " << input_filename << endl;
 
   LibRaw rawProcessor;
