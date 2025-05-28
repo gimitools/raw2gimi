@@ -1,4 +1,5 @@
 #include "raw2gimi.h"
+#include "decoder.h"
 #include "image_factory.h"
 
 // CLI API
@@ -19,8 +20,11 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   cout << "Created: " << output_filename << endl;
 }
 
-void Raw2Gimi::to_gimi(MainArgs args) {
-  cout << "TODO: to_gimi()" << endl;
+void Raw2Gimi::raw_to_gimi(MainArgs args) {
+  string input_filename = args.input_filename;
+  string output_filename = args.extract_output_filename();
+
+  Raw2Gimi::raw_to_gimi(input_filename, output_filename);
 }
 
 void Raw2Gimi::heif_to_gimi(MainArgs args) {
@@ -41,6 +45,11 @@ heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, 
   he(heif_context_encode_image(ctx, img, encoder, nullptr, &handle));
 
   return ctx;
+}
+
+void Raw2Gimi::raw_to_gimi(string input_filename, string output_filename) {
+  cout << "TODO: raw_to_gimi()" << endl;
+  Decoder::decode_file(input_filename);
 }
 
 // Helper Functions

@@ -17,8 +17,8 @@ static void print_versions() {
 bool execute_action(string action, MainArgs args) {
   if (action == "write_image_from_memory" || action.empty()) {
     Raw2Gimi::write_image_from_memory(args);
-  } else if (action == "to_gimi") {
-    Raw2Gimi::to_gimi(args);
+  } else if (action == "raw_to_gimi") {
+    Raw2Gimi::raw_to_gimi(args);
   } else if (action == "heif_to_gimi") {
     Raw2Gimi::heif_to_gimi(args);
   } else {
