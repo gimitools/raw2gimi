@@ -13,16 +13,13 @@ gimi::Image FileReader::decode_with_libraw(const string &input_filename) {
   LibRaw rawProcessor;
   int ret;
 
-  // Open the RAW file
+  // Open File
   ret = rawProcessor.open_file(input_filename.c_str());
   check_libraw_error(ret, "Failed to open RAW file");
 
   // Unpack the RAW data
   ret = rawProcessor.unpack();
-  if (ret != LIBRAW_SUCCESS) {
-    cerr << "Failed to unpack file: " << libraw_strerror(ret) << endl;
-    exit(1);
-  }
+  check_libraw_error(ret, "Failed to unpack RAW data");
 
   // Process the RAW data (demosaic, gamma correction, etc.)
   ret = rawProcessor.dcraw_process();
