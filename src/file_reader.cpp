@@ -17,33 +17,33 @@ void FileReader::decode_with_libraw(string input_filename) {
   ret = rawProcessor.open_file(input_filename.c_str());
   if (ret != LIBRAW_SUCCESS) {
     cerr << "Failed to open file: " << libraw_strerror(ret) << endl;
-    return;
+    exit(1);
   }
 
   // Unpack the RAW data
   ret = rawProcessor.unpack();
   if (ret != LIBRAW_SUCCESS) {
     cerr << "Failed to unpack file: " << libraw_strerror(ret) << endl;
-    return;
+    exit(1);
   }
 
   // Process the RAW data (demosaic, gamma correction, etc.)
   ret = rawProcessor.dcraw_process();
   if (ret != LIBRAW_SUCCESS) {
     cerr << "Failed to process RAW data: " << libraw_strerror(ret) << endl;
-    return;
+    exit(1);
   }
 
   // Get the processed image data
-  libraw_processed_image_t *image = rawProcessor.dcraw_make_mem_image(&ret);
-  if (!image || ret != LIBRAW_SUCCESS) {
+  libraw_processed_image_t *libraw_image = rawProcessor.dcraw_make_mem_image(&ret);
+  if (!libraw_image || ret != LIBRAW_SUCCESS) {
     cerr << "Failed to get processed image: " << libraw_strerror(ret) << endl;
-    return;
+    exit(1);
   }
 
-  cout << "Image decoded: " << image->width << "x" << image->height
-       << ", colors: " << image->colors << ", bits: " << image->bits << endl;
+  cout << "Image decoded: " << libraw_image->width << "x" << libraw_image->height
+       << ", colors: " << libraw_image->colors << ", bits: " << libraw_image->bits << endl;
 
   // Free the image memory
-  LibRaw::dcraw_clear_mem(image);
+  LibRaw::dcraw_clear_mem(libraw_image);
 }

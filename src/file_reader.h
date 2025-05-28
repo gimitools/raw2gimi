@@ -1,3 +1,4 @@
+#include "model/image.h"
 #include <iostream>
 using namespace std;
 
