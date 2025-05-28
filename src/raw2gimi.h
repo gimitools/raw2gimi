@@ -5,7 +5,7 @@ public:
   // CLI API
   static void write_image_from_memory(MainArgs);
   static void to_gimi(MainArgs args);
-  static void heif_to_heif(MainArgs args);
+  static void heif_to_gimi(MainArgs args);
 
 protected:
   // Primary Functions

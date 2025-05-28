@@ -23,8 +23,8 @@ void Raw2Gimi::to_gimi(MainArgs args) {
   cout << "TODO: to_gimi()" << endl;
 }
 
-void Raw2Gimi::heif_to_heif(MainArgs args) {
-  cout << "TODO: heif_to_heif()" << endl;
+void Raw2Gimi::heif_to_gimi(MainArgs args) {
+  cout << "TODO: heif_to_gimi()" << endl;
 }
 
 // Primary Functions

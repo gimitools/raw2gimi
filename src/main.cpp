@@ -19,8 +19,8 @@ bool execute_action(string action, MainArgs args) {
     Raw2Gimi::write_image_from_memory(args);
   } else if (action == "to_gimi") {
     Raw2Gimi::to_gimi(args);
-  } else if (action == "heif_to_heif") {
-    Raw2Gimi::heif_to_heif(args);
+  } else if (action == "heif_to_gimi") {
+    Raw2Gimi::heif_to_gimi(args);
   } else {
     return false; // action not found
   }

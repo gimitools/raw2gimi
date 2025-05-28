@@ -7,7 +7,7 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   bool help = false;
 
   // Action
-  option_handler.add("a", "action", &action, "The action to perform. Default = heif_to_heif");
+  option_handler.add("a", "action", &action, "The action to perform. Default = heif_to_gimi");
   option_handler.add("d", "debug", &debug, "Used for debugging");
 
   // Output

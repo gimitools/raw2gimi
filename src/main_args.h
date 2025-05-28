@@ -33,7 +33,7 @@ public:
   string colorspace;
   string chroma;
   string bit_depth;
-  string action = "heif_to_heif";
+  string action = "heif_to_gimi";
   string debug;
   string pixel_algorithm;
   string width;
