@@ -43,5 +43,6 @@ int main(int argc, const char *argv[]) {
     cout << "Action not found: " << action << endl;
   }
 
+  cout << "=============== End of raw2gimi ===============" << endl;
   return 0;
 }
