@@ -46,4 +46,6 @@ void FileReader::decode_with_libraw(string input_filename) {
 
   // Free the image memory
   LibRaw::dcraw_clear_mem(libraw_image);
+
+  gimi::Image foobar(10, 10);
 }

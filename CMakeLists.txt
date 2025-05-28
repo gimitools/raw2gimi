@@ -8,8 +8,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
 set(LIBHEIF_DIR submodules/libheif)
 add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 
-# Automatically find all .cpp files
-file(GLOB SOURCES "src/*.cpp")
+# Automatically find all .cpp files recursively
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Include libheif headers
