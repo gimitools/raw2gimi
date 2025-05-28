@@ -19,6 +19,14 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   cout << "Created: " << output_filename << endl;
 }
 
+void Raw2Gimi::to_gimi(MainArgs args) {
+  cout << "TODO: to_gimi()" << endl;
+}
+
+void Raw2Gimi::heif_to_heif(MainArgs args) {
+  cout << "TODO: heif_to_heif()" << endl;
+}
+
 // Primary Functions
 heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth) {
   // Create Image

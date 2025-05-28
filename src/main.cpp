@@ -15,10 +15,12 @@ static void print_versions() {
 }
 
 bool execute_action(string action, MainArgs args) {
-  if (action == "heif_to_heif" || action.empty()) {
-
-  } else if (action == "write_image_from_memory") {
+  if (action == "write_image_from_memory" || action.empty()) {
     Raw2Gimi::write_image_from_memory(args);
+  } else if (action == "to_gimi") {
+    Raw2Gimi::to_gimi(args);
+  } else if (action == "heif_to_heif") {
+    Raw2Gimi::heif_to_heif(args);
   } else {
     return false; // action not found
   }
