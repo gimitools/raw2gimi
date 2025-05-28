@@ -45,6 +45,17 @@ gimi::Image FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_im
   uint32_t colors = libraw_image->colors;
   uint32_t bit_depth = libraw_image->bits;
 
+  if (colors != 3) {
+    cout << "TODO: Handle non-RGB images (colors != 3)" << endl;
+    exit(1);
+  } else if (bit_depth != 8) {
+    cout << "TODO: Handle non-8-bit images (bit_depth != 8)" << endl;
+    exit(1);
+  } else if (type != LIBRAW_IMAGE_BITMAP) {
+    cout << "TODO: Handle non-BITMAP images (type != LIBRAW_IMAGE_BITMAP)" << endl;
+    exit(1);
+  }
+
   libraw_image->data_size;
   libraw_image->data;
 
