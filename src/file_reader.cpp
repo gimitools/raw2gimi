@@ -42,10 +42,17 @@ gimi::Image FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_im
   enum LibRaw_image_formats type = libraw_image->type; // 2 = LIBRAW_IMAGE_BITMAP
   uint32_t width = libraw_image->width;
   uint32_t height = libraw_image->height;
-  uint32_t bit_depth = libraw_image->bits;
   uint32_t colors = libraw_image->colors;
+  uint32_t bit_depth = libraw_image->bits;
+
+  libraw_image->data_size;
+  libraw_image->data;
 
   gimi::Image gimi_image(width, height, bit_depth);
+
+  std::vector<uint8_t> pixels(libraw_image->data, libraw_image->data + libraw_image->data_size);
+
+  gimi_image.add_rgb_interleaved_8bit_band(pixels);
 
   return gimi_image;
 }
