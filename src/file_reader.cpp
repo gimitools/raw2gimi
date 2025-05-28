@@ -10,23 +10,19 @@ void FileReader::read_file(string input_filename) {
 gimi::Image FileReader::decode_with_libraw(const string &input_filename) {
   cout << "Decoding file: " << input_filename << endl;
 
-  LibRaw rawProcessor;
+  LibRaw libRaw;
   int ret;
 
-  // Open File
-  ret = rawProcessor.open_file(input_filename.c_str());
+  ret = libRaw.open_file(input_filename.c_str());
   check_libraw_error(ret, "Failed to open RAW file");
 
-  // Unpack the RAW data
-  ret = rawProcessor.unpack();
+  ret = libRaw.unpack();
   check_libraw_error(ret, "Failed to unpack RAW data");
 
-  // Process the RAW data (demosaic, gamma correction, etc.)
-  ret = rawProcessor.dcraw_process();
+  ret = libRaw.dcraw_process();
   check_libraw_error(ret, "Failed to process RAW data");
 
-  // Get the processed image data
-  libraw_processed_image_t *libraw_image = rawProcessor.dcraw_make_mem_image(&ret);
+  libraw_processed_image_t *libraw_image = libRaw.dcraw_make_mem_image(&ret);
   check_libraw_error(ret, "Failed to get processed image");
 
   cout << "Image decoded: " << libraw_image->width << "x" << libraw_image->height
