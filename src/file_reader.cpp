@@ -1,9 +1,9 @@
-#include "decoder.h"
+#include "file_reader.h"
 #include <libraw/libraw.h>
 
 using namespace std;
 
-void Decoder::decode_file(string input_filename) {
+void FileReader::read_file(string input_filename) {
   cout << "Decoding file: " << input_filename << endl;
 
   LibRaw rawProcessor;

@@ -1,5 +1,5 @@
 #include "raw2gimi.h"
-#include "decoder.h"
+#include "file_reader.h"
 #include "image_factory.h"
 
 // CLI API
@@ -49,7 +49,7 @@ heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, 
 
 void Raw2Gimi::raw_to_gimi(string input_filename, string output_filename) {
   cout << "TODO: raw_to_gimi()" << endl;
-  Decoder::decode_file(input_filename);
+  FileReader::read_file(input_filename);
 }
 
 // Helper Functions

@@ -9,6 +9,7 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   // Action
   option_handler.add("a", "action", &action, "The action to perform. Default = heif_to_gimi");
   option_handler.add("d", "debug", &debug, "Used for debugging");
+  option_handler.add("i", "input", &input_filename, "Path to input file");
 
   // Output
   option_handler.add("e", "encoding", &encoding, "Specify how the to encode the output file. Default = hevc");
