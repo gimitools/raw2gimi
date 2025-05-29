@@ -11,6 +11,11 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, heif_chroma chroma, 
 }
 
 // Public Functions
+gimi::Image ImageFactory::create(const string &pixel_pattern) {
+  cout << "TODO: ImageFactory::create()" << endl;
+  exit(1);
+}
+
 heif_image *ImageFactory::create_image_in_memory(string pixel_algorithm) {
 
   heif_image *img;
