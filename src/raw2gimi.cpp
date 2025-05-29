@@ -35,10 +35,6 @@ void Raw2Gimi::heif_to_gimi(MainArgs args) {
   cout << "TODO: heif_to_gimi()" << endl;
 }
 
-void Raw2Gimi::generate_sample_files(MainArgs args) {
-  SampleFileGenerator::generate_sample_files("out");
-}
-
 // Primary Functions
 heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth) {
   // Create Image
