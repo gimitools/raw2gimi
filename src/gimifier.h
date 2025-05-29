@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/image.h"
+#include "model/raw_image.h"
 #include <iostream>
 
 using namespace std;
@@ -8,9 +8,9 @@ using namespace std;
 namespace gimi {
 class Gimifier {
 public:
-  static void write_to_file(const Image &, const string &output_filename);
+  static void write_to_file(const RawImage &, const string &output_filename);
 
 protected:
-  static void libheif_write_to_heif(const Image &image, const string &output_filename);
+  static void libheif_write_to_heif(const RawImage &image, const string &output_filename);
 };
 } // namespace gimi

@@ -8,9 +8,9 @@ using namespace std;
 
 namespace gimi {
 
-class Image {
+class RawImage {
 public: // Constructor
-  Image(uint32_t width, uint32_t height, uint32_t bit_depth = 8);
+  RawImage(uint32_t width, uint32_t height, uint32_t bit_depth = 8);
 
 public:
   void add_rgb_interleaved_8bit_band(const vector<uint8_t> &data); // TODO: HDR

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/image.h"
+#include "model/raw_image.h"
 #include <iostream>
 #include <libheif/heif.h> // Delete: should not depend on libheif
 #include <vector>
@@ -13,7 +13,7 @@ public:
   ImageFactory(uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth);
 
 public:
-  gimi::Image create(const string &pixel_pattern = "solid");
+  gimi::RawImage create(const string &pixel_pattern = "solid");
   heif_image *create_image_in_memory(string pixel_algorithm);
   vector<heif_image *> create_sequence_in_memory(string pixel_algorithm);
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/image.h"
+#include "model/raw_image.h"
 #include <iostream>
 #include <libheif/heif.h>
 #include <string>

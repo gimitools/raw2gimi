@@ -16,9 +16,9 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   string pixel_algorithm = args.pixel_algorithm;
   string output_filename = args.extract_output_filename();
 
-  // Create Image
+  // Create RawImage
   ImageFactory imageFactory(width, height, chroma, colorspace, bit_depth);
-  gimi::Image image = imageFactory.create();
+  gimi::RawImage image = imageFactory.create();
 
   // WRITE
   Gimifier::write_to_file(image, output_filename);
@@ -39,7 +39,7 @@ void Raw2Gimi::heif_to_gimi(MainArgs args) {
 
 // Primary Functions
 heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, uint32_t width, uint32_t height, heif_chroma chroma, heif_colorspace colorspace, uint32_t bit_depth) {
-  // Create Image
+  // Create RawImage
   ImageFactory image_factory(width, height, chroma, colorspace, bit_depth);
   heif_image *img = image_factory.create_image_in_memory("solid");
 
@@ -54,7 +54,7 @@ heif_context *Raw2Gimi::encode_image_from_memory(heif_compression_format codec, 
 }
 
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
-  const gimi::Image image = FileReader::read_file(input_filename);
+  const gimi::RawImage image = FileReader::read_file(input_filename);
   gimi::Gimifier::write_to_file(image, output_filename);
 }
 

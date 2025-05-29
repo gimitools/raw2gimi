@@ -3,12 +3,12 @@
 
 using namespace std;
 
-gimi::Image FileReader::read_file(string input_filename) {
-  gimi::Image image = libraw_decode(input_filename);
+gimi::RawImage FileReader::read_file(string input_filename) {
+  gimi::RawImage image = libraw_decode(input_filename);
   return image;
 }
 
-gimi::Image FileReader::libraw_decode(const string &input_filename) {
+gimi::RawImage FileReader::libraw_decode(const string &input_filename) {
 
   // Open File
   LibRaw libraw;
@@ -29,8 +29,8 @@ gimi::Image FileReader::libraw_decode(const string &input_filename) {
   libraw_processed_image_t *libraw_image = libraw.dcraw_make_mem_image(&ret);
   re(ret);
 
-  // Convert Image
-  gimi::Image image = FileReader::libraw_to_gimi(libraw_image);
+  // Convert RawImage
+  gimi::RawImage image = FileReader::libraw_to_gimi(libraw_image);
 
   // Free the image memory
   LibRaw::dcraw_clear_mem(libraw_image);
@@ -38,7 +38,7 @@ gimi::Image FileReader::libraw_decode(const string &input_filename) {
   return image;
 }
 
-gimi::Image FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_image) {
+gimi::RawImage FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_image) {
 
   enum LibRaw_image_formats type = libraw_image->type; // 2 = LIBRAW_IMAGE_BITMAP
   uint32_t width = libraw_image->width;
@@ -60,7 +60,7 @@ gimi::Image FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_im
   libraw_image->data_size;
   libraw_image->data;
 
-  gimi::Image gimi_image(width, height, bit_depth);
+  gimi::RawImage gimi_image(width, height, bit_depth);
 
   vector<uint8_t> pixels(libraw_image->data, libraw_image->data + libraw_image->data_size);
 
