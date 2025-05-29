@@ -22,6 +22,7 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   gimi::Image image = imageFactory.create();
 
   // WRITE
+  Gimifier::write_to_file(image, output_filename);
   // he(heif_context_write_to_file(ctx, output_filename.c_str()));
   // cout << "Created: " << output_filename << endl;
 }
