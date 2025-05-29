@@ -2,7 +2,6 @@
 #include "file_reader.h"
 #include "file_writer.h"
 #include "image_factory.h"
-#include "sample_file_generator.h"
 
 using namespace gimi;
 

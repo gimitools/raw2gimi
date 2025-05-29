@@ -39,7 +39,7 @@ const vector<MainArgs> SampleFileGenerator::desired_data() {
   // v.push_back(create_args("hevc", colorspace, chroma, bit_depth, height, width));
   // v.push_back(create_args("av1", colorspace, chroma, bit_depth, height, width));
 
-  // Bit Depth
+  // HDR
   // v.push_back(create_args(codec, colorspace, chroma, "10", height, width));
   // v.push_back(create_args(codec, colorspace, chroma, "12", height, width));
   // v.push_back(create_args(codec, colorspace, chroma, "14", height, width));
