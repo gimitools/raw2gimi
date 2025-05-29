@@ -1,4 +1,4 @@
-#include "file_writer.h"
+#include "gimifier.h"
 #include <cstring> // memcpy()
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
@@ -12,11 +12,11 @@ void he(struct heif_error error) {
   }
 }
 
-void FileWriter::write_image_to_file(const Image &image, const string &output_filename) {
+void Gimifier::write_to_file(const Image &image, const string &output_filename) {
   libheif_write_to_heif(image, output_filename);
 }
 
-void FileWriter::libheif_write_to_heif(const Image &image, const string &output_filename) {
+void Gimifier::libheif_write_to_heif(const Image &image, const string &output_filename) {
 
   heif_context *ctx = heif_context_alloc();
   heif_compression_format compression = heif_compression_HEVC;
