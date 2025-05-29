@@ -22,16 +22,16 @@ public: // Getters
   uint32_t get_bit_depth() const { return m_bit_depth; }
 
 public:
+  // ISO/IEC 23001-17 Table 3
   enum class Sampling {
-    // ISO/IEC 23001-17 Table 3
-    yuv_444, // no subsampling, rgb
+    yuv_444, // no subsampling & rgb
     yuv_422,
     yuv_420,
     yuv_411,
   };
 
+  // ISO/IEC 23001-17 Table 4
   enum class Interleave {
-    // ISO/IEC 23001-17 Table 4
     planar,      // (Component Interleaving)
     interleaved, // (Pixel Interleaving)
     mixed,
