@@ -4,13 +4,14 @@ namespace gimi {
 
 enum class Chroma {
   rgb,
-  monochrome,
+  gray,
   yuv_444,
   yuv_422,
   yuv_420,
   yuv_411,
 };
 
+// ISO/IEC 23001-17 Table 4
 enum class Interleave {
   planar,
   interleaved,

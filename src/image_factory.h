@@ -22,13 +22,9 @@ protected:
   RawImage create_monochrome_image();
 
 protected:
-  void addChannel_rgb_interleaved_8bit(RawImage);
-  void addChannel_rgb_planar_8bit(RawImage);
-  void addChannel_rgb_interleaved_hdr(RawImage);
-  void addChannel_yuv_444_8bit(RawImage);
-  void addChannel_yuv_422_8bit(RawImage);
+  RawImage create_rgb_interleaved_8bit();
 
-private:
+private: // Member Variables
   uint32_t m_width;
   uint32_t m_height;
   Chroma m_chroma;
@@ -36,7 +32,7 @@ private:
   uint32_t m_bit_depth;
 
 public:
-  uint32_t m_frame_count = 5;
+  uint32_t m_frame_count = 5; // TODO: don't show your private parts in public
 
 private:
   uint32_t m_color_1 = 0x11; // R or Y

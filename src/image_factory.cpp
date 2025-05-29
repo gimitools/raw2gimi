@@ -14,6 +14,35 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Inter
 gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
   RawImage image(m_width, m_height, m_bit_depth);
 
+  switch (m_chroma) {
+  case Chroma::rgb:
+    create_rgb_image();
+    break;
+  case Chroma::gray:
+    cout << "Unsupported Feature: Monochrome Image Creation!\n";
+    exit(1);
+    break;
+  case Chroma::yuv_444:
+    cout << "unsupported Feature: YUV 444 Image Creation!\n";
+    exit(1);
+    break;
+  case Chroma::yuv_422:
+    cout << "Unsupported Feature: YUV 422 Image Creation!\n";
+    exit(1);
+    break;
+  case Chroma::yuv_420:
+    cout << "Unsupported Feature: YUV 420 Image Creation!\n";
+    exit(1);
+    break;
+  case Chroma::yuv_411:
+    cout << "Unsupported Feature: YUV 411 Image Creation!\n";
+    exit(1);
+    break;
+  default:
+    cout << "Unsupported Chroma Format: " << static_cast<int>(m_chroma) << endl;
+    exit(1);
+  }
+
   return image;
 }
 
@@ -45,6 +74,23 @@ RawImage ImageFactory::create_yuv_image() {
 RawImage ImageFactory::create_rgb_image() {
   RawImage img(m_width, m_height);
 
+  switch (m_interleave) {
+  case Interleave::interleaved:
+    break;
+  case Interleave::planar:
+    break;
+  case Interleave::mixed:
+  case Interleave::row:
+  case Interleave::tile_component:
+  case Interleave::multi_y_pixel:
+    cout << "Unsupported Interleave Type: " << static_cast<int>(m_interleave) << endl;
+    exit(1);
+    break;
+  default:
+    cout << "Unrecognized Interleave Type: " << static_cast<int>(m_interleave) << endl;
+    exit(1);
+  }
+
   return img;
 }
 
@@ -55,17 +101,10 @@ RawImage ImageFactory::create_monochrome_image() {
 
 // Protected Functions
 
-void ImageFactory::addChannel_rgb_interleaved_8bit(RawImage img) {
-}
+RawImage ImageFactory::create_rgb_interleaved_8bit() {
+  RawImage image(m_width, m_height, 8);
 
-void ImageFactory::addChannel_rgb_planar_8bit(RawImage img) {
-}
+  // TODO
 
-void ImageFactory::addChannel_rgb_interleaved_hdr(RawImage img) {
-}
-
-void ImageFactory::addChannel_yuv_444_8bit(RawImage img) {
-}
-
-void ImageFactory::addChannel_yuv_422_8bit(RawImage img) {
+  return image;
 }

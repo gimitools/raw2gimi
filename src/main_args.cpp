@@ -74,8 +74,8 @@ string MainArgs::extract_codec() {
 gimi::Chroma MainArgs::extract_chroma() {
   if (chroma == "rgb" || chroma.empty()) {
     return Chroma::rgb;
-  } else if (chroma == "mono" || chroma == "gray" || chroma == "monochrome") {
-    return Chroma::monochrome;
+  } else if (chroma == "gray" || chroma == "grey" || chroma == "mono" || chroma == "monochrome") {
+    return Chroma::gray;
   } else if (chroma == "444" || chroma == "yuv") {
     return Chroma::yuv_444;
   } else if (chroma == "422") {

@@ -24,7 +24,7 @@ MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string
 const vector<MainArgs> SampleFileGenerator::create_cli_args() {
   vector<MainArgs> v;
   string codec = "unc";
-  string chroma = "444";
+  string chroma = "rgb";
   string interleave = "interleaved";
   string bit_depth = "8";
   string width = "64";
