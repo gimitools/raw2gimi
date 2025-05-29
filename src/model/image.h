@@ -21,6 +21,25 @@ public: // Getters
   uint32_t get_height() const { return m_height; }
   uint32_t get_bit_depth() const { return m_bit_depth; }
 
+public:
+  enum class Sampling {
+    // ISO/IEC 23001-17 Table 3
+    yuv_444, // no subsampling, rgb
+    yuv_422,
+    yuv_420,
+    yuv_411,
+  };
+
+  enum class Interleave {
+    // ISO/IEC 23001-17 Table 4
+    planar,      // (Component Interleaving)
+    interleaved, // (Pixel Interleaving)
+    mixed,
+    row,
+    tile_component,
+    multi_y_pixel
+  };
+
 protected:
   uint32_t m_width;         // Width of the image
   uint32_t m_height;        // Height of the image

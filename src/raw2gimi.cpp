@@ -17,7 +17,6 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   string output_filename = args.extract_output_filename();
 
   // Create Image
-  // heif_context *ctx = encode_image_from_memory(compression, width, height, chroma, colorspace, bit_depth);
   ImageFactory imageFactory(width, height, chroma, colorspace, bit_depth);
   gimi::Image image = imageFactory.create();
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "model/image.h"
 #include <iostream>
 #include <libheif/heif.h>
 #include <string>
@@ -14,9 +15,9 @@ public:
 
 public:
   string extract_output_filename();
-  heif_compression_format extract_compression();
-  heif_colorspace extract_colorspace();
-  heif_chroma extract_chroma();
+  heif_compression_format extract_compression(); // Delete
+  heif_colorspace extract_colorspace();          // Delete
+  heif_chroma extract_chroma();                  // Delete
   uint32_t extract_bit_depth();
   uint32_t extract_width();
   uint32_t extract_height();
