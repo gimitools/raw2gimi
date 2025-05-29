@@ -13,12 +13,12 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   int bit_depth = args.extract_bit_depth();
   string pixel_algorithm = args.pixel_algorithm;
   string output_filename = args.extract_output_filename();
-  Sampling sampling = args.extract_sampling();
+  Chroma chroma = args.extract_chroma();
   Interleave interleave = args.extract_interleave();
 
   // Create RawImage
-  ImageFactory imageFactory(width, height, sampling, interleave, bit_depth);
-  gimi::RawImage image = imageFactory.create();
+  ImageFactory imageFactory(width, height, chroma, interleave, bit_depth);
+  gimi::RawImage image = imageFactory.create_image();
 
   // WRITE
   Gimifier::write_to_file(image, output_filename);

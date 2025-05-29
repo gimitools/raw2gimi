@@ -16,7 +16,7 @@ public:
 public:
   string extract_output_filename();
   string extract_codec();
-  gimi::Sampling extract_sampling();
+  gimi::Chroma extract_chroma();
   gimi::Interleave extract_interleave();
   uint32_t extract_bit_depth();
   uint32_t extract_width();
@@ -31,7 +31,7 @@ public: // User Input
   string input_filename;
   string output_filename;
   string codec;
-  string sampling;
+  string chroma;
   string interleave;
   string bit_depth;
   string action = "heif_to_gimi";

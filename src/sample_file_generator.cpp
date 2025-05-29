@@ -9,10 +9,10 @@ void SampleFileGenerator::generate_sample_files(const string &output_directory) 
   }
 }
 
-MainArgs SampleFileGenerator::create_args(string encoding, string sampling, string interleave, string bit_depth, string width, string height) {
+MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string interleave, string bit_depth, string width, string height) {
   MainArgs args;
   args.codec = encoding;
-  args.sampling = sampling;
+  args.chroma = chroma;
   args.interleave = interleave;
   args.bit_depth = bit_depth;
   args.width = width;
@@ -24,26 +24,26 @@ MainArgs SampleFileGenerator::create_args(string encoding, string sampling, stri
 const vector<MainArgs> SampleFileGenerator::create_cli_args() {
   vector<MainArgs> v;
   string codec = "unc";
-  string sampling = "444";
+  string chroma = "444";
   string interleave = "interleaved";
   string bit_depth = "8";
   string width = "64";
   string height = "64";
 
   // Default
-  v.push_back(create_args(codec, sampling, interleave, bit_depth, height, width));
+  v.push_back(create_args(codec, chroma, interleave, bit_depth, height, width));
 
   // Codec variations
-  // v.push_back(create_args("unc", sampling, interleave, bit_depth, height, width));
-  // v.push_back(create_args("j2k", sampling, interleave, bit_depth, height, width));
-  // v.push_back(create_args("hevc", sampling, interleave, bit_depth, height, width));
-  // v.push_back(create_args("av1", sampling, interleave, bit_depth, height, width));
+  // v.push_back(create_args("unc", chroma, interleave, bit_depth, height, width));
+  // v.push_back(create_args("j2k", chroma, interleave, bit_depth, height, width));
+  // v.push_back(create_args("hevc", chroma, interleave, bit_depth, height, width));
+  // v.push_back(create_args("av1", chroma, interleave, bit_depth, height, width));
 
   // HDR
-  // v.push_back(create_args(codec, sampling, interleave, "10", height, width));
-  // v.push_back(create_args(codec, sampling, interleave, "12", height, width));
-  // v.push_back(create_args(codec, sampling, interleave, "14", height, width));
-  // v.push_back(create_args(codec, sampling, interleave, "16", height, width));
+  // v.push_back(create_args(codec, chroma, interleave, "10", height, width));
+  // v.push_back(create_args(codec, chroma, interleave, "12", height, width));
+  // v.push_back(create_args(codec, chroma, interleave, "14", height, width));
+  // v.push_back(create_args(codec, chroma, interleave, "16", height, width));
 
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "rgb", bit_depth, height, width));
@@ -58,9 +58,9 @@ const vector<MainArgs> SampleFileGenerator::create_cli_args() {
 string SampleFileGenerator::create_filename(MainArgs args) {
 
   string interleave = "interleave"; // TODO - read args.interleave enum
-  string sampling = "sampling";     // TODO - read args.sampling enum
+  string chroma = "chroma";         // TODO - read args.chroma enum
 
-  string filename = "out/" + args.codec + "_" + "todointerleave" + "_" + "todosampling" + "_" +
+  string filename = "out/" + args.codec + "_" + "todointerleave" + "_" + "todochroma" + "_" +
                     args.bit_depth + "bit_" + args.width + "x" + args.height + ".heif";
   return filename;
 }

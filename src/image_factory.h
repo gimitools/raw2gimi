@@ -10,10 +10,10 @@ using namespace gimi;
 
 class ImageFactory {
 public:
-  ImageFactory(uint32_t width, uint32_t height, Sampling, Interleave, uint32_t bit_depth);
+  ImageFactory(uint32_t width, uint32_t height, Chroma, Interleave, uint32_t bit_depth);
 
 public:
-  gimi::RawImage create(const string &pixel_pattern = "solid");
+  gimi::RawImage create_image(const string &pixel_pattern = "solid");
   vector<RawImage> create_sequence_in_memory(string pixel_algorithm);
 
 protected:
@@ -31,7 +31,7 @@ protected:
 private:
   uint32_t m_width;
   uint32_t m_height;
-  Sampling m_sampling;
+  Chroma m_chroma;
   Interleave m_interleave;
   uint32_t m_bit_depth;
 

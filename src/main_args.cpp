@@ -15,7 +15,7 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
 
   // Output
   option_handler.add("e", "codec", &codec, "raw (default), avc, hevc, j2k, av1");
-  option_handler.add("", "sampling", &sampling, "444 (default), 422, 420, 411");
+  option_handler.add("", "chroma", &chroma, "rgb (default), mono, 444, 422, 420, 411");
   option_handler.add("", "interleave", &interleave, "interleaved (default) or planar");
   option_handler.add("", "pixel_algorithm", &pixel_algorithm, "Specify function to create image. Default: solid. {stripes, random, four_squares}");
   option_handler.add("", "width", &width, "Specify width of image");
@@ -68,19 +68,24 @@ string MainArgs::extract_codec() {
     cerr << "Unsupported encoding format: " << codec << endl;
     exit(1);
   }
+  return codec;
 }
 
-gimi::Sampling MainArgs::extract_sampling() {
-  if (sampling == "444" || sampling.empty()) {
-    return Sampling::yuv_444;
-  } else if (sampling == "422") {
-    return Sampling::yuv_422;
-  } else if (sampling == "420") {
-    return Sampling::yuv_420;
-  } else if (sampling == "411") {
-    return Sampling::yuv_411;
+gimi::Chroma MainArgs::extract_chroma() {
+  if (chroma == "rgb" || chroma.empty()) {
+    return Chroma::rgb;
+  } else if (chroma == "mono" || chroma == "gray" || chroma == "monochrome") {
+    return Chroma::monochrome;
+  } else if (chroma == "444" || chroma == "yuv") {
+    return Chroma::yuv_444;
+  } else if (chroma == "422") {
+    return Chroma::yuv_422;
+  } else if (chroma == "420") {
+    return Chroma::yuv_420;
+  } else if (chroma == "411") {
+    return Chroma::yuv_411;
   } else {
-    cerr << "Unsupported sampling format: " << sampling << endl;
+    cerr << "Unsupported chroma format: " << chroma << endl;
     exit(1);
   }
 }

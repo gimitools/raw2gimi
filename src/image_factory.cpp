@@ -2,26 +2,26 @@
 #include <cstring> //memset()
 
 // Constructor
-ImageFactory::ImageFactory(uint32_t width, uint32_t height, Sampling sampling, Interleave interleave, uint32_t bit_depth) {
+ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, uint32_t bit_depth) {
   m_width = width;
   m_height = height;
-  m_sampling = sampling;
+  m_chroma = chroma;
   m_interleave = interleave;
   m_bit_depth = bit_depth;
 }
 
 // Public Functions
-gimi::RawImage ImageFactory::create(const string &pixel_pattern) {
-  cout << "TODO: ImageFactory::create()" << endl;
+gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
   RawImage image(m_width, m_height, m_bit_depth);
-  exit(1);
+
+  return image;
 }
 
 vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm) {
   vector<RawImage> images;
 
   for (uint32_t i = 0; i < m_frame_count; i++) {
-    RawImage img = create(pixel_algroithm);
+    RawImage img = create_image(pixel_algroithm);
     images.push_back(img);
 
     // Shuffle Colors
