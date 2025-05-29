@@ -11,6 +11,8 @@ bool execute_action(string action, MainArgs args) {
     Raw2Gimi::raw_to_gimi(args);
   } else if (action == "heif_to_gimi") {
     Raw2Gimi::heif_to_gimi(args);
+  } else if (action == "generate_sample_files") {
+    Raw2Gimi::generate_sample_files(args);
   } else {
     return false; // action not found
   }

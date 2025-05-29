@@ -2,6 +2,9 @@
 #include "file_reader.h"
 #include "file_writer.h"
 #include "image_factory.h"
+#include "sample_file_generator.h"
+
+using namespace gimi;
 
 // CLI API
 void Raw2Gimi::write_image_from_memory(MainArgs args) {
@@ -30,6 +33,10 @@ void Raw2Gimi::raw_to_gimi(MainArgs args) {
 
 void Raw2Gimi::heif_to_gimi(MainArgs args) {
   cout << "TODO: heif_to_gimi()" << endl;
+}
+
+void Raw2Gimi::generate_sample_files(MainArgs args) {
+  SampleFileGenerator::generate_sample_files("out");
 }
 
 // Primary Functions
