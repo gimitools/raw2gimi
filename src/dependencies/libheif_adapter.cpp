@@ -1,1 +1,0 @@
-#include "libheif_adapter.h"

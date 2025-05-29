@@ -21,4 +21,15 @@ enum class Interleave {
   multi_y_pixel
 };
 
+enum class Codec {
+  raw,  // uncompressed
+  hevc, // h265
+  avc,  // h264
+  vvc,  // h266
+  av1,
+  jpeg,
+  j2k,
+  htj2k,
+};
+
 } // namespace gimi

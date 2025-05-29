@@ -76,6 +76,7 @@ RawImage ImageFactory::create_rgb_image() {
 
   switch (m_interleave) {
   case Interleave::interleaved:
+    img = create_rgb_interleaved_8bit();
     break;
   case Interleave::planar:
     break;
@@ -104,7 +105,20 @@ RawImage ImageFactory::create_monochrome_image() {
 RawImage ImageFactory::create_rgb_interleaved_8bit() {
   RawImage image(m_width, m_height, 8);
 
-  // TODO
+  const uint32_t band_count = 3; // RGB
+  uint64_t size = m_width * m_height * band_count;
+  vector<uint8_t> pixels;
+  pixels.reserve(size);
+
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
+      pixels.push_back(static_cast<uint8_t>(m_color_2)); // G or U
+      pixels.push_back(static_cast<uint8_t>(m_color_3)); // B or V
+    }
+  }
+
+  image.add_rgb_interleaved_8bit_band(pixels);
 
   return image;
 }

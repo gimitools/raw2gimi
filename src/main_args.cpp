@@ -53,22 +53,23 @@ string MainArgs::extract_output_filename() {
   return output_filename;
 }
 
-string MainArgs::extract_codec() {
+Codec MainArgs::extract_codec() {
   // TODO: make an enum for codec
   if (codec == "unc" || codec == "uncompressed" || codec == "raw" || codec.empty()) {
-    return "raw";
+    return Codec::raw;
   } else if (codec == "avc" || codec == "h264") {
+    return Codec::avc;
   } else if (codec == "hevc" || codec == "h265") {
-    return codec;
+    return Codec::hevc;
   } else if (codec == "j2k") {
-    return codec;
+    return Codec::j2k;
   } else if (codec == "av1") {
-    return codec;
+    return Codec::av1;
   } else {
     cerr << "Unsupported encoding format: " << codec << endl;
     exit(1);
   }
-  return codec;
+  return Codec::raw;
 }
 
 gimi::Chroma MainArgs::extract_chroma() {

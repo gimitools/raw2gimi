@@ -15,7 +15,7 @@ public:
 
 public:
   string extract_output_filename();
-  string extract_codec();
+  gimi::Codec extract_codec();
   gimi::Chroma extract_chroma();
   gimi::Interleave extract_interleave();
   uint32_t extract_bit_depth();
