@@ -1,7 +1,7 @@
 #include "options.h"
 
-std::vector<std::string> OptionHandler::parse(int argc, const char *argv[]) {
-  std::vector<std::string> remaining;
+vector<string> OptionHandler::parse(int argc, const char *argv[]) {
+  vector<string> remaining;
 
   ArgQueue args;
   for (int i = 1; i < argc; ++i) // skip argv[0]

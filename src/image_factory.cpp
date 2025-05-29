@@ -128,7 +128,7 @@ heif_image *ImageFactory::create_rgb_image() {
 }
 
 heif_image *ImageFactory::create_monochrome_image() {
-  std::cout << "Unsupported Feature!\n";
+  cout << "Unsupported Feature!\n";
   exit(1);
 }
 

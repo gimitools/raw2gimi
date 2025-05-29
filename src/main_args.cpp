@@ -138,12 +138,12 @@ uint32_t MainArgs::extract_layers() {
 
 double MainArgs::extract_scale_factor() {
   try {
-    return std::stod(scale_factor);
-  } catch (const std::invalid_argument &ia) {
-    std::cerr << "Invalid scale value: " << ia.what() << std::endl;
+    return stod(scale_factor);
+  } catch (const invalid_argument &ia) {
+    cerr << "Invalid scale value: " << ia.what() << endl;
     exit(1);
-  } catch (const std::out_of_range &oor) {
-    std::cerr << "Scale value is out of range: " << oor.what() << std::endl;
+  } catch (const out_of_range &oor) {
+    cerr << "Scale value is out of range: " << oor.what() << endl;
     exit(1);
   }
 }
@@ -166,14 +166,14 @@ uint32_t MainArgs::string_to_int(string str, uint32_t default_value) {
   try {
     int value = stoi(str);
     return value;
-  } catch (const std::invalid_argument &e) {
-    std::cout << "Invalid argument: " << e.what() << std::endl;
+  } catch (const invalid_argument &e) {
+    cout << "Invalid argument: " << e.what() << endl;
     exit(1);
-  } catch (const std::out_of_range &e) {
-    std::cout << "Out of range: " << e.what() << std::endl;
+  } catch (const out_of_range &e) {
+    cout << "Out of range: " << e.what() << endl;
     exit(1);
   } catch (...) {
-    std::cout << "Unknown error" << std::endl;
+    cout << "Unknown error" << endl;
     exit(1);
   }
 }

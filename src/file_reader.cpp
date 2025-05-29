@@ -62,7 +62,7 @@ gimi::Image FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw_im
 
   gimi::Image gimi_image(width, height, bit_depth);
 
-  std::vector<uint8_t> pixels(libraw_image->data, libraw_image->data + libraw_image->data_size);
+  vector<uint8_t> pixels(libraw_image->data, libraw_image->data + libraw_image->data_size);
 
   gimi_image.add_rgb_interleaved_8bit_band(pixels);
 

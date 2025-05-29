@@ -7,7 +7,7 @@ namespace gimi {
 
 class SampleFileGenerator {
 public:
-  static void generate_sample_files(const std::string &output_directory);
+  static void generate_sample_files(const string &output_directory);
 
 private:
 };
