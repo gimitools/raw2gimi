@@ -1,6 +1,8 @@
 #include "main_args.h"
 #include "options.h"
 
+using namespace gimi;
+
 // Constructor
 MainArgs::MainArgs(int argc, const char *argv[]) {
   OptionHandler option_handler;
@@ -12,9 +14,9 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   option_handler.add("i", "input", &input_filename, "Path to input file");
 
   // Output
-  option_handler.add("e", "encoding", &encoding, "Specify how the to encode the output file. Default = hevc");
-  option_handler.add("", "colorspace", &colorspace, "rgb or mono");
-  option_handler.add("", "chroma", &chroma, "Specify chroma format. Default: rgb. {mono, 444, 422, 420, rgb, rgba, rrggbb_be, rrggbbaa_be, rrggbb_le, rrggbbaa_le}");
+  option_handler.add("e", "codec", &codec, "raw (default), avc, hevc, j2k, av1");
+  option_handler.add("", "sampling", &sampling, "444 (default), 422, 420, 411");
+  option_handler.add("", "interleave", &interleave, "interleaved (default) or planar");
   option_handler.add("", "pixel_algorithm", &pixel_algorithm, "Specify function to create image. Default: solid. {stripes, random, four_squares}");
   option_handler.add("", "width", &width, "Specify width of image");
   option_handler.add("", "height", &height, "Specify height of image");
@@ -51,64 +53,54 @@ string MainArgs::extract_output_filename() {
   return output_filename;
 }
 
-heif_compression_format MainArgs::extract_compression() {
-  if (encoding == "unc" || encoding == "uncompressed") {
-    return heif_compression_uncompressed;
-  } else if (encoding == "avc") {
-    return heif_compression_AVC;
-  } else if (encoding == "j2k") {
-    return heif_compression_JPEG2000;
-  } else if (encoding == "av1") {
-    return heif_compression_AV1;
+string MainArgs::extract_codec() {
+  // TODO: make an enum for codec
+  if (codec == "unc" || codec == "uncompressed" || codec == "raw" || codec.empty()) {
+    return "raw";
+  } else if (codec == "avc" || codec == "h264") {
+  } else if (codec == "hevc" || codec == "h265") {
+    return codec;
+  } else if (codec == "j2k") {
+    return codec;
+  } else if (codec == "av1") {
+    return codec;
   } else {
-    return heif_compression_HEVC;
+    cerr << "Unsupported encoding format: " << codec << endl;
+    exit(1);
   }
 }
 
-heif_colorspace MainArgs::extract_colorspace() {
-  if (colorspace == "rgb" || colorspace == "RGB") {
-    return heif_colorspace_RGB;
-  } else if (colorspace == "mono" || colorspace == "monochrome") {
-    return heif_colorspace_monochrome;
-  } else if (colorspace == "yuv") {
-    return heif_colorspace_YCbCr;
+gimi::Sampling MainArgs::extract_sampling() {
+  if (sampling == "444" || sampling.empty()) {
+    return Sampling::yuv_444;
+  } else if (sampling == "422") {
+    return Sampling::yuv_422;
+  } else if (sampling == "420") {
+    return Sampling::yuv_420;
+  } else if (sampling == "411") {
+    return Sampling::yuv_411;
   } else {
-    return heif_colorspace_RGB;
+    cerr << "Unsupported sampling format: " << sampling << endl;
+    exit(1);
   }
 }
 
-heif_chroma MainArgs::extract_chroma() {
-  if (chroma == "gray" || chroma == "mono") {
-    return heif_chroma_monochrome;
-  } else if (chroma == "444" || chroma == "planar") {
-    return heif_chroma_444;
-  } else if (chroma == "422") {
-    return heif_chroma_422;
-  } else if (chroma == "420") {
-    return heif_chroma_420;
-  } else if (chroma == "rgb") {
-    if (bit_depth == "8" || bit_depth == "") {
-      return heif_chroma_interleaved_RGB;
-    } else {
-      return heif_chroma_interleaved_RRGGBB_BE;
-    }
-    return heif_chroma_interleaved_RGB;
-  } else if (chroma == "rgba") {
-    if (bit_depth == "8" || bit_depth == "") {
-      return heif_chroma_interleaved_RGBA;
-    } else {
-      return heif_chroma_interleaved_RRGGBBAA_BE;
-    }
-  } else if (chroma == "rrggbb_be") {
-    return heif_chroma_interleaved_RRGGBB_BE;
-  } else if (chroma == "rrggbbaa_be") {
-    return heif_chroma_interleaved_RRGGBBAA_BE;
-  } else if (chroma == "rrggbb_le") {
-    return heif_chroma_interleaved_RRGGBB_LE;
-  } else if (chroma == "rrggbbaa_le") {
-    return heif_chroma_interleaved_RRGGBBAA_LE;
+gimi::Interleave MainArgs::extract_interleave() {
+  if (interleave == "interleaved" || interleave.empty()) {
+    return Interleave::interleaved;
+  } else if (interleave == "planar") {
+    return Interleave::planar;
+  } else if (interleave == "mixed") {
+    return Interleave::mixed;
+  } else if (interleave == "row") {
+    return Interleave::row;
+  } else if (interleave == "tile_component") {
+    return Interleave::tile_component;
+  } else if (interleave == "multi_y_pixel") {
+    return Interleave::multi_y_pixel;
   } else {
-    return heif_chroma_interleaved_RGB;
+    cerr << "Unsupported interleaving format: " << interleave << endl;
+    exit(1);
   }
 }
 
@@ -151,7 +143,7 @@ double MainArgs::extract_scale_factor() {
 void MainArgs::print() {
   cout << "input_filename = " << input_filename << endl;
   cout << "output_filename = " << output_filename << endl;
-  cout << "encoding = " << encoding << endl;
+  cout << "encoding = " << codec << endl;
   cout << "action = " << action << endl;
   cout << "debug = " << debug << endl;
   cout << "flag1 = " << flag1 << endl;

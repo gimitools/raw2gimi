@@ -9,11 +9,11 @@ void SampleFileGenerator::generate_sample_files(const string &output_directory) 
   }
 }
 
-MainArgs SampleFileGenerator::create_args(string encoding, string colorspace, string chroma, string bit_depth, string width, string height) {
+MainArgs SampleFileGenerator::create_args(string encoding, string sampling, string interleave, string bit_depth, string width, string height) {
   MainArgs args;
-  args.encoding = encoding;
-  args.colorspace = colorspace;
-  args.chroma = chroma;
+  args.codec = encoding;
+  args.sampling = sampling;
+  args.interleave = interleave;
   args.bit_depth = bit_depth;
   args.width = width;
   args.height = height;
@@ -56,17 +56,11 @@ const vector<MainArgs> SampleFileGenerator::desired_data() {
 };
 
 string SampleFileGenerator::create_filename(MainArgs args) {
-  /*
-  colorspace - rgb, yuv, monochrome
-  chroma
 
-  */
-  string chroma = args.chroma;
-  if (chroma == "rgb") {
-    chroma = "interleaved"; // The colorspace is already RGB
-  }
+  string interleave = "interleave"; // TODO - read args.interleave enum
+  string sampling = "sampling";     // TODO - read args.sampling enum
 
-  string filename = "out/" + args.encoding + "_" + args.colorspace + "_" + chroma + "_" +
+  string filename = "out/" + args.codec + "_" + "todointerleave" + "_" + "todosampling" + "_" +
                     args.bit_depth + "bit_" + args.width + "x" + args.height + ".heif";
   return filename;
 }

@@ -15,6 +15,6 @@ public:
 protected:
   static const vector<MainArgs> desired_data();
   static string create_filename(MainArgs args);
-  static MainArgs create_args(string encoding, string colorspace, string chroma, string bit_depth, string width, string height);
+  static MainArgs create_args(string encoding, string sampling, string interleave, string bit_depth, string width, string height);
 };
 } // namespace gimi

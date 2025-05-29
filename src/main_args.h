@@ -1,8 +1,8 @@
 #pragma once
 
+#include "model/pixel_formats.h"
 #include "model/raw_image.h"
 #include <iostream>
-#include <libheif/heif.h>
 #include <string>
 
 using namespace std;
@@ -15,9 +15,9 @@ public:
 
 public:
   string extract_output_filename();
-  heif_compression_format extract_compression(); // Delete
-  heif_colorspace extract_colorspace();          // Delete
-  heif_chroma extract_chroma();                  // Delete
+  string extract_codec();
+  gimi::Sampling extract_sampling();
+  gimi::Interleave extract_interleave();
   uint32_t extract_bit_depth();
   uint32_t extract_width();
   uint32_t extract_height();
@@ -27,12 +27,12 @@ public:
   double extract_scale_factor();
   void print();
 
-public:
+public: // User Input
   string input_filename;
   string output_filename;
-  string encoding;
-  string colorspace;
-  string chroma;
+  string codec;
+  string sampling;
+  string interleave;
   string bit_depth;
   string action = "heif_to_gimi";
   string debug;
