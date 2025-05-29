@@ -13,21 +13,15 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, Sampling sampling, I
 // Public Functions
 gimi::RawImage ImageFactory::create(const string &pixel_pattern) {
   cout << "TODO: ImageFactory::create()" << endl;
+  RawImage image(m_width, m_height, m_bit_depth);
   exit(1);
-}
-
-RawImage ImageFactory::create_image_in_memory(string pixel_algorithm) {
-
-  RawImage img(m_width, m_height);
-
-  return img;
 }
 
 vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm) {
   vector<RawImage> images;
 
   for (uint32_t i = 0; i < m_frame_count; i++) {
-    RawImage img = create_image_in_memory(pixel_algroithm);
+    RawImage img = create(pixel_algroithm);
     images.push_back(img);
 
     // Shuffle Colors

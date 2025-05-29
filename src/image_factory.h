@@ -14,7 +14,6 @@ public:
 
 public:
   gimi::RawImage create(const string &pixel_pattern = "solid");
-  RawImage create_image_in_memory(string pixel_algorithm);
   vector<RawImage> create_sequence_in_memory(string pixel_algorithm);
 
 protected:
