@@ -53,7 +53,23 @@ void LibheifWrapper::he(struct heif_error error) {
 }
 
 heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec) {
-  return heif_compression_format();
+  switch (codec) {
+  case Codec::raw:
+    return heif_compression_uncompressed;
+  case Codec::hevc:
+    return heif_compression_HEVC;
+  case Codec::avc:
+    return heif_compression_AVC;
+  case Codec::vvc:
+    return heif_compression_VVC;
+  case Codec::av1:
+    return heif_compression_AV1;
+  case Codec::jpeg:
+    return heif_compression_JPEG;
+  case Codec::j2k:
+    return heif_compression_JPEG2000;
+  case Codec::htj2k:
+    return heif_compression_HTJ2K;
+  }
+  return heif_compression_undefined;
 }
-// heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec) {
-// }
