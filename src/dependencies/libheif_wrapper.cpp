@@ -7,10 +7,10 @@ using namespace gimi;
 
 // API
 
-void LibheifWrapper::write_to_heif(const RawImage &rawImage, gimi::Codec codec, const string &output_filename) {
-
+void LibheifWrapper::write_to_heif(const RawImage &rawImage, WriteOptions options) {
+  string output_filename = options.output_filename;
   heif_context *ctx = heif_context_alloc();
-  heif_compression_format compression = get_compression_format(codec);
+  heif_compression_format compression = get_compression_format(options.codec);
   heif_encoder *encoder;
   heif_image *img;
   heif_image_handle *handle;

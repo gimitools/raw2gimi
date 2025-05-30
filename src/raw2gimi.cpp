@@ -3,6 +3,7 @@
 #include "gimifier.h"
 #include "image_factory.h"
 #include "model/pixel_formats.h"
+#include "model/write_options.h"
 
 using namespace gimi;
 
@@ -20,8 +21,10 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   ImageFactory imageFactory(width, height, chroma, interleave, bit_depth);
   gimi::RawImage image = imageFactory.create_image();
 
+  gimi::WriteOptions options;
+
   // Write to File
-  Gimifier::write_to_file(image, codec, output_filename);
+  Gimifier::write_to_file(image, options);
   cout << "Created: " << output_filename << endl;
 }
 
