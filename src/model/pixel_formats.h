@@ -15,10 +15,10 @@ enum class Chroma {
 enum class Interleave {
   planar,
   interleaved,
-  mixed,
-  row,
-  tile_component,
-  multi_y_pixel
+  // mixed,
+  // row,
+  // tile_component,
+  // multi_y_pixel
 };
 
 enum class Codec {

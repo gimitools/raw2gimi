@@ -80,13 +80,6 @@ RawImage ImageFactory::create_rgb_image() {
     break;
   case Interleave::planar:
     break;
-  case Interleave::mixed:
-  case Interleave::row:
-  case Interleave::tile_component:
-  case Interleave::multi_y_pixel:
-    cout << "Unsupported Interleave Type: " << static_cast<int>(m_interleave) << endl;
-    exit(1);
-    break;
   default:
     cout << "Unrecognized Interleave Type: " << static_cast<int>(m_interleave) << endl;
     exit(1);

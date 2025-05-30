@@ -96,14 +96,6 @@ gimi::Interleave MainArgs::extract_interleave() {
     return Interleave::interleaved;
   } else if (interleave == "planar") {
     return Interleave::planar;
-  } else if (interleave == "mixed") {
-    return Interleave::mixed;
-  } else if (interleave == "row") {
-    return Interleave::row;
-  } else if (interleave == "tile_component") {
-    return Interleave::tile_component;
-  } else if (interleave == "multi_y_pixel") {
-    return Interleave::multi_y_pixel;
   } else {
     cerr << "Unsupported interleaving format: " << interleave << endl;
     exit(1);
