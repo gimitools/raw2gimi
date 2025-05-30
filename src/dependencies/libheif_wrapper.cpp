@@ -5,10 +5,12 @@
 
 using namespace gimi;
 
-void LibheifWrapper::write_to_heif(const RawImage &rawImage, Codec codec, const string &output_filename) {
+// API
+
+void LibheifWrapper::write_to_heif(const RawImage &rawImage, gimi::Codec codec, const string &output_filename) {
 
   heif_context *ctx = heif_context_alloc();
-  heif_compression_format compression = heif_compression_HEVC;
+  heif_compression_format compression = get_compression_format(codec);
   heif_encoder *encoder;
   heif_image *img;
   heif_image_handle *handle;
@@ -41,9 +43,17 @@ void LibheifWrapper::write_to_heif(const RawImage &rawImage, Codec codec, const 
   printf("Created: %s\n", output_filename.c_str());
 }
 
+// Helper Functions
+
 void LibheifWrapper::he(struct heif_error error) {
   if (error.code) {
     printf("ERROR! - subcode: %d  Message: %s\n", error.subcode, error.message);
     exit(error.code);
   }
 }
+
+heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec) {
+  return heif_compression_format();
+}
+// heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec) {
+// }

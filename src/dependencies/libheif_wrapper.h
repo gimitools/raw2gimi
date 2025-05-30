@@ -1,7 +1,7 @@
 #pragma once
-
 #include "model/pixel_formats.h"
 #include "model/raw_image.h"
+#include <libheif/heif.h>
 #include <string>
 using namespace std;
 using namespace gimi;
@@ -13,4 +13,5 @@ public:
 
 private:
   static void he(struct heif_error);
+  static heif_compression_format get_compression_format(gimi::Codec codec);
 };

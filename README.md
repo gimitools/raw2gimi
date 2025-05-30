@@ -1,5 +1,5 @@
 # raw2gimi
-Conversion tools to get from raw / Bayer imagery to ISOBMFF GIMI profile 
+Conversion tool comply with the ISOBMFF GIMI profile.
 
 ## Build
 Initalize Submodules:
