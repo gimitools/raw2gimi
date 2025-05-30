@@ -5,5 +5,5 @@
 using namespace gimi;
 
 void Gimifier::write_to_file(const RawImage &image, Codec codec, const string &output_filename) {
-  Libheif::libheif_write_to_heif(image, codec, output_filename);
+  Libheif::write_to_heif(image, codec, output_filename);
 }

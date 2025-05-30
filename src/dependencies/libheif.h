@@ -9,7 +9,7 @@ using namespace gimi;
 class Libheif {
 
 public:
-  static void libheif_write_to_heif(const RawImage &image, Codec, const string &output_filename);
+  static void write_to_heif(const RawImage &image, Codec, const string &output_filename);
 
 private:
   static void he(struct heif_error);

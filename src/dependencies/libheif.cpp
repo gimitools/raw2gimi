@@ -5,7 +5,7 @@
 
 using namespace gimi;
 
-void Libheif::libheif_write_to_heif(const RawImage &image, Codec codec, const string &output_filename) {
+void Libheif::write_to_heif(const RawImage &image, Codec codec, const string &output_filename) {
 
   heif_context *ctx = heif_context_alloc();
   heif_compression_format compression = heif_compression_HEVC;
