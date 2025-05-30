@@ -3,6 +3,8 @@
 #include "main_args.h"
 #include "model/write_options.h"
 
+namespace gimi {
+
 class Raw2Gimi {
 public:
   // CLI API
@@ -16,5 +18,7 @@ protected:
 
 private:
   // Helper Functions
-  static gimi::WriteOptions create_write_options(MainArgs);
+  static WriteOptions create_write_options(MainArgs);
 };
+
+} // namespace gimi
