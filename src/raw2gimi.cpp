@@ -11,17 +11,16 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
   int bit_depth = args.extract_bit_depth();
-  string pixel_algorithm = args.pixel_algorithm;
-  string output_filename = args.extract_output_filename();
   Chroma chroma = args.extract_chroma();
   Interleave interleave = args.extract_interleave();
   Codec codec = args.extract_codec();
+  string output_filename = args.extract_output_filename();
 
   // Create RawImage
   ImageFactory imageFactory(width, height, chroma, interleave, bit_depth);
   gimi::RawImage image = imageFactory.create_image();
 
-  // WRITE
+  // Write to File
   Gimifier::write_to_file(image, codec, output_filename);
   cout << "Created: " << output_filename << endl;
 }

@@ -1,11 +1,11 @@
-#include "libheif.h"
+#include "libheif_wrapper.h"
 #include <cstring> // memcpy()
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
 
 using namespace gimi;
 
-void Libheif::write_to_heif(const RawImage &image, Codec codec, const string &output_filename) {
+void LibheifWrapper::write_to_heif(const RawImage &rawImage, Codec codec, const string &output_filename) {
 
   heif_context *ctx = heif_context_alloc();
   heif_compression_format compression = heif_compression_HEVC;
@@ -15,9 +15,9 @@ void Libheif::write_to_heif(const RawImage &image, Codec codec, const string &ou
   heif_chroma chroma = heif_chroma_interleaved_RGB;
   heif_colorspace colorspace = heif_colorspace_RGB;
 
-  uint32_t width = image.get_width();
-  uint32_t height = image.get_height();
-  uint32_t bit_depth = image.get_bit_depth();
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
 
   heif_channel channel = heif_channel_interleaved;
   he(heif_image_create(width, height, colorspace, chroma, &img));
@@ -27,7 +27,7 @@ void Libheif::write_to_heif(const RawImage &image, Codec codec, const string &ou
   int stride;
   uint8_t *data = heif_image_get_plane(img, channel, &stride);
 
-  const vector<Band> bands = image.get_bands();
+  const vector<Band> bands = rawImage.get_bands();
   Band b = bands[0];                              // Assuming the first band is RGB
   memcpy(data, b.m_data.data(), stride * height); // Copy RGB data to image plane
 
@@ -41,7 +41,7 @@ void Libheif::write_to_heif(const RawImage &image, Codec codec, const string &ou
   printf("Created: %s\n", output_filename.c_str());
 }
 
-void Libheif::he(struct heif_error error) {
+void LibheifWrapper::he(struct heif_error error) {
   if (error.code) {
     printf("ERROR! - subcode: %d  Message: %s\n", error.subcode, error.message);
     exit(error.code);

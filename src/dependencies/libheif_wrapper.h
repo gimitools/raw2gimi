@@ -6,7 +6,7 @@
 using namespace std;
 using namespace gimi;
 
-class Libheif {
+class LibheifWrapper {
 
 public:
   static void write_to_heif(const RawImage &image, Codec, const string &output_filename);
