@@ -13,7 +13,7 @@ public:
   static void generate_sample_files(const string &output_directory);
 
 protected:
-  static const vector<MainArgs> create_cli_args();
+  static const vector<MainArgs> simulate_user_cli();
   static string create_filename(MainArgs args);
   static MainArgs create_args(string encoding, string chroma, string interleave, string bit_depth, string width, string height);
 };
