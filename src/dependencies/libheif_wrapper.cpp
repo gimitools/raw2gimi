@@ -110,11 +110,9 @@ heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleav
 
 heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions options) {
 
-  // WIP
   uint32_t nbands = image.get_band_count();
   uint32_t bit_depth = image.get_bit_depth();
 
-  heif_chroma libheif_chroma = heif_chroma_undefined;
   gimi::Chroma gimi_chroma = options.chroma;
   gimi::Interleave gimi_interleave = options.interleave;
   bool little_endian = options.little_endian;
@@ -137,7 +135,6 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
     } else if (bit_depth > 8 && nbands == 4 && little_endian) {
       return heif_chroma_interleaved_RRGGBBAA_LE;
     }
-
     break;
   case gimi::Chroma::gray:
     return heif_chroma_monochrome;
@@ -152,5 +149,5 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
     exit(1);
   }
 
-  return libheif_chroma;
+  return heif_chroma_undefined;
 }
