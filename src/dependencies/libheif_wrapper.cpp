@@ -1,5 +1,6 @@
 #include "libheif_wrapper.h"
 #include <cstring> // memcpy()
+#include <iostream>
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
 
@@ -10,7 +11,7 @@ using namespace gimi;
 void LibheifWrapper::write_to_heif(const RawImage &rawImage, WriteOptions options) {
   string output_filename = options.output_filename;
   heif_context *ctx = heif_context_alloc();
-  heif_compression_format compression = get_compression_format(options.codec);
+  heif_compression_format compression = extract_compression(options.codec);
   heif_encoder *encoder;
   heif_image *img;
   heif_image_handle *handle;
@@ -52,7 +53,7 @@ void LibheifWrapper::he(struct heif_error error) {
   }
 }
 
-heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec) {
+heif_compression_format LibheifWrapper::extract_compression(gimi::Codec codec) {
   switch (codec) {
   case Codec::raw:
     return heif_compression_uncompressed;
@@ -72,4 +73,56 @@ heif_compression_format LibheifWrapper::get_compression_format(gimi::Codec codec
     return heif_compression_HTJ2K;
   }
   return heif_compression_undefined;
+}
+
+heif_chroma LibheifWrapper::extract_chroma(WriteOptions options) {
+
+  // WIP
+
+  heif_chroma libheif_chroma = heif_chroma_undefined;
+  gimi::Chroma gimi_chroma = options.chroma;
+
+  if (gimi_chroma == gimi::Chroma::rgb) {
+  }
+
+  switch (gimi_chroma) {
+  case gimi::Chroma::rgb:
+    break;
+  case gimi::Chroma::gray:
+    return heif_chroma_monochrome;
+  case gimi::Chroma::yuv_444:
+    return heif_chroma_444;
+  case gimi::Chroma::yuv_422:
+    return heif_chroma_422;
+  case gimi::Chroma::yuv_420:
+    return heif_chroma_420;
+  case gimi::Chroma::yuv_411:
+    cerr << "libheif_wrapper::extract_chroma(): Unsupported chroma format: yuv_411" << endl;
+    exit(1);
+  }
+
+  return libheif_chroma;
+}
+
+heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleave gimi_interleave) {
+  switch (gimi_chroma) {
+  case gimi::Chroma::rgb:
+    return heif_colorspace_RGB;
+  case gimi::Chroma::gray:
+    return heif_colorspace_monochrome;
+  case gimi::Chroma::yuv_444:
+    if (gimi_interleave == Interleave::planar) {
+      return heif_colorspace_YCbCr;
+    } else {
+      return heif_colorspace_RGB;
+    }
+  case gimi::Chroma::yuv_422:
+  case gimi::Chroma::yuv_420:
+    return heif_colorspace_YCbCr;
+  default:
+    cerr << "libheif_wrapper::extract_colorspace(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
+    exit(1);
+  }
+
+  return heif_colorspace_undefined;
 }
