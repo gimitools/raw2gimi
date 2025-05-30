@@ -10,9 +10,9 @@ using namespace gimi;
 class LibheifWrapper {
 
 public:
-  // Constructor
-  LibheifWrapper(WriteOptions);
-  // TODO: a heif file can have multiple images with varying write options.
+  // Constructors
+  LibheifWrapper(WriteOptions); // TODO: a heif file can have multiple images with varying write options.
+  ~LibheifWrapper();
 
 public:
   // API
@@ -29,20 +29,5 @@ protected:
 private:
   // Member Variables
   WriteOptions m_options;
-  // heif_context *ctx; // TODO
+  heif_context *m_ctx; // TODO
 };
-
-// enum heif_chroma
-// {
-//   heif_chroma_undefined = 99,
-//   heif_chroma_monochrome = 0,
-//   heif_chroma_420 = 1,
-//   heif_chroma_422 = 2,
-//   heif_chroma_444 = 3,
-//   heif_chroma_interleaved_RGB = 10,
-//   heif_chroma_interleaved_RGBA = 11,
-//   heif_chroma_interleaved_RRGGBB_BE = 12,   // HDR, big endian.
-//   heif_chroma_interleaved_RRGGBBAA_BE = 13, // HDR, big endian.
-//   heif_chroma_interleaved_RRGGBB_LE = 14,   // HDR, little endian.
-//   heif_chroma_interleaved_RRGGBBAA_LE = 15  // HDR, little endian.
-// };

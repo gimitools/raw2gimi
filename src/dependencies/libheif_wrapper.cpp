@@ -8,14 +8,20 @@ using namespace gimi;
 
 // Constructor
 LibheifWrapper::LibheifWrapper(WriteOptions options) {
-  // *ctx = heif_context_alloc();
+  m_ctx = heif_context_alloc();
   m_options = options;
+}
+
+LibheifWrapper::~LibheifWrapper() {
+  if (m_ctx) {
+    heif_context_free(m_ctx);
+    m_ctx = nullptr;
+  }
 }
 
 // API
 void LibheifWrapper::add_image(const RawImage &rawImage) {
-  string output_filename = m_options.output_filename;
-  heif_context *ctx = heif_context_alloc();
+  // heif_context *m_ctx = heif_context_alloc();
   heif_compression_format compression = extract_compression(m_options.codec);
   heif_encoder *encoder;
   heif_image *img;
@@ -36,22 +42,22 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   uint8_t *data = heif_image_get_plane(img, channel, &stride);
 
   const vector<Band> bands = rawImage.get_bands();
-  Band b = bands[0];                              // Assuming the first band is RGB
+
+  // TODO: dont assume the first band is RGB
+  Band b = bands[0];
   memcpy(data, b.m_data.data(), stride * height); // Copy RGB data to image plane
 
-  he(heif_context_get_encoder_for_format(ctx, compression, &encoder));
-  he(heif_context_encode_image(ctx, img, encoder, nullptr, &handle));
+  he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
+  he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
 
   // heif_item_id primary_id = heif_image_handle_get_item_id(handle);
-  // gimify(ctx, primary_id);
-
-  he(heif_context_write_to_file(ctx, output_filename.c_str()));
-  printf("Created: %s\n", output_filename.c_str());
+  // gimify(m_ctx, primary_id);
 }
 
 void LibheifWrapper::write_to_heif() {
-  cout << "LibheifWrapper::write_to_heif() is not implemented yet." << endl;
-  exit(1);
+  string output_filename = m_options.output_filename;
+  he(heif_context_write_to_file(m_ctx, output_filename.c_str()));
+  printf("Created: %s\n", output_filename.c_str());
 }
 
 // Helper Functions
