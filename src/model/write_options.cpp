@@ -7,4 +7,5 @@ WriteOptions::WriteOptions() {
   chroma = Chroma::rgb;
   interleave = Interleave::interleaved;
   codec = Codec::raw;
+  little_endian = false;
 }

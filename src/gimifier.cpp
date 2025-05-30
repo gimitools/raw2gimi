@@ -5,7 +5,9 @@
 using namespace gimi;
 
 void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
-  LibheifWrapper::write_to_heif(image, options);
+  LibheifWrapper libheif(options);
+  libheif.add_image(image);
+  libheif.write_to_heif();
 }
 
 void Gimifier::write_to_file(vector<RawImage> &, WriteOptions) {

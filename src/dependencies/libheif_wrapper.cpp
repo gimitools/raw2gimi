@@ -6,17 +6,22 @@
 
 using namespace gimi;
 
-// API
+// Constructor
+LibheifWrapper::LibheifWrapper(WriteOptions options) {
+  // *ctx = heif_context_alloc();
+  m_options = options;
+}
 
-void LibheifWrapper::write_to_heif(const RawImage &rawImage, WriteOptions options) {
-  string output_filename = options.output_filename;
+// API
+void LibheifWrapper::add_image(const RawImage &rawImage) {
+  string output_filename = m_options.output_filename;
   heif_context *ctx = heif_context_alloc();
-  heif_compression_format compression = extract_compression(options.codec);
+  heif_compression_format compression = extract_compression(m_options.codec);
   heif_encoder *encoder;
   heif_image *img;
   heif_image_handle *handle;
-  heif_chroma chroma = heif_chroma_interleaved_RGB;
-  heif_colorspace colorspace = extract_colorspace(options.chroma, options.interleave);
+  heif_chroma chroma = extract_chroma(rawImage, m_options);
+  heif_colorspace colorspace = extract_colorspace(m_options.chroma, m_options.interleave);
 
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
@@ -42,6 +47,11 @@ void LibheifWrapper::write_to_heif(const RawImage &rawImage, WriteOptions option
 
   he(heif_context_write_to_file(ctx, output_filename.c_str()));
   printf("Created: %s\n", output_filename.c_str());
+}
+
+void LibheifWrapper::write_to_heif() {
+  cout << "LibheifWrapper::write_to_heif() is not implemented yet." << endl;
+  exit(1);
 }
 
 // Helper Functions
@@ -98,18 +108,36 @@ heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleav
   return heif_colorspace_undefined;
 }
 
-heif_chroma LibheifWrapper::extract_chroma(WriteOptions options) {
+heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions options) {
 
   // WIP
+  uint32_t nbands = image.get_band_count();
+  uint32_t bit_depth = image.get_bit_depth();
 
   heif_chroma libheif_chroma = heif_chroma_undefined;
   gimi::Chroma gimi_chroma = options.chroma;
-
-  if (gimi_chroma == gimi::Chroma::rgb) {
-  }
+  gimi::Interleave gimi_interleave = options.interleave;
+  bool little_endian = options.little_endian;
+  bool big_endian = !little_endian;
 
   switch (gimi_chroma) {
   case gimi::Chroma::rgb:
+    if (gimi_interleave == gimi::Interleave::planar) {
+      return heif_chroma_444; // Planar RGB
+    } else if (bit_depth == 8 && nbands == 3) {
+      return heif_chroma_interleaved_RGB;
+    } else if (bit_depth == 8 && nbands == 4) {
+      return heif_chroma_interleaved_RGBA;
+    } else if (bit_depth > 8 && nbands == 3 && big_endian) {
+      return heif_chroma_interleaved_RRGGBB_BE;
+    } else if (bit_depth > 8 && nbands == 4 && big_endian) {
+      return heif_chroma_interleaved_RRGGBBAA_BE;
+    } else if (bit_depth > 8 && nbands == 3 && little_endian) {
+      return heif_chroma_interleaved_RRGGBB_LE;
+    } else if (bit_depth > 8 && nbands == 4 && little_endian) {
+      return heif_chroma_interleaved_RRGGBBAA_LE;
+    }
+
     break;
   case gimi::Chroma::gray:
     return heif_chroma_monochrome;

@@ -13,5 +13,6 @@ struct WriteOptions {
   Chroma chroma;
   Interleave interleave;
   Codec codec;
+  bool little_endian;
 };
 } // namespace gimi

@@ -21,8 +21,8 @@ public: // Getters
   uint32_t get_width() const { return m_width; }
   uint32_t get_height() const { return m_height; }
   uint32_t get_bit_depth() const { return m_bit_depth; }
+  uint32_t get_band_count() const { return m_bands.size(); }
 
-public:
 protected:
   uint32_t m_width;         // Width of the image
   uint32_t m_height;        // Height of the image
