@@ -1,6 +1,7 @@
 #pragma once
 
 #include "main_args.h"
+#include "model/write_options.h"
 
 class Raw2Gimi {
 public:
@@ -12,4 +13,8 @@ public:
 protected:
   // Primary Functions
   static void raw_to_gimi(const string &input_filename, const string &output_filename);
+
+private:
+  // Helper Functions
+  static gimi::WriteOptions create_write_options(MainArgs);
 };

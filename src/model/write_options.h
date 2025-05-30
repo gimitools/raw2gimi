@@ -8,6 +8,7 @@ using namespace std;
 namespace gimi {
 
 struct WriteOptions {
+  WriteOptions(); // Constructor
   string output_filename;
   Chroma chroma;
   Interleave interleave;
