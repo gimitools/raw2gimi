@@ -15,8 +15,8 @@ public:
 private:
   static void he(struct heif_error);
   static heif_compression_format extract_compression(gimi::Codec);
-  static heif_chroma extract_chroma(WriteOptions);
   static heif_colorspace extract_colorspace(gimi::Chroma, gimi::Interleave);
+  static heif_chroma extract_chroma(WriteOptions);
 };
 
 // enum heif_chroma

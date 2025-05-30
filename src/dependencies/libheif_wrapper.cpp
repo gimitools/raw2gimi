@@ -16,7 +16,7 @@ void LibheifWrapper::write_to_heif(const RawImage &rawImage, WriteOptions option
   heif_image *img;
   heif_image_handle *handle;
   heif_chroma chroma = heif_chroma_interleaved_RGB;
-  heif_colorspace colorspace = heif_colorspace_RGB;
+  heif_colorspace colorspace = extract_colorspace(options.chroma, options.interleave);
 
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
@@ -75,6 +75,29 @@ heif_compression_format LibheifWrapper::extract_compression(gimi::Codec codec) {
   return heif_compression_undefined;
 }
 
+heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleave gimi_interleave) {
+  switch (gimi_chroma) {
+  case gimi::Chroma::rgb:
+    return heif_colorspace_RGB;
+  case gimi::Chroma::gray:
+    return heif_colorspace_monochrome;
+  case gimi::Chroma::yuv_444:
+    if (gimi_interleave == Interleave::planar) {
+      return heif_colorspace_YCbCr;
+    } else {
+      return heif_colorspace_RGB;
+    }
+  case gimi::Chroma::yuv_422:
+  case gimi::Chroma::yuv_420:
+    return heif_colorspace_YCbCr;
+  default:
+    cerr << "libheif_wrapper::extract_colorspace(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
+    exit(1);
+  }
+
+  return heif_colorspace_undefined;
+}
+
 heif_chroma LibheifWrapper::extract_chroma(WriteOptions options) {
 
   // WIP
@@ -102,27 +125,4 @@ heif_chroma LibheifWrapper::extract_chroma(WriteOptions options) {
   }
 
   return libheif_chroma;
-}
-
-heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleave gimi_interleave) {
-  switch (gimi_chroma) {
-  case gimi::Chroma::rgb:
-    return heif_colorspace_RGB;
-  case gimi::Chroma::gray:
-    return heif_colorspace_monochrome;
-  case gimi::Chroma::yuv_444:
-    if (gimi_interleave == Interleave::planar) {
-      return heif_colorspace_YCbCr;
-    } else {
-      return heif_colorspace_RGB;
-    }
-  case gimi::Chroma::yuv_422:
-  case gimi::Chroma::yuv_420:
-    return heif_colorspace_YCbCr;
-  default:
-    cerr << "libheif_wrapper::extract_colorspace(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
-    exit(1);
-  }
-
-  return heif_colorspace_undefined;
 }
