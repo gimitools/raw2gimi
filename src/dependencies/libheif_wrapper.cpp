@@ -155,5 +155,6 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
     exit(1);
   }
 
+  cerr << "libheif_wrapper::extract_chroma(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
   return heif_chroma_undefined;
 }
