@@ -2,6 +2,32 @@
 
 using namespace gimi;
 
+uint32_t to_uint32(BitDepth bit_depth) {
+  switch (bit_depth) {
+  case BitDepth::uint8:
+    return 8;
+  case BitDepth::uint10:
+    return 10;
+  case BitDepth::uint12:
+    return 12;
+  case BitDepth::uint14:
+    return 14;
+  case BitDepth::uint16:
+    return 16;
+  case BitDepth::int8:
+    return 8;
+  case BitDepth::int16:
+    return 16;
+  case BitDepth::float32:
+    return 32;
+  case BitDepth::complex:
+    return 64; // Assuming complex is represented as two float32 values
+  case BitDepth::mixed:
+    return 0; // Mixed bit depth, not a single value
+  }
+  return 0; // Default for unknown bit depth
+}
+
 string to_string(BitDepth bit_depth) {
   switch (bit_depth) {
   case BitDepth::uint8:

@@ -1,6 +1,7 @@
 #pragma once
 
 using namespace std;
+#include <cstdint>
 #include <string>
 
 namespace gimi {
@@ -54,5 +55,6 @@ string to_string(BitDepth);
 string to_string(Chroma);
 string to_string(Interleave);
 string to_string(Codec);
+uint32_t to_uint32(BitDepth);
 
 } // namespace gimi
