@@ -1,5 +1,8 @@
 #pragma once
 
+using namespace std;
+#include <string>
+
 namespace gimi {
 
 enum class Chroma {
@@ -46,5 +49,10 @@ enum class BitDepth {
   complex,
   mixed, // Each BitDepth plane in RawImage different.
 };
+
+string to_string(BitDepth);
+string to_string(Chroma);
+string to_string(Interleave);
+string to_string(Codec);
 
 } // namespace gimi
