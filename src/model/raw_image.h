@@ -3,6 +3,7 @@
 #include "band.h"
 #include "pixel_formats.h"
 #include <cstdint>
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -15,6 +16,7 @@ public: // Constructor
 
 public:
   void add_rgb_interleaved_8bit_band(const vector<uint8_t> &data); // TODO: HDR
+  string to_string() const;
 
 public: // Getters
   const vector<Band> &get_bands() const { return m_bands; }
@@ -28,6 +30,7 @@ protected:
   uint32_t m_height;        // Height of the image
   uint32_t m_bit_depth = 8; // Default bit depth
   vector<Band> m_bands;     // Data buffer for the image bands
+  uint32_t m_band_count;    // for RGB interleaved, band_count = 3 but m_bands.size() = 1
 };
 
 } // namespace gimi

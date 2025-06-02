@@ -12,11 +12,10 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Inter
 
 // Public Functions
 gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
-  RawImage image(m_width, m_height, m_bit_depth);
 
   switch (m_chroma) {
   case Chroma::rgb:
-    create_rgb_image();
+    return create_rgb_image();
     break;
   case Chroma::gray:
     cout << "Unsupported Feature: Monochrome Image Creation!\n";
@@ -43,6 +42,9 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
     exit(1);
   }
 
+  cerr << "ImageFactory::create_image() failed!" << endl;
+  exit(1);
+  RawImage image(m_width, m_height, m_bit_depth);
   return image;
 }
 
@@ -72,11 +74,13 @@ RawImage ImageFactory::create_yuv_image() {
 }
 
 RawImage ImageFactory::create_rgb_image() {
-  RawImage img(m_width, m_height);
+  RawImage image(m_width, m_height);
 
   switch (m_interleave) {
   case Interleave::interleaved:
-    img = create_rgb_interleaved_8bit();
+    image = create_rgb_interleaved_8bit();
+    cout << image.get_band_count() << endl;
+
     break;
   case Interleave::planar:
     break;
@@ -85,7 +89,7 @@ RawImage ImageFactory::create_rgb_image() {
     exit(1);
   }
 
-  return img;
+  return image;
 }
 
 RawImage ImageFactory::create_monochrome_image() {

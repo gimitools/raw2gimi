@@ -21,7 +21,6 @@ LibheifWrapper::~LibheifWrapper() {
 
 // API
 void LibheifWrapper::add_image(const RawImage &rawImage) {
-  // heif_context *m_ctx = heif_context_alloc();
   heif_compression_format compression = extract_compression(m_options.codec);
   heif_encoder *encoder;
   heif_image *img;
