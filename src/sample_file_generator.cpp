@@ -55,12 +55,13 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   return v;
 };
 
-string SampleFileGenerator::create_filename(MainArgs args) {
-
-  string interleave = "interleave"; // TODO - read args.interleave enum
-  string chroma = "chroma";         // TODO - read args.chroma enum
-
-  string filename = "out/" + args.codec + "_" + "todointerleave" + "_" + "todochroma" + "_" +
-                    args.bit_depth + "bit_" + args.width + "x" + args.height + ".heif";
+string SampleFileGenerator::create_filename(MainArgs p) {
+  string filename = "out/" +
+                    p.codec + "_" +
+                    p.chroma + "_" +
+                    p.interleave + "_" +
+                    p.bit_depth + "bit_" +
+                    p.width + "x" +
+                    p.height + ".heif";
   return filename;
 }
