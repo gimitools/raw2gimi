@@ -19,4 +19,5 @@ void gimi::RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data)
 
   interleave = Interleave::interleaved;
   chroma = Chroma::rgb;
+  bit_depth = BitDepth::uint8;
 }

@@ -35,7 +35,6 @@ enum class Codec {
 };
 
 enum class BitDepth {
-  mixed,
   uint8,
   uint10,
   uint12,
@@ -45,6 +44,7 @@ enum class BitDepth {
   int16,
   float32,
   complex,
+  mixed, // Each BitDepth plane in RawImage different.
 };
 
 } // namespace gimi

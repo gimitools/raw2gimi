@@ -15,7 +15,7 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
 
   switch (m_chroma) {
   case Chroma::rgb:
-    return create_rgb_image();
+    return create_image_rgb();
     break;
   case Chroma::gray:
     cout << "Unsupported Feature: Monochrome Image Creation!\n";
@@ -67,17 +67,17 @@ vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm)
 
 // Protected Functions
 
-RawImage ImageFactory::create_yuv_image() {
+RawImage ImageFactory::create_image_yuv() {
   RawImage img(m_width, m_height);
 
   return img;
 }
 
-RawImage ImageFactory::create_rgb_image() {
+RawImage ImageFactory::create_image_rgb() {
 
   switch (m_interleave) {
   case Interleave::interleaved:
-    return create_rgb_interleaved_8bit();
+    return create_image_rgb_interleaved();
   case Interleave::planar:
     cout << "Unsupported Feature: Planar RGB Image Creation!\n";
     exit(1);
@@ -87,20 +87,41 @@ RawImage ImageFactory::create_rgb_image() {
     exit(1);
   }
 
-  cerr << "ImageFactory::create_rgb_image() failed!" << endl;
+  cerr << "ImageFactory::create_image_rgb() failed!" << endl;
   exit(1);
   RawImage image(m_width, m_height);
   return image;
 }
 
-RawImage ImageFactory::create_monochrome_image() {
+RawImage ImageFactory::create_image_mono() {
   cout << "Unsupported Feature!\n";
   exit(1);
 }
 
 // Protected Functions
 
-RawImage ImageFactory::create_rgb_interleaved_8bit() {
+RawImage ImageFactory::create_image_rgb_interleaved() {
+  switch (m_bit_depth) {
+  case BitDepth::uint8:
+    return create_image_rgb_interleaved_8bit();
+  case BitDepth::uint10:
+  case BitDepth::uint12:
+  case BitDepth::uint14:
+  case BitDepth::uint16:
+  case BitDepth::int8:
+  case BitDepth::int16:
+  case BitDepth::float32:
+  case BitDepth::complex:
+  case BitDepth::mixed:
+  default:
+    cout << "Unsupported Bit Depth: " << static_cast<int>(m_bit_depth) << endl;
+    exit(1);
+  }
+}
+
+// Protected Functions
+
+RawImage ImageFactory::create_image_rgb_interleaved_8bit() {
 
   // Variables
   RawImage image(m_width, m_height);

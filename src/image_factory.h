@@ -17,12 +17,15 @@ public:
   vector<RawImage> create_sequence_in_memory(string pixel_algorithm);
 
 protected:
-  RawImage create_yuv_image();
-  RawImage create_rgb_image();
-  RawImage create_monochrome_image();
+  RawImage create_image_yuv();
+  RawImage create_image_rgb();
+  RawImage create_image_mono();
 
 protected:
-  RawImage create_rgb_interleaved_8bit();
+  RawImage create_image_rgb_interleaved();
+
+protected:
+  RawImage create_image_rgb_interleaved_8bit();
 
 private: // Member Variables
   uint32_t m_width;

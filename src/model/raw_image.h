@@ -37,6 +37,7 @@ private:
   Interleave interleave = Interleave::planar;
   Chroma chroma = Chroma::rgb;
   vector<Plane> planes;
+  BitDepth bit_depth = BitDepth::uint8;
   // bool little_endian = false; // RawImage shall be big endian.
 };
 
