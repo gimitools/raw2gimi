@@ -16,4 +16,7 @@ void gimi::RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data)
 
   Plane plane(pixel_data, width, height, BitDepth::UINT8);
   planes.push_back(plane);
+
+  interleave = Interleave::interleaved;
+  chroma = Chroma::rgb;
 }

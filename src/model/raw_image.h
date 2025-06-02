@@ -36,6 +36,7 @@ private:
   Interleave interleave = Interleave::planar;
   Chroma chroma = Chroma::rgb;
   vector<Plane> planes;
+  // bool little_endian = false; // RawImage shall be big endian.
 };
 
 } // namespace gimi

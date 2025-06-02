@@ -25,8 +25,9 @@ struct Plane {
   BitDepth m_bit_depth = gimi::BitDepth::UINT8;
   uint32_t m_width = 0;
   uint32_t m_height = 0;
-  // Interleave m_interleave; // See RawImage for Interleave
-  // Chroma m_chroma;         // See RawImage for Chroma
+  // Should not varry across planes:
+  //   1. Interleave m_interleave (should a Plane know how it's interleaved?)
+  //   2. Chroma, (describes a set of planes).
 
   Plane(Pixels, uint32_t width, uint32_t height, BitDepth);
 };
