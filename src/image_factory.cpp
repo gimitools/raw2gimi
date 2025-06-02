@@ -44,7 +44,8 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
 
   cerr << "ImageFactory::create_image() failed!" << endl;
   exit(1);
-  RawImage image(m_width, m_height, m_bit_depth);
+  // RawImage image(m_width, m_height, m_bit_depth);
+  RawImage image(m_width, m_height);
   return image;
 }
 
@@ -100,7 +101,7 @@ RawImage ImageFactory::create_monochrome_image() {
 // Protected Functions
 
 RawImage ImageFactory::create_rgb_interleaved_8bit() {
-  RawImage image(m_width, m_height, 8);
+  RawImage image(m_width, m_height);
 
   const uint32_t band_count = 3; // RGB
   uint64_t size = m_width * m_height * band_count;
@@ -115,7 +116,7 @@ RawImage ImageFactory::create_rgb_interleaved_8bit() {
     }
   }
 
-  image.add_rgb_interleaved_8bit_band(pixels);
+  // image.add_rgb_interleaved_8bit_band(pixels);
 
   return image;
 }

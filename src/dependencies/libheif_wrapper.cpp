@@ -40,11 +40,11 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   int stride;
   uint8_t *data = heif_image_get_plane(img, channel, &stride);
 
-  const vector<Band> bands = rawImage.get_bands();
+  // const vector<Band> bands = rawImage.get_bands();
 
   // TODO: dont assume the first band is RGB
-  Band b = bands[0];
-  memcpy(data, b.m_data.data(), stride * height); // Copy RGB data to image plane
+  // Band b = bands[0];
+  // memcpy(data, b.m_data.data(), stride * height); // Copy RGB data to image plane
 
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));

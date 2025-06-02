@@ -60,11 +60,12 @@ gimi::RawImage FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw
   libraw_image->data_size;
   libraw_image->data;
 
-  gimi::RawImage gimi_image(width, height, bit_depth);
+  // gimi::RawImage gimi_image(width, height, bit_depth);
+  gimi::RawImage gimi_image(width, height);
 
   vector<uint8_t> pixels(libraw_image->data, libraw_image->data + libraw_image->data_size);
 
-  gimi_image.add_rgb_interleaved_8bit_band(pixels);
+  // gimi_image.add_rgb_interleaved_8bit_band(pixels);
 
   return gimi_image;
 }

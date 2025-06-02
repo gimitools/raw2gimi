@@ -32,4 +32,16 @@ enum class Codec {
   htj2k,
 };
 
+enum class BitDepth {
+  UINT8,
+  UINT10,
+  UINT12,
+  UINT14,
+  UINT16,
+  INT8,
+  INT16,
+  FLOAT32,
+  COMPLEX,
+};
+
 } // namespace gimi
