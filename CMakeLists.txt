@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
 
 # Add libheif submodule
 set(WITH_UNCOMPRESSED_CODEC ON CACHE BOOL "Enable Uncompressed codec in libheif")
+set(WITH_OpenJPEG ON CACHE BOOL "Enable OpenJPEG JPEG 2000 codec")
 set(LIBHEIF_DIR submodules/libheif)
 add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 

@@ -35,15 +35,16 @@ enum class Codec {
 };
 
 enum class BitDepth {
-  UINT8,
-  UINT10,
-  UINT12,
-  UINT14,
-  UINT16,
-  INT8,
-  INT16,
-  FLOAT32,
-  COMPLEX,
+  mixed,
+  uint8,
+  uint10,
+  uint12,
+  uint14,
+  uint16,
+  int8,
+  int16,
+  float32,
+  complex,
 };
 
 } // namespace gimi

@@ -22,7 +22,7 @@ using Pixels = std::variant<
 
 struct Plane {
   Pixels m_pixels;
-  BitDepth m_bit_depth = gimi::BitDepth::UINT8;
+  BitDepth m_bit_depth = gimi::BitDepth::uint8;
   uint32_t m_width = 0;
   uint32_t m_height = 0;
   // Should not varry across planes:

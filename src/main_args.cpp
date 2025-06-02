@@ -104,23 +104,23 @@ gimi::Interleave MainArgs::extract_interleave() {
 
 BitDepth MainArgs::extract_bit_depth() {
   if (bit_depth == "8" || bit_depth.empty()) {
-    return BitDepth::UINT8;
+    return BitDepth::uint8;
   } else if (bit_depth == "10") {
-    return BitDepth::UINT10;
+    return BitDepth::uint10;
   } else if (bit_depth == "12") {
-    return BitDepth::UINT12;
+    return BitDepth::uint12;
   } else if (bit_depth == "14") {
-    return BitDepth::UINT14;
+    return BitDepth::uint14;
   } else if (bit_depth == "16") {
-    return BitDepth::UINT16;
+    return BitDepth::uint16;
   } else if (bit_depth == "int8") {
-    return BitDepth::INT8;
+    return BitDepth::int8;
   } else if (bit_depth == "int16") {
-    return BitDepth::INT16;
+    return BitDepth::int16;
   } else if (bit_depth == "float32") {
-    return BitDepth::FLOAT32;
+    return BitDepth::float32;
   } else if (bit_depth == "complex") {
-    return BitDepth::COMPLEX;
+    return BitDepth::complex;
   } else {
     cerr << "Unsupported bit depth: " << bit_depth << endl;
     exit(1);
