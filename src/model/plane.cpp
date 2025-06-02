@@ -2,7 +2,9 @@
 
 using namespace gimi;
 
-Plane::Plane(Pixels d, uint32_t w, uint32_t h, BitDepth bit_depth) {
-  cerr << "Plane::Plane() - Not Implemented Yet!" << endl;
-  exit(1);
+Plane::Plane(Pixels pixels, uint32_t width, uint32_t height, BitDepth bit_depth) {
+  m_pixels = pixels;
+  m_bit_depth = bit_depth;
+  m_width = width;
+  m_height = height;
 }

@@ -21,12 +21,12 @@ using Pixels = std::variant<
     vector<complex<float>>>;
 
 struct Plane {
-  Pixels data;
-  BitDepth bit_depth = gimi::BitDepth::UINT8;
-  size_t element_count = 0;
-  uint32_t width = 0;
-  uint32_t height = 0;
-  // See RawImage for Interleave and Chroma
+  Pixels m_pixels;
+  BitDepth m_bit_depth = gimi::BitDepth::UINT8;
+  uint32_t m_width = 0;
+  uint32_t m_height = 0;
+  // Interleave m_interleave; // See RawImage for Interleave
+  // Chroma m_chroma;         // See RawImage for Chroma
 
   Plane(Pixels, uint32_t width, uint32_t height, BitDepth);
 };
