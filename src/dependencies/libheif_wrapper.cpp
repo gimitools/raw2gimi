@@ -21,10 +21,10 @@ LibheifWrapper::~LibheifWrapper() {
 
 // API
 void LibheifWrapper::add_image(const RawImage &rawImage) {
-  heif_compression_format compression = extract_compression(m_options.codec);
-  heif_encoder *encoder;
   heif_image *img;
   heif_image_handle *handle;
+  heif_encoder *encoder;
+  heif_compression_format compression = extract_compression(m_options.codec);
   heif_chroma chroma = extract_chroma(rawImage, m_options);
   heif_colorspace colorspace = extract_colorspace(m_options.chroma, m_options.interleave);
 
@@ -32,7 +32,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   uint32_t height = rawImage.get_height();
   uint32_t bit_depth = rawImage.get_bit_depth();
 
-  heif_channel channel = heif_channel_interleaved;
+  heif_channel channel = heif_channel_interleaved; // HARD CODED!
   he(heif_image_create(width, height, colorspace, chroma, &img));
   he(heif_image_add_plane(img, channel, width, height, bit_depth));
 
@@ -40,11 +40,21 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   int stride;
   uint8_t *data = heif_image_get_plane(img, channel, &stride);
 
-  // const vector<Band> bands = rawImage.get_bands();
+  // std::variant
+  const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 1) {
+    cerr << "LibheifWrapper::add_image(): Expected exactly one plane, got " << planes.size() << endl;
+    exit(1);
+  }
+  const Plane &plane = planes[0];
+  Pixels pixels = plane.m_pixels;
+  vector<uint8_t> &pixels_uint8 = get<vector<uint8_t>>(pixels);
+  if (pixels_uint8.size() != stride * height) {
+    cerr << "LibheifWrapper::add_image(): Pixel data size does not match image dimensions." << endl;
+    exit(1);
+  }
 
-  // TODO: dont assume the first band is RGB
-  // Band b = bands[0];
-  // memcpy(data, b.m_data.data(), stride * height); // Copy RGB data to image plane
+  memcpy(data, pixels_uint8.data(), stride * height); // Copy RGB data to image plane
 
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
@@ -56,7 +66,6 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
 void LibheifWrapper::write_to_heif() {
   string output_filename = m_options.output_filename;
   he(heif_context_write_to_file(m_ctx, output_filename.c_str()));
-  printf("Created: %s\n", output_filename.c_str());
 }
 
 // Helper Functions

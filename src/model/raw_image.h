@@ -25,6 +25,7 @@ public:
   uint32_t get_height() const { return height; }
   uint32_t get_bit_depth() const { return 8; }
   uint32_t get_band_count() const { return 3; }
+  const vector<Plane> &get_planes() const { return planes; }
 
 public:
   // Helpers
