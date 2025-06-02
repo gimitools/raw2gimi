@@ -10,7 +10,7 @@ using namespace gimi;
 void Raw2Gimi::write_image_from_memory(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
-  int bit_depth = args.extract_bit_depth();
+  BitDepth bit_depth = args.extract_bit_depth();
   Chroma chroma = args.extract_chroma();
   Interleave interleave = args.extract_interleave();
   Codec codec = args.extract_codec();

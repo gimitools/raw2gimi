@@ -18,7 +18,7 @@ public:
   gimi::Codec extract_codec();
   gimi::Chroma extract_chroma();
   gimi::Interleave extract_interleave();
-  uint32_t extract_bit_depth();
+  gimi::BitDepth extract_bit_depth();
   uint32_t extract_width();
   uint32_t extract_height();
   uint32_t extract_rows();

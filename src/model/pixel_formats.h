@@ -4,6 +4,8 @@ namespace gimi {
 
 enum class Chroma {
   rgb,
+  rgba,
+  bayer,
   gray,
   yuv_444,
   yuv_422,

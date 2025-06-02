@@ -12,7 +12,8 @@
 using namespace std;
 
 namespace gimi {
-using PlaneData = std::variant<
+
+using Pixels = std::variant<
     vector<uint8_t>,
     vector<uint16_t>,
     vector<int16_t>,
@@ -20,13 +21,14 @@ using PlaneData = std::variant<
     vector<complex<float>>>;
 
 struct Plane {
-  PlaneData data;
-  // BitDepth bit_depth = gimi::BitDepth::UINT8;
+  Pixels data;
+  BitDepth bit_depth = gimi::BitDepth::UINT8;
   size_t element_count = 0;
   uint32_t width = 0;
   uint32_t height = 0;
+  // See RawImage for Interleave and Chroma
 
-  Plane(PlaneData d, BitDepth bit_depth, size_t count, uint32_t w, uint32_t h);
+  Plane(Pixels, uint32_t width, uint32_t height, BitDepth);
 };
 
 } // namespace gimi

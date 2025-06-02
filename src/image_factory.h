@@ -10,7 +10,7 @@ using namespace gimi;
 
 class ImageFactory {
 public:
-  ImageFactory(uint32_t width, uint32_t height, Chroma, Interleave, uint32_t bit_depth);
+  ImageFactory(uint32_t width, uint32_t height, Chroma, Interleave, BitDepth);
 
 public:
   gimi::RawImage create_image(const string &pixel_pattern = "solid");
@@ -29,7 +29,7 @@ private: // Member Variables
   uint32_t m_height;
   Chroma m_chroma;
   Interleave m_interleave;
-  uint32_t m_bit_depth;
+  BitDepth m_bit_depth;
 
 public:
   uint32_t m_frame_count = 5; // TODO: don't show your private parts in public

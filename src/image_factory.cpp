@@ -2,7 +2,7 @@
 #include <cstring> //memset()
 
 // Constructor
-ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, uint32_t bit_depth) {
+ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, BitDepth bit_depth) {
   m_width = width;
   m_height = height;
   m_chroma = chroma;
@@ -44,7 +44,6 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
 
   cerr << "ImageFactory::create_image() failed!" << endl;
   exit(1);
-  // RawImage image(m_width, m_height, m_bit_depth);
   RawImage image(m_width, m_height);
   return image;
 }
@@ -75,21 +74,22 @@ RawImage ImageFactory::create_yuv_image() {
 }
 
 RawImage ImageFactory::create_rgb_image() {
-  RawImage image(m_width, m_height);
 
   switch (m_interleave) {
   case Interleave::interleaved:
-    image = create_rgb_interleaved_8bit();
-    cout << image.get_band_count() << endl;
-
-    break;
+    return create_rgb_interleaved_8bit();
   case Interleave::planar:
+    cout << "Unsupported Feature: Planar RGB Image Creation!\n";
+    exit(1);
     break;
   default:
     cout << "Unrecognized Interleave Type: " << static_cast<int>(m_interleave) << endl;
     exit(1);
   }
 
+  cerr << "ImageFactory::create_rgb_image() failed!" << endl;
+  exit(1);
+  RawImage image(m_width, m_height);
   return image;
 }
 
@@ -101,13 +101,15 @@ RawImage ImageFactory::create_monochrome_image() {
 // Protected Functions
 
 RawImage ImageFactory::create_rgb_interleaved_8bit() {
-  RawImage image(m_width, m_height);
 
+  // Variables
+  RawImage image(m_width, m_height);
   const uint32_t band_count = 3; // RGB
   uint64_t size = m_width * m_height * band_count;
   vector<uint8_t> pixels;
   pixels.reserve(size);
 
+  // Fill Pixels
   for (uint32_t y = 0; y < m_height; y++) {
     for (uint32_t x = 0; x < m_width; x++) {
       pixels.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
@@ -116,7 +118,8 @@ RawImage ImageFactory::create_rgb_interleaved_8bit() {
     }
   }
 
-  // image.add_rgb_interleaved_8bit_band(pixels);
+  // Add Pixels
+  image.add_rgb_interleaved_8bit(pixels);
 
   return image;
 }
