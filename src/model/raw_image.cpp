@@ -2,10 +2,36 @@
 
 using namespace gimi;
 
+// Constructor
+
 gimi::RawImage::RawImage(uint32_t w, uint32_t h) {
   width = w;
   height = h;
 }
+
+// Getters
+
+uint32_t RawImage::get_width() const {
+  return width;
+}
+
+uint32_t RawImage::get_height() const {
+  return height;
+}
+
+uint32_t RawImage::get_bit_depth() const {
+  return gimi::get_bit_depth(pixel_type);
+}
+
+uint32_t RawImage::get_band_count() const {
+  return 3;
+}
+
+const vector<Plane> &RawImage::get_planes() const {
+  return planes;
+}
+
+// API
 
 void gimi::RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data) {
   const int band_count = 3;     // RGB
