@@ -39,7 +39,7 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
     exit(1);
     break;
   default:
-    cout << "Unsupported Chroma Format: " << static_cast<int>(m_chroma) << endl;
+    cout << "Unsupported Chroma Format: " << to_string(m_chroma) << endl;
     exit(1);
   }
 
@@ -84,7 +84,7 @@ RawImage ImageFactory::create_image_rgb() {
     exit(1);
     break;
   default:
-    cout << "Unrecognized Interleave Type: " << static_cast<int>(m_interleave) << endl;
+    cout << "Unrecognized Interleave Type: " << to_string(m_interleave) << endl;
     exit(1);
   }
 
