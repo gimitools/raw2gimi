@@ -1,4 +1,5 @@
 #include "image_factory.h"
+#include "pixel_formats.h"
 #include <cstring> //memset()
 
 // Constructor
@@ -115,7 +116,7 @@ RawImage ImageFactory::create_image_rgb_interleaved() {
   case PixelType::complex:
   case PixelType::mixed:
   default:
-    cout << "Unsupported Bit Depth: " << static_cast<int>(m_pixel_type) << endl;
+    cout << "Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
     exit(1);
   }
 }

@@ -2,7 +2,7 @@
 
 using namespace gimi;
 
-uint32_t to_uint32(PixelType pixel_type) {
+uint32_t gimi::to_uint32(PixelType pixel_type) {
   switch (pixel_type) {
   case PixelType::uint8:
     return 8;
@@ -28,7 +28,7 @@ uint32_t to_uint32(PixelType pixel_type) {
   return 0; // Default for unknown bit depth
 }
 
-string to_string(PixelType pixel_type) {
+string gimi::to_string(PixelType pixel_type) {
   switch (pixel_type) {
   case PixelType::uint8:
     return "uint8";
@@ -54,7 +54,7 @@ string to_string(PixelType pixel_type) {
   return "unknown_bit_depth";
 }
 
-string to_string(Chroma chroma) {
+string gimi::to_string(Chroma chroma) {
   switch (chroma) {
   case Chroma::rgb:
     return "rgb";
@@ -76,7 +76,7 @@ string to_string(Chroma chroma) {
   return "unknown_chroma";
 }
 
-string to_string(Interleave interleave) {
+string gimi::to_string(Interleave interleave) {
   switch (interleave) {
   case Interleave::planar:
     return "planar";
@@ -94,7 +94,7 @@ string to_string(Interleave interleave) {
   return "unknown_interleave";
 }
 
-string to_string(Codec codec) {
+string gimi::to_string(Codec codec) {
   switch (codec) {
   case Codec::raw:
     return "raw";
