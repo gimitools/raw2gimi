@@ -102,27 +102,27 @@ gimi::Interleave MainArgs::extract_interleave() {
   }
 }
 
-BitDepth MainArgs::extract_bit_depth() {
-  if (bit_depth == "8" || bit_depth.empty()) {
-    return BitDepth::uint8;
-  } else if (bit_depth == "10") {
-    return BitDepth::uint10;
-  } else if (bit_depth == "12") {
-    return BitDepth::uint12;
-  } else if (bit_depth == "14") {
-    return BitDepth::uint14;
-  } else if (bit_depth == "16") {
-    return BitDepth::uint16;
-  } else if (bit_depth == "int8") {
-    return BitDepth::int8;
-  } else if (bit_depth == "int16") {
-    return BitDepth::int16;
-  } else if (bit_depth == "float32") {
-    return BitDepth::float32;
-  } else if (bit_depth == "complex") {
-    return BitDepth::complex;
+PixelType MainArgs::extract_pixel_type() {
+  if (pixel_type == "8" || pixel_type.empty()) {
+    return PixelType::uint8;
+  } else if (pixel_type == "10") {
+    return PixelType::uint10;
+  } else if (pixel_type == "12") {
+    return PixelType::uint12;
+  } else if (pixel_type == "14") {
+    return PixelType::uint14;
+  } else if (pixel_type == "16") {
+    return PixelType::uint16;
+  } else if (pixel_type == "int8") {
+    return PixelType::int8;
+  } else if (pixel_type == "int16") {
+    return PixelType::int16;
+  } else if (pixel_type == "float32") {
+    return PixelType::float32;
+  } else if (pixel_type == "complex") {
+    return PixelType::complex;
   } else {
-    cerr << "Unsupported bit depth: " << bit_depth << endl;
+    cerr << "Unsupported bit depth: " << pixel_type << endl;
     exit(1);
   }
 }

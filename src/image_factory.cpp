@@ -2,12 +2,12 @@
 #include <cstring> //memset()
 
 // Constructor
-ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, BitDepth bit_depth) {
+ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, PixelType pixel_type) {
   m_width = width;
   m_height = height;
   m_chroma = chroma;
   m_interleave = interleave;
-  m_bit_depth = bit_depth;
+  m_pixel_type = pixel_type;
 }
 
 // Public Functions
@@ -101,20 +101,21 @@ RawImage ImageFactory::create_image_mono() {
 // Protected Functions
 
 RawImage ImageFactory::create_image_rgb_interleaved() {
-  switch (m_bit_depth) {
-  case BitDepth::uint8:
+  switch (m_pixel_type) {
+  case PixelType::uint8:
     return create_image_rgb_interleaved_8bit();
-  case BitDepth::uint10:
-  case BitDepth::uint12:
-  case BitDepth::uint14:
-  case BitDepth::uint16:
-  case BitDepth::int8:
-  case BitDepth::int16:
-  case BitDepth::float32:
-  case BitDepth::complex:
-  case BitDepth::mixed:
+  case PixelType::uint10:
+    return create_image_rgb_interleaved_10bit();
+  case PixelType::uint12:
+  case PixelType::uint14:
+  case PixelType::uint16:
+  case PixelType::int8:
+  case PixelType::int16:
+  case PixelType::float32:
+  case PixelType::complex:
+  case PixelType::mixed:
   default:
-    cout << "Unsupported Bit Depth: " << static_cast<int>(m_bit_depth) << endl;
+    cout << "Unsupported Bit Depth: " << static_cast<int>(m_pixel_type) << endl;
     exit(1);
   }
 }
@@ -125,8 +126,9 @@ RawImage ImageFactory::create_image_rgb_interleaved_8bit() {
 
   // Variables
   RawImage image(m_width, m_height);
-  const uint32_t band_count = 3; // RGB
-  uint64_t size = m_width * m_height * band_count;
+  const uint32_t band_count = 3;     // RGB
+  const uint32_t bytes_per_band = 1; // 8-bit per channel
+  uint64_t size = m_width * m_height * band_count * bytes_per_band;
   vector<uint8_t> pixels;
   pixels.reserve(size);
 
@@ -141,6 +143,30 @@ RawImage ImageFactory::create_image_rgb_interleaved_8bit() {
 
   // Add Pixels
   image.add_rgb_interleaved_8bit(pixels);
+
+  return image;
+}
+
+RawImage ImageFactory::create_image_rgb_interleaved_10bit() {
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 3; // RGB
+  const uint32_t bytes_per_band = 2;
+  uint64_t size = m_width * m_height * band_count * bytes_per_band;
+  vector<uint16_t> pixels;
+  pixels.reserve(size);
+
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint16_t>(m_color_1)); // R or Y
+      pixels.push_back(static_cast<uint16_t>(m_color_2)); // G or U
+      pixels.push_back(static_cast<uint16_t>(m_color_3)); // B or V
+    }
+  }
+
+  // Add Pixels
+  image.add_rgb_interleaved_hdr(pixels, m_pixel_type);
 
   return image;
 }

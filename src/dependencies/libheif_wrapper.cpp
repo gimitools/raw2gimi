@@ -72,6 +72,7 @@ void LibheifWrapper::write_to_heif() {
 
 void LibheifWrapper::he(struct heif_error error) {
   if (error.code) {
+    printf("libheif wrapper error!!\n");
     printf("ERROR! - subcode: %d  Message: %s\n", error.subcode, error.message);
     exit(error.code);
   }

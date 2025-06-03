@@ -15,6 +15,6 @@ public:
 protected:
   static const vector<MainArgs> simulate_user_cli();
   static string create_filename(MainArgs args);
-  static MainArgs create_args(string encoding, string chroma, string interleave, string bit_depth, string width, string height);
+  static MainArgs create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height);
 };
 } // namespace gimi

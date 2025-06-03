@@ -10,14 +10,14 @@ using namespace gimi;
 void Raw2Gimi::write_image_from_memory(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
-  BitDepth bit_depth = args.extract_bit_depth();
+  PixelType pixel_type = args.extract_pixel_type();
   Chroma chroma = args.extract_chroma();
   Interleave interleave = args.extract_interleave();
   Codec codec = args.extract_codec();
   string output_filename = args.extract_output_filename();
 
   // Create RawImage
-  ImageFactory imageFactory(width, height, chroma, interleave, bit_depth);
+  ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
   gimi::RawImage image = imageFactory.create_image();
 
   WriteOptions options = Raw2Gimi::create_write_options(args);

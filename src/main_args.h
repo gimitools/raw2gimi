@@ -18,7 +18,7 @@ public:
   gimi::Codec extract_codec();
   gimi::Chroma extract_chroma();
   gimi::Interleave extract_interleave();
-  gimi::BitDepth extract_bit_depth();
+  gimi::PixelType extract_pixel_type();
   uint32_t extract_width();
   uint32_t extract_height();
   uint32_t extract_rows();
@@ -33,7 +33,7 @@ public: // User Input
   string codec;
   string chroma;
   string interleave;
-  string bit_depth;
+  string pixel_type;
   string action = "heif_to_gimi";
   string debug;
   string pixel_algorithm;
@@ -49,5 +49,4 @@ public: // User Input
 private: // Helper Functions
   uint32_t string_to_int(string str, uint32_t default_value);
   const uint32_t default_dimensions = 64;
-  const uint32_t default_bit_depth = 8;
 };

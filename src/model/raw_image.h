@@ -30,6 +30,7 @@ public:
 public:
   // Helpers
   void add_rgb_interleaved_8bit(const vector<uint8_t> &);
+  void add_rgb_interleaved_hdr(const vector<uint16_t> &, PixelType);
 
 private:
   uint32_t width = 0;
@@ -37,8 +38,8 @@ private:
   Interleave interleave = Interleave::planar;
   Chroma chroma = Chroma::rgb;
   vector<Plane> planes;
-  BitDepth bit_depth = BitDepth::uint8;
-  // bool little_endian = false; // RawImage shall be big endian.
+  PixelType pixel_type = PixelType::uint8;
+  bool little_endian = false;
 };
 
 } // namespace gimi

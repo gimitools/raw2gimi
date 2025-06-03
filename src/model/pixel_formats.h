@@ -38,7 +38,7 @@ enum class Codec {
   htj2k,
 };
 
-enum class BitDepth {
+enum class PixelType {
   uint8,
   uint10,
   uint12,
@@ -48,13 +48,13 @@ enum class BitDepth {
   int16,
   float32,
   complex,
-  mixed, // Each BitDepth plane in RawImage different.
+  mixed, // Each PixelType plane in RawImage different.
 };
 
-string to_string(BitDepth);
+string to_string(PixelType);
 string to_string(Chroma);
 string to_string(Interleave);
 string to_string(Codec);
-uint32_t to_uint32(BitDepth);
+uint32_t to_uint32(PixelType);
 
 } // namespace gimi
