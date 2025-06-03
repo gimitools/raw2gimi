@@ -33,11 +33,15 @@ public:
   void add_rgb_interleaved_hdr(const vector<uint16_t> &, PixelType);
 
 private:
-  uint32_t width = 0;
-  uint32_t height = 0;
+  // Pixel Data
+  vector<Plane> planes;
+
+private:
+  // Metadata
+  uint32_t width;
+  uint32_t height;
   Interleave interleave = Interleave::planar;
   Chroma chroma = Chroma::rgb;
-  vector<Plane> planes;
   PixelType pixel_type = PixelType::uint8;
   bool little_endian = false;
 };
