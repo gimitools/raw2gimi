@@ -53,6 +53,11 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));
 
+  // Tiled
+  // 1. grid
+  // 2. uncC internal
+  // 3. tili
+
   return v;
 };
 
