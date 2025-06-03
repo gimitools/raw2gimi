@@ -2,7 +2,7 @@
 
 using namespace std;
 #include <cstdint>
-#include <string>
+#include <iostream>
 
 namespace gimi {
 
@@ -15,9 +15,9 @@ enum class Chroma {
   yuv_422,
   yuv_420,
   yuv_411,
+  // multi_spectral,
 };
 
-// ISO/IEC 23001-17 Table 4
 enum class Interleave {
   planar,
   interleaved,
@@ -25,17 +25,6 @@ enum class Interleave {
   // row,
   // tile_component,
   // multi_y_pixel
-};
-
-enum class Codec {
-  raw,  // uncompressed
-  hevc, // h265
-  avc,  // h264
-  vvc,  // h266
-  av1,
-  jpeg,
-  j2k,
-  htj2k,
 };
 
 enum class PixelType {
@@ -51,10 +40,25 @@ enum class PixelType {
   mixed, // Each PixelType plane in RawImage different.
 };
 
+enum class Codec {
+  raw,  // uncompressed
+  hevc, // h265
+  avc,  // h264
+  vvc,  // h266
+  av1,
+  jpeg,
+  j2k,
+  htj2k,
+};
+
+// To String
 string to_string(PixelType);
 string to_string(Chroma);
 string to_string(Interleave);
 string to_string(Codec);
-uint32_t to_uint32(PixelType);
+
+// Getters
+uint32_t get_bit_depth(PixelType);
+uint32_t get_component_count(Chroma);
 
 } // namespace gimi
