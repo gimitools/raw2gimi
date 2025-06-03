@@ -152,10 +152,9 @@ RawImage ImageFactory::create_image_rgb_interleaved_10bit() {
   // Variables
   RawImage image(m_width, m_height);
   const uint32_t band_count = 3; // RGB
-  const uint32_t bytes_per_band = 2;
-  uint64_t size = m_width * m_height * band_count * bytes_per_band;
+  uint64_t pixel_count = m_width * m_height * band_count;
   vector<uint16_t> pixels;
-  pixels.reserve(size);
+  pixels.reserve(pixel_count);
 
   // Fill Pixels
   for (uint32_t y = 0; y < m_height; y++) {
@@ -167,7 +166,7 @@ RawImage ImageFactory::create_image_rgb_interleaved_10bit() {
   }
 
   // Add Pixels
-  image.add_rgb_interleaved_hdr(pixels, m_pixel_type);
+  image.add_rgb_interleaved_hdr(pixels, PixelType::uint10);
 
   return image;
 }

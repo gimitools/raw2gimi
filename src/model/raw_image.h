@@ -38,12 +38,12 @@ private:
 
 private:
   // Metadata
-  uint32_t width;
-  uint32_t height;
-  Interleave interleave = Interleave::planar;
-  Chroma chroma = Chroma::rgb;
-  PixelType pixel_type = PixelType::uint8;
-  bool little_endian = false;
+  uint32_t m_width;
+  uint32_t m_height;
+  Interleave m_interleave = Interleave::planar;
+  Chroma m_chroma = Chroma::rgb;
+  PixelType m_pixel_type = PixelType::uint8;
+  // bool little_endian = false; // TODO (assume big-endian for now)
 };
 
 } // namespace gimi
