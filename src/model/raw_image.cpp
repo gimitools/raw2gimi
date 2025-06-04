@@ -49,9 +49,10 @@ void gimi::RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data)
   m_pixel_type = PixelType::uint8;
 }
 
-void gimi::RawImage::add_rgb_interleaved_hdr(const vector<uint16_t> &pixel_data, PixelType pixel_type) {
+void gimi::RawImage::add_rgb_interleaved_hdr(const vector<uint8_t> &pixel_data, PixelType pixel_type) {
   const int band_count = 3; // RGB
-  uint64_t expected_pixel_count = m_width * m_height * band_count;
+  const int bytes_per_pixel = 2;
+  uint64_t expected_pixel_count = m_width * m_height * band_count * bytes_per_pixel;
   if (pixel_data.size() != expected_pixel_count) {
     cerr << "RawImage Error: Data size does not match image dimensions." << endl;
     cerr << "\tExpected size: " << expected_pixel_count << endl;

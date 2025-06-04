@@ -47,14 +47,13 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
     exit(1);
   }
   const Plane &plane = planes[0];
-  Pixels pixels = plane.m_pixels;
-  vector<uint8_t> &pixels_uint8 = get<vector<uint8_t>>(pixels);
-  if (pixels_uint8.size() != stride * height) {
+  const vector<uint8_t> &pixels = plane.m_pixels;
+  if (pixels.size() != stride * height) {
     cerr << "LibheifWrapper::add_image(): Pixel data size does not match image dimensions." << endl;
     exit(1);
   }
 
-  memcpy(data, pixels_uint8.data(), stride * height); // Copy RGB data to image plane
+  memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
 
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));

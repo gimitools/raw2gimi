@@ -13,15 +13,8 @@ using namespace std;
 
 namespace gimi {
 
-using Pixels = std::variant<
-    vector<uint8_t>,
-    vector<uint16_t>,
-    vector<int16_t>,
-    vector<float>,
-    vector<complex<float>>>;
-
 struct Plane {
-  Pixels m_pixels;
+  vector<uint8_t> m_pixels;
   PixelType m_pixel_type = gimi::PixelType::uint8;
   uint32_t m_width = 0;
   uint32_t m_height = 0;
@@ -29,7 +22,7 @@ struct Plane {
   //   1. Interleave m_interleave (should a Plane know how it's interleaved?)
   //   2. Chroma, (describes a set of planes).
 
-  Plane(Pixels, uint32_t width, uint32_t height, PixelType);
+  Plane(vector<uint8_t> pixels, uint32_t width, uint32_t height, PixelType);
 };
 
 } // namespace gimi

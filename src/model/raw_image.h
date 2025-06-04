@@ -30,7 +30,7 @@ public:
 public:
   // API
   void add_rgb_interleaved_8bit(const vector<uint8_t> &);
-  void add_rgb_interleaved_hdr(const vector<uint16_t> &, PixelType);
+  void add_rgb_interleaved_hdr(const vector<uint8_t> &, PixelType);
 
 private:
   // Pixel Data
