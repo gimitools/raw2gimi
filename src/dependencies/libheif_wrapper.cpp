@@ -93,6 +93,49 @@ heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, he
 
 // Leaf Functions
 
+heif_image *LibheifWrapper::convert_interleaved_planar(const RawImage &rawImage) {
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_RGB;
+  heif_channel channel1 = heif_channel_R;
+  heif_channel channel2 = heif_channel_G;
+  heif_channel channel3 = heif_channel_B;
+  heif_chroma chroma = heif_chroma_interleaved_RGB;
+
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
+
+  he(heif_image_create(width, height, colorspace, chroma, &img));
+  he(heif_image_add_plane(img, channel1, width, height, bit_depth));
+  he(heif_image_add_plane(img, channel2, width, height, bit_depth));
+  he(heif_image_add_plane(img, channel3, width, height, bit_depth));
+
+  // Get Channels
+  int stride;
+  uint8_t *data1 = heif_image_get_plane(img, channel1, &stride);
+  uint8_t *data2 = heif_image_get_plane(img, channel2, &stride);
+  uint8_t *data3 = heif_image_get_plane(img, channel3, &stride);
+
+  const vector<Plane> &planes = rawImage.get_planes();
+
+  const Plane &plane = planes[0];
+  const vector<uint8_t> &plane_r = planes[0].m_pixels;
+  const vector<uint8_t> &plane_g = planes[1].m_pixels;
+  const vector<uint8_t> &plane_b = planes[2].m_pixels;
+
+  if (plane_r.size() != stride * height) {
+    cerr << "LibheifWrapper::convert_interleaved_planar(): Pixel data size does not match image dimensions." << endl;
+    exit(1);
+  }
+
+  memcpy(data1, plane_r.data(), stride * height);
+  memcpy(data2, plane_g.data(), stride * height);
+  memcpy(data3, plane_b.data(), stride * height);
+
+  return img;
+}
+
 heif_image *LibheifWrapper::convert_interleaved_rgb(const RawImage &rawImage) {
   heif_image *img;
 
@@ -103,7 +146,6 @@ heif_image *LibheifWrapper::convert_interleaved_rgb(const RawImage &rawImage) {
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
   uint32_t bit_depth = rawImage.get_bit_depth();
-  PixelType pixel_type = rawImage.get_pixel_type();
 
   he(heif_image_create(width, height, colorspace, chroma, &img));
   he(heif_image_add_plane(img, channel, width, height, bit_depth));
