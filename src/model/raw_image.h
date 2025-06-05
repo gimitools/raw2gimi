@@ -33,6 +33,9 @@ public:
   // API
   void add_rgb_interleaved_8bit(const vector<uint8_t> &);
   void add_rgb_interleaved_hdr(const vector<uint8_t> &, PixelType);
+  void add_rgb_planar_8bit(const vector<uint8_t> &r,
+                           const vector<uint8_t> &g,
+                           const vector<uint8_t> &b);
 
 private:
   // Pixel Data

@@ -23,10 +23,12 @@ protected:
 
 protected:
   RawImage create_image_rgb_interleaved();
+  RawImage create_image_rgb_planar();
 
 protected:
   RawImage create_image_rgb_interleaved_8bit();
   RawImage create_image_rgb_interleaved_10bit();
+  RawImage create_image_rgb_planar_8bit();
 
 private: // Member Variables
   uint32_t m_width;

@@ -80,8 +80,7 @@ RawImage ImageFactory::create_image_rgb() {
   case Interleave::interleaved:
     return create_image_rgb_interleaved();
   case Interleave::planar:
-    cout << "Unsupported Feature: Planar RGB Image Creation!\n";
-    exit(1);
+    return create_image_rgb_planar();
     break;
   default:
     cout << "Unrecognized Interleave Type: " << to_string(m_interleave) << endl;
@@ -119,6 +118,27 @@ RawImage ImageFactory::create_image_rgb_interleaved() {
     cout << "Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
     exit(1);
   }
+}
+
+RawImage ImageFactory::create_image_rgb_planar() {
+  switch (m_pixel_type) {
+  case PixelType::uint8:
+    return create_image_rgb_planar_8bit();
+  case PixelType::uint10:
+  case PixelType::uint12:
+  case PixelType::uint14:
+  case PixelType::uint16:
+  case PixelType::int8:
+  case PixelType::int16:
+  case PixelType::float32:
+  case PixelType::complex:
+  case PixelType::mixed:
+  default:
+    cout << "Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
+    exit(1);
+  }
+  cout << "Unsupported Feature: Planar RGB Image Creation!\n";
+  exit(1);
 }
 
 // Protected Functions
@@ -174,6 +194,30 @@ RawImage ImageFactory::create_image_rgb_interleaved_10bit() {
 
   // Add Pixels
   image.add_rgb_interleaved_hdr(pixels, PixelType::uint10);
+
+  return image;
+}
+
+RawImage ImageFactory::create_image_rgb_planar_8bit() {
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 3;     // RGB
+  const uint32_t bytes_per_band = 1; // 8-bit per channel
+  uint64_t size = m_width * m_height * band_count * bytes_per_band;
+  vector<uint8_t> pixels;
+  pixels.reserve(size);
+
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
+      pixels.push_back(static_cast<uint8_t>(m_color_2)); // G or U
+      pixels.push_back(static_cast<uint8_t>(m_color_3)); // B or V
+    }
+  }
+
+  // Add Pixels
+  image.add_rgb_interleaved_8bit(pixels);
 
   return image;
 }
