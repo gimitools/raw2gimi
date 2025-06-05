@@ -21,11 +21,11 @@ void throw_error_impl(const char *file, int line, const char *func, const char *
     snprintf(message, sizeof(message), "No error message provided.");
   }
 
-  cerr << "=======================ERROR!=======================" << endl;
+  cerr << "*********************ERROR!*********************" << endl;
   // cerr << "\tFile:     " << file << endl;
   cerr << "  " << func << "  Line: " << line << endl;
   cerr << "  Error:  " << message << endl;
-  cerr << "=======================ERROR!=======================" << endl;
+  cerr << "*********************ERROR!*********************" << endl;
 
   exit(1);
 }
