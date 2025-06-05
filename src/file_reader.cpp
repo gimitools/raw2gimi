@@ -1,4 +1,5 @@
 #include "file_reader.h"
+#include "error_handler.h"
 #include <libraw/libraw.h>
 
 using namespace std;
@@ -72,7 +73,6 @@ gimi::RawImage FileReader::libraw_to_gimi(const libraw_processed_image_t *libraw
 
 void FileReader::re(int ret) {
   if (ret != LIBRAW_SUCCESS) {
-    cerr << "LibRaw Error: " << libraw_strerror(ret) << endl;
-    exit(1);
+    throw_error("");
   }
 }

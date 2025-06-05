@@ -67,8 +67,7 @@ Codec MainArgs::extract_codec() {
   } else if (codec == "av1") {
     return Codec::av1;
   } else {
-    cerr << "Unsupported encoding format: " << codec << endl;
-    exit(1);
+    throw_error("Unsupported encoding format: %s", codec.c_str());
   }
   return Codec::raw;
 }
@@ -87,9 +86,9 @@ gimi::Chroma MainArgs::extract_chroma() {
   } else if (chroma == "411") {
     return Chroma::yuv_411;
   } else {
-    cerr << "Unsupported chroma format: " << chroma << endl;
-    exit(1);
+    throw_error("Unsupported chroma format: %s", chroma.c_str());
   }
+  return Chroma::rgb;
 }
 
 gimi::Interleave MainArgs::extract_interleave() {
@@ -100,6 +99,7 @@ gimi::Interleave MainArgs::extract_interleave() {
   } else {
     throw_error("Unsupported interleaving format: %s", interleave.c_str());
   }
+  return Interleave::interleaved;
 }
 
 PixelType MainArgs::extract_pixel_type() {
@@ -122,9 +122,9 @@ PixelType MainArgs::extract_pixel_type() {
   } else if (pixel_type == "complex") {
     return PixelType::complex;
   } else {
-    cerr << "Unsupported bit depth: " << pixel_type << endl;
-    exit(1);
+    throw_error("Unsupported pixel type: %s", pixel_type.c_str());
   }
+  return PixelType::uint8;
 }
 
 uint32_t MainArgs::extract_width() {
@@ -151,12 +151,11 @@ double MainArgs::extract_scale_factor() {
   try {
     return stod(scale_factor);
   } catch (const invalid_argument &ia) {
-    cerr << "Invalid scale value: " << ia.what() << endl;
-    exit(1);
+    throw_error("Invalid scale value: %s", ia.what());
   } catch (const out_of_range &oor) {
-    cerr << "Scale value is out of range: " << oor.what() << endl;
-    exit(1);
+    throw_error("Scale value is out of range: %s", oor.what());
   }
+  return 0;
 }
 
 void MainArgs::print() {

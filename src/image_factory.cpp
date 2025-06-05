@@ -1,4 +1,5 @@
 #include "image_factory.h"
+#include "error_handler.h"
 #include "pixel_formats.h"
 #include <cstring> //memset()
 
@@ -43,8 +44,7 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
     exit(1);
   }
 
-  cerr << "ImageFactory::create_image() failed!" << endl;
-  exit(1);
+  throw_error("");
   RawImage image(m_width, m_height);
   return image;
 }
@@ -86,9 +86,7 @@ RawImage ImageFactory::create_image_rgb() {
     cout << "Unrecognized Interleave Type: " << to_string(m_interleave) << endl;
     exit(1);
   }
-
-  cerr << "ImageFactory::create_image_rgb() failed!" << endl;
-  exit(1);
+  throw_error();
   RawImage image(m_width, m_height);
   return image;
 }
