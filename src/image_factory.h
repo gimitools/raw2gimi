@@ -17,18 +17,24 @@ public:
   vector<RawImage> create_sequence_in_memory(string pixel_algorithm);
 
 protected:
+  // Colorspace Functions
   RawImage create_image_yuv();
   RawImage create_image_rgb();
   RawImage create_image_mono();
 
 protected:
+  // Interleave Functions
   RawImage create_image_rgb_interleaved();
   RawImage create_image_rgb_planar();
+  RawImage create_image_yuv_interleaved();
+  RawImage create_image_yuv_planar();
 
 protected:
+  // Leaf Functions
   RawImage create_image_rgb_interleaved_8bit();
   RawImage create_image_rgb_interleaved_hdr();
   RawImage create_image_rgb_planar_8bit();
+  RawImage create_image_444_interleaved_8bit();
 
 private: // Member Variables
   uint32_t m_width;

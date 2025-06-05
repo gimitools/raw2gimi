@@ -21,14 +21,10 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
   case Chroma::gray:
     throw_error("Unsupported Feature: Monochrome Image Creation!");
   case Chroma::yuv_444:
-    throw_error("Unsupported Feature: YUV 444 Image Creation!");
-    break;
   case Chroma::yuv_422:
-    throw_error("Unsupported Feature: YUV 422 Image Creation!");
   case Chroma::yuv_420:
-    throw_error("Unsupported Feature: YUV 420 Image Creation!");
   case Chroma::yuv_411:
-    throw_error("Unsupported Feature: YUV 411 Image Creation!");
+    return create_image_yuv();
   default:
     throw_error("Unsupported Chroma Format: %s", to_string(m_chroma).c_str());
   }
@@ -55,16 +51,22 @@ vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm)
   return images;
 }
 
-// Protected Functions
+// Colorspace Functions
 
 RawImage ImageFactory::create_image_yuv() {
-  RawImage img(m_width, m_height);
-
-  return img;
+  switch (m_interleave) {
+  case Interleave::interleaved:
+    return create_image_yuv_interleaved();
+  case Interleave::planar:
+    return create_image_yuv_planar();
+  default:
+    throw_error("Unsupported Interleave Type: %s", to_string(m_interleave).c_str());
+  }
+  RawImage image(0, 0);
+  return image;
 }
 
 RawImage ImageFactory::create_image_rgb() {
-
   switch (m_interleave) {
   case Interleave::interleaved:
     return create_image_rgb_interleaved();
@@ -75,7 +77,7 @@ RawImage ImageFactory::create_image_rgb() {
     throw_error("Unsupported Interleave Type: %s", to_string(m_interleave).c_str());
   }
   throw_error();
-  RawImage image(m_width, m_height);
+  RawImage image(0, 0);
   return image;
 }
 
@@ -84,7 +86,7 @@ RawImage ImageFactory::create_image_mono() {
   return RawImage(0, 0);
 }
 
-// Protected Functions
+// Interleave Functions
 
 RawImage ImageFactory::create_image_rgb_interleaved() {
   switch (m_pixel_type) {
@@ -122,6 +124,16 @@ RawImage ImageFactory::create_image_rgb_planar() {
   default:
     throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
   }
+  return RawImage(0, 0);
+}
+
+RawImage ImageFactory::create_image_yuv_interleaved() {
+  throw_error("Function not implemented yet");
+  return RawImage(0, 0);
+}
+
+RawImage ImageFactory::create_image_yuv_planar() {
+  throw_error("Function not implemented yet");
   return RawImage(0, 0);
 }
 
