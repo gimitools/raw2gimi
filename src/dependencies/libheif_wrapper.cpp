@@ -57,7 +57,19 @@ void LibheifWrapper::write_to_heif() {
 // Helper Functions
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
-  throw_error("Function not yet implemented");
+  switch (chroma) {
+  case heif_chroma_444:
+    return convert_yuv_444_interleaved_8bit(rawImage);
+    break;
+  case heif_chroma_422:
+    break;
+  case heif_chroma_420:
+    break;
+  default:
+    throw_error("Expected yuv chroma but got: %d", chroma);
+  }
+
+  throw_error("Unhandled chroma: %d", chroma);
   return nullptr;
 }
 
@@ -200,6 +212,11 @@ heif_image *LibheifWrapper::convert_rgb_interleaved_hdr_be(const RawImage &rawIm
   memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
 
   return img;
+}
+
+heif_image *LibheifWrapper::convert_yuv_444_interleaved_8bit(const RawImage &rawImage) {
+  throw_error("Function not yet implemented");
+  return nullptr;
 }
 
 // Static Functions
