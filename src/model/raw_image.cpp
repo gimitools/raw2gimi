@@ -27,6 +27,10 @@ uint32_t RawImage::get_band_count() const {
   return 3;
 }
 
+Interleave RawImage::get_interleave() const {
+  return m_interleave;
+}
+
 PixelType RawImage::get_pixel_type() const {
   return m_pixel_type;
 }
