@@ -27,7 +27,6 @@ protected:
 
 protected:
   RawImage create_image_rgb_interleaved_8bit();
-  RawImage create_image_rgb_interleaved_10bit();
   RawImage create_image_rgb_interleaved_hdr();
   RawImage create_image_rgb_planar_8bit();
 

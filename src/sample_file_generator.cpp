@@ -44,10 +44,10 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
 
   // HDR
-  // v.push_back(create_args(codec, chroma, interleave, "10", height, width));
+  v.push_back(create_args(codec, chroma, interleave, "10", height, width));
   v.push_back(create_args(codec, chroma, interleave, "12", height, width));
-  // v.push_back(create_args(codec, chroma, interleave, "14", height, width));
-  // v.push_back(create_args(codec, chroma, interleave, "16", height, width));
+  v.push_back(create_args(codec, chroma, interleave, "14", height, width));
+  v.push_back(create_args(codec, chroma, interleave, "16", height, width));
 
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "rgb", pixel_type, height, width));
