@@ -35,13 +35,13 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
 
   // Codec variations
   // v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));
-  // v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
+  v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
   // v.push_back(create_args("av1", chroma, interleave, pixel_type, height, width));
   // Warning! OpenJPEG not compiled in!
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
 
   // HDR
-  v.push_back(create_args(codec, chroma, interleave, "10", height, width));
+  // v.push_back(create_args(codec, chroma, interleave, "10", height, width));
   // v.push_back(create_args(codec, chroma, interleave, "12", height, width));
   // v.push_back(create_args(codec, chroma, interleave, "14", height, width));
   // v.push_back(create_args(codec, chroma, interleave, "16", height, width));

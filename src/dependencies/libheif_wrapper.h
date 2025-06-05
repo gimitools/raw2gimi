@@ -21,6 +21,16 @@ public:
 
 protected:
   // Helper Functions
+  heif_image *convert_yuv_colorspace(const RawImage &, heif_chroma);
+  heif_image *convert_rgb_colorspace(const RawImage &, heif_chroma);
+  heif_image *convert_gray_colorspace(const RawImage &, heif_chroma);
+
+protected:
+  // Leaf Functions
+  heif_image *convert_interleaved_rgb(const RawImage &);
+
+protected:
+  // Static Functions
   static void he(struct heif_error);
   static heif_compression_format extract_compression(gimi::Codec);
   static heif_colorspace extract_colorspace(gimi::Chroma, gimi::Interleave);

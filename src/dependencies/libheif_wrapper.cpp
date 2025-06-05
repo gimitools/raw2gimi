@@ -28,12 +28,83 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_chroma chroma = extract_chroma(rawImage, m_options);
   heif_colorspace colorspace = extract_colorspace(m_options.chroma, m_options.interleave);
 
+  switch (colorspace) {
+  case heif_colorspace_YCbCr:
+    img = convert_yuv_colorspace(rawImage, chroma);
+    break;
+  case heif_colorspace_RGB:
+    img = convert_rgb_colorspace(rawImage, chroma);
+    break;
+  case heif_colorspace_monochrome:
+    img = convert_gray_colorspace(rawImage, chroma);
+    break;
+  default:
+    cerr << "LibheifWrapper::add_image(): Unsupported colorspace: " << static_cast<int>(colorspace) << endl;
+    exit(1);
+  }
+
+  he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
+  he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
+
+  // heif_item_id primary_id = heif_image_handle_get_item_id(handle);
+  // gimify(m_ctx, primary_id);
+}
+
+void LibheifWrapper::write_to_heif() {
+  string output_filename = m_options.output_filename;
+  he(heif_context_write_to_file(m_ctx, output_filename.c_str()));
+}
+
+// Helper Functions
+
+heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
+  cerr << "LibheifWrapper::convert_yuv_colorspace() is not implemented yet." << endl;
+  exit(1);
+}
+
+heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, heif_chroma chroma) {
+  switch (chroma) {
+  case heif_chroma_444: // planar
+    break;
+  case heif_chroma_interleaved_RGB:
+    return convert_interleaved_rgb(rawImage);
+  case heif_chroma_interleaved_RGBA:
+    break;
+  case heif_chroma_interleaved_RRGGBB_BE:
+    break;
+  case heif_chroma_interleaved_RRGGBBAA_BE:
+    break;
+  case heif_chroma_interleaved_RRGGBB_LE:
+    break;
+  case heif_chroma_interleaved_RRGGBBAA_LE:
+    break;
+  default:
+    cerr << "LibheifWrapper::convert_rgb_colorspace(): Unsupported chroma format: " << static_cast<int>(chroma) << endl;
+    exit(1);
+  }
+  cerr << "LibheifWrapper::convert_rgb_colorspace(): Unsupported chroma format: " << static_cast<int>(chroma) << endl;
+  exit(1);
+}
+
+heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, heif_chroma chroma) {
+  cerr << "LibheifWrapper::convert_gray_colorspace() is not implemented yet." << endl;
+  exit(1);
+}
+
+// Leaf Functions
+
+heif_image *LibheifWrapper::convert_interleaved_rgb(const RawImage &rawImage) {
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_RGB;
+  heif_channel channel = heif_channel_interleaved;
+  heif_chroma chroma = heif_chroma_interleaved_RGB;
+
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
   uint32_t bit_depth = rawImage.get_bit_depth();
   PixelType pixel_type = rawImage.get_pixel_type();
 
-  heif_channel channel = heif_channel_interleaved; // HARD CODED!
   he(heif_image_create(width, height, colorspace, chroma, &img));
   he(heif_image_add_plane(img, channel, width, height, bit_depth));
 
@@ -55,19 +126,10 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
 
   memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
 
-  he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
-  he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
-
-  // heif_item_id primary_id = heif_image_handle_get_item_id(handle);
-  // gimify(m_ctx, primary_id);
+  return img;
 }
 
-void LibheifWrapper::write_to_heif() {
-  string output_filename = m_options.output_filename;
-  he(heif_context_write_to_file(m_ctx, output_filename.c_str()));
-}
-
-// Helper Functions
+// Static Functions
 
 void LibheifWrapper::he(struct heif_error error) {
   if (error.code) {
