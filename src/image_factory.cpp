@@ -107,6 +107,7 @@ RawImage ImageFactory::create_image_rgb_interleaved() {
   case PixelType::uint10:
     return create_image_rgb_interleaved_10bit();
   case PixelType::uint12:
+    return create_image_rgb_interleaved_hdr();
   case PixelType::uint14:
   case PixelType::uint16:
   case PixelType::int8:
@@ -115,7 +116,7 @@ RawImage ImageFactory::create_image_rgb_interleaved() {
   case PixelType::complex:
   case PixelType::mixed:
   default:
-    cout << "Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
+    cout << __func__ << "(): Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
     exit(1);
   }
 }
@@ -134,7 +135,7 @@ RawImage ImageFactory::create_image_rgb_planar() {
   case PixelType::complex:
   case PixelType::mixed:
   default:
-    cout << "Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
+    cout << __func__ << "(): Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
     exit(1);
   }
   cout << "Unsupported Feature: Planar RGB Image Creation!\n";
@@ -194,6 +195,36 @@ RawImage ImageFactory::create_image_rgb_interleaved_10bit() {
 
   // Add Pixels
   image.add_rgb_interleaved_hdr(pixels, PixelType::uint10);
+
+  return image;
+}
+
+RawImage ImageFactory::create_image_rgb_interleaved_hdr() {
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 3; // RGB
+  const uint32_t bytes_per_pixel = 2;
+  uint64_t pixel_count = m_width * m_height * band_count;
+  const uint64_t size_in_bytes = pixel_count * bytes_per_pixel;
+  vector<uint8_t> pixels;
+  pixels.reserve(size_in_bytes);
+
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
+      pixels.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
+
+      pixels.push_back(static_cast<uint8_t>(m_color_2)); // G or U
+      pixels.push_back(static_cast<uint8_t>(m_color_2)); // G or U
+
+      pixels.push_back(static_cast<uint8_t>(m_color_3)); // B or V
+      pixels.push_back(static_cast<uint8_t>(m_color_3)); // B or V
+    }
+  }
+
+  // Add Pixels
+  image.add_rgb_interleaved_hdr(pixels, m_pixel_type);
 
   return image;
 }
