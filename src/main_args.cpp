@@ -1,4 +1,5 @@
 #include "main_args.h"
+#include "error_handler.h"
 #include "options.h"
 
 using namespace gimi;
@@ -97,8 +98,7 @@ gimi::Interleave MainArgs::extract_interleave() {
   } else if (interleave == "planar") {
     return Interleave::planar;
   } else {
-    cerr << "Unsupported interleaving format: " << interleave << endl;
-    exit(1);
+    throw_error("Unsupported interleaving format: %s", interleave.c_str());
   }
 }
 

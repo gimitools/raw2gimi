@@ -23,7 +23,7 @@ MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string
 
 const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   vector<MainArgs> v;
-  string codec = "unc";
+  string codec = "hevc";
   string chroma = "rgb";
   string interleave = "interleaved";
   string pixel_type = "8";
@@ -44,15 +44,15 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
 
   // HDR
-  v.push_back(create_args(codec, chroma, interleave, "10", height, width));
-  v.push_back(create_args(codec, chroma, interleave, "12", height, width));
-  v.push_back(create_args(codec, chroma, interleave, "14", height, width));
-  v.push_back(create_args(codec, chroma, interleave, "16", height, width));
+  // v.push_back(create_args("unc", chroma, interleave, "10", height, width));
+  // v.push_back(create_args("unc", chroma, interleave, "12", height, width));
+  // v.push_back(create_args("unc", chroma, interleave, "14", height, width));
+  // v.push_back(create_args("unc", chroma, interleave, "16", height, width));
 
   // Formats variations
-  // v.push_back(create_args(codec, "rgb", "rgb", pixel_type, height, width));
+  // v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));
   // v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
-  // v.push_back(create_args(codec, "yuv", "444", pixel_type, height, width));
+  v.push_back(create_args(codec, "yuv", "444", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));
 
