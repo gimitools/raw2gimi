@@ -241,11 +241,6 @@ heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleav
   case gimi::Chroma::gray:
     return heif_colorspace_monochrome;
   case gimi::Chroma::yuv_444:
-    if (gimi_interleave == Interleave::planar) {
-      return heif_colorspace_YCbCr;
-    } else {
-      return heif_colorspace_RGB;
-    }
   case gimi::Chroma::yuv_422:
   case gimi::Chroma::yuv_420:
     return heif_colorspace_YCbCr;
