@@ -127,3 +127,35 @@ void RawImage::add_yuv_444_interleaved_8bit(const vector<uint8_t> &pixels) {
   m_chroma = Chroma::yuv_444;
   m_pixel_type = PixelType::uint8;
 }
+
+void RawImage::add_yuv_444_planar_8bit(const vector<uint8_t> &pixels_y,
+                                       const vector<uint8_t> &pixels_u,
+                                       const vector<uint8_t> &pixels_v) {
+  const int bytes_per_pixel = 1;
+  uint64_t expected_pixel_count = m_width * m_height * bytes_per_pixel;
+
+  if (pixels_y.size() != expected_pixel_count ||
+      pixels_u.size() != expected_pixel_count ||
+      pixels_v.size() != expected_pixel_count) {
+    cerr << "RawImage Error: Data size does not match image dimensions." << endl;
+    cerr << "\tExpected size: " << expected_pixel_count << endl;
+    cerr << "\tActual sizes: "
+         << "R: " << pixels_y.size()
+         << ", G: " << pixels_u.size()
+         << ", B: " << pixels_v.size() << endl;
+    exit(1);
+  }
+
+  // Pixel Data
+  Plane plane_r(pixels_y, m_width, m_height, PixelType::uint8);
+  Plane plane_g(pixels_u, m_width, m_height, PixelType::uint8);
+  Plane plane_b(pixels_v, m_width, m_height, PixelType::uint8);
+  planes.push_back(plane_r);
+  planes.push_back(plane_g);
+  planes.push_back(plane_b);
+
+  // Metadata
+  m_interleave = Interleave::planar;
+  m_chroma = Chroma::rgb;
+  m_pixel_type = PixelType::uint8;
+}

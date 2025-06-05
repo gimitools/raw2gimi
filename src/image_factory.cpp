@@ -147,8 +147,31 @@ RawImage ImageFactory::create_image_yuv_interleaved() {
 }
 
 RawImage ImageFactory::create_image_yuv_planar() {
-  throw_error("Function not implemented yet");
-  return RawImage(0, 0);
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 3;     // RGB
+  const uint32_t bytes_per_band = 1; // 8-bit per channel
+  uint64_t size_in_bytes = m_width * m_height * bytes_per_band;
+  vector<uint8_t> Y;
+  vector<uint8_t> u;
+  vector<uint8_t> v;
+  Y.reserve(size_in_bytes);
+  u.reserve(size_in_bytes);
+  v.reserve(size_in_bytes);
+
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      Y.push_back(static_cast<uint8_t>(m_color_1)); // R or Y
+      u.push_back(static_cast<uint8_t>(m_color_2)); // G or U
+      v.push_back(static_cast<uint8_t>(m_color_3)); // B or V
+    }
+  }
+
+  // Add Pixels
+  image.add_yuv_444_planar_8bit(Y, u, v);
+
+  return image;
 }
 
 // Protected Functions

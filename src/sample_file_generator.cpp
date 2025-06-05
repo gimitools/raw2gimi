@@ -52,9 +52,9 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));
   // v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
-  v.push_back(create_args(codec, "444", "interleaved", pixel_type, height, width));
-  // v.push_back(create_args(codec, "422", "interleaved", pixel_type, height, width));
-  // v.push_back(create_args(codec, "420", "interleaved", pixel_type, height, width));
+  v.push_back(create_args(codec, "444", "planar", pixel_type, height, width));
+  // v.push_back(create_args(codec, "422", "planar", pixel_type, height, width));
+  // v.push_back(create_args(codec, "420", "planar", pixel_type, height, width));
 
   // Tiled
   // 1. grid

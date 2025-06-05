@@ -57,9 +57,16 @@ void LibheifWrapper::write_to_heif() {
 // Helper Functions
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
+
+  // Assert Planar
+  gimi::Interleave interleave = rawImage.get_interleave();
+  if (interleave != gimi::Interleave::planar) {
+    throw_error("libheif doesn't support yuv interleaved");
+  }
+
   switch (chroma) {
   case heif_chroma_444:
-    return convert_yuv_444_interleaved_8bit(rawImage);
+    return convert_yuv_444_planar_8bit(rawImage);
     break;
   case heif_chroma_422:
     break;
@@ -214,9 +221,49 @@ heif_image *LibheifWrapper::convert_rgb_interleaved_hdr_be(const RawImage &rawIm
   return img;
 }
 
-heif_image *LibheifWrapper::convert_yuv_444_interleaved_8bit(const RawImage &rawImage) {
-  throw_error("Function not yet implemented");
-  return nullptr;
+heif_image *LibheifWrapper::convert_yuv_444_planar_8bit(const RawImage &rawImage) {
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_YCbCr;
+  heif_channel channel1 = heif_channel_Y;
+  heif_channel channel2 = heif_channel_Cb;
+  heif_channel channel3 = heif_channel_Cr;
+  heif_chroma chroma = heif_chroma_444;
+
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
+
+  he(heif_image_create(width, height, colorspace, chroma, &img));
+  he(heif_image_add_plane(img, channel1, width, height, bit_depth));
+  he(heif_image_add_plane(img, channel2, width, height, bit_depth));
+  he(heif_image_add_plane(img, channel3, width, height, bit_depth));
+
+  // Get Channels
+  int stride;
+  uint8_t *data1 = heif_image_get_plane(img, channel1, &stride);
+  uint8_t *data2 = heif_image_get_plane(img, channel2, &stride);
+  uint8_t *data3 = heif_image_get_plane(img, channel3, &stride);
+
+  const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 3) {
+    throw_error("Expected 3 planes, but got: %d", planes.size());
+  }
+
+  const Plane &plane = planes[0];
+  const vector<uint8_t> &plane_y = planes[0].m_pixels;
+  const vector<uint8_t> &plane_u = planes[1].m_pixels;
+  const vector<uint8_t> &plane_v = planes[2].m_pixels;
+
+  if (plane_y.size() != stride * height) {
+    throw_error("Expected size: %d, but got: %zu", stride * height, plane_y.size());
+  }
+
+  memcpy(data1, plane_y.data(), stride * height);
+  memcpy(data2, plane_u.data(), stride * height);
+  memcpy(data3, plane_v.data(), stride * height);
+
+  return img;
 }
 
 // Static Functions
