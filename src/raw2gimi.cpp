@@ -1,4 +1,5 @@
 #include "raw2gimi.h"
+#include "error_handler.h"
 #include "file_reader.h"
 #include "gimifier.h"
 #include "image_factory.h"
@@ -35,14 +36,12 @@ void Raw2Gimi::raw_to_gimi(MainArgs args) {
 }
 
 void Raw2Gimi::heif_to_gimi(MainArgs args) {
-  cout << "TODO: heif_to_gimi()" << endl;
-  exit(1);
+  throw_error("Function not yet implemented");
 }
 
 // Primary Functions
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
-  cout << "TODO: raw_to_gimi()" << endl;
-  exit(1);
+  throw_error("Function not yet implemented");
 }
 
 // Helper Functions

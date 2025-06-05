@@ -1,5 +1,6 @@
 #include "gimifier.h"
 #include "dependencies/libheif_wrapper.h"
+#include "error_handler.h"
 #include <cstring> // memcpy()
 
 using namespace gimi;
@@ -11,6 +12,5 @@ void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
 }
 
 void Gimifier::write_to_file(vector<RawImage> &, WriteOptions) {
-  cout << "TODO: write_to_file(vector<RawImage> &)" << endl;
-  exit(1);
+  throw_error("Function not yet implemented");
 }

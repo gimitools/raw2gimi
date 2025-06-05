@@ -18,30 +18,19 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
   switch (m_chroma) {
   case Chroma::rgb:
     return create_image_rgb();
-    break;
   case Chroma::gray:
-    cout << "Unsupported Feature: Monochrome Image Creation!\n";
-    exit(1);
-    break;
+    throw_error("Unsupported Feature: Monochrome Image Creation!");
   case Chroma::yuv_444:
-    cout << "unsupported Feature: YUV 444 Image Creation!\n";
-    exit(1);
+    throw_error("Unsupported Feature: YUV 444 Image Creation!");
     break;
   case Chroma::yuv_422:
-    cout << "Unsupported Feature: YUV 422 Image Creation!\n";
-    exit(1);
-    break;
+    throw_error("Unsupported Feature: YUV 422 Image Creation!");
   case Chroma::yuv_420:
-    cout << "Unsupported Feature: YUV 420 Image Creation!\n";
-    exit(1);
-    break;
+    throw_error("Unsupported Feature: YUV 420 Image Creation!");
   case Chroma::yuv_411:
-    cout << "Unsupported Feature: YUV 411 Image Creation!\n";
-    exit(1);
-    break;
+    throw_error("Unsupported Feature: YUV 411 Image Creation!");
   default:
-    cout << "Unsupported Chroma Format: " << to_string(m_chroma) << endl;
-    exit(1);
+    throw_error("Unsupported Chroma Format: %s", to_string(m_chroma).c_str());
   }
 
   throw_error("");
@@ -83,8 +72,7 @@ RawImage ImageFactory::create_image_rgb() {
     return create_image_rgb_planar();
     break;
   default:
-    cout << "Unrecognized Interleave Type: " << to_string(m_interleave) << endl;
-    exit(1);
+    throw_error("Unsupported Interleave Type: %s", to_string(m_interleave).c_str());
   }
   throw_error();
   RawImage image(m_width, m_height);
@@ -92,8 +80,8 @@ RawImage ImageFactory::create_image_rgb() {
 }
 
 RawImage ImageFactory::create_image_mono() {
-  cout << "Unsupported Feature!\n";
-  exit(1);
+  throw_error("Unsupported Feature: Monochrome Image Creation!");
+  return RawImage(0, 0);
 }
 
 // Protected Functions
@@ -113,9 +101,9 @@ RawImage ImageFactory::create_image_rgb_interleaved() {
   case PixelType::complex:
   case PixelType::mixed:
   default:
-    cout << __func__ << "(): Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
-    exit(1);
+    throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
   }
+  return RawImage(0, 0);
 }
 
 RawImage ImageFactory::create_image_rgb_planar() {
@@ -132,11 +120,9 @@ RawImage ImageFactory::create_image_rgb_planar() {
   case PixelType::complex:
   case PixelType::mixed:
   default:
-    cout << __func__ << "(): Unsupported Bit Depth: " << to_string(m_pixel_type) << endl;
-    exit(1);
+    throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
   }
-  cout << "Unsupported Feature: Planar RGB Image Creation!\n";
-  exit(1);
+  return RawImage(0, 0);
 }
 
 // Protected Functions

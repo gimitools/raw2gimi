@@ -1,4 +1,5 @@
 #include "pixel_formats.h"
+#include "error_handler.h"
 
 using namespace gimi;
 
@@ -135,6 +136,6 @@ uint32_t gimi::get_component_count(Chroma chroma) {
   case Chroma::rgba:
     return 4;
   }
-  cerr << "gimi::get_component_count(): Unsupported chroma format: " << static_cast<int>(chroma) << endl;
-  exit(1);
+  throw_error("Unsupported chroma format: %s", to_string(chroma));
+  return 0;
 }
