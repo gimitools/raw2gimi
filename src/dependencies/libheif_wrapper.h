@@ -29,6 +29,7 @@ protected:
   // Leaf Functions
   heif_image *convert_rgb_planar(const RawImage &);
   heif_image *convert_rgb_interleaved(const RawImage &);
+  heif_image *convert_rgb_interleaved_hdr_be(const RawImage &);
 
 protected:
   // Static Functions

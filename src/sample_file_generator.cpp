@@ -34,7 +34,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // v.push_back(create_args(codec, chroma, interleave, pixel_type, height, width));
 
   // Testing
-  v.push_back(create_args("hevc", "rgb", "planar", pixel_type, height, width));
+  v.push_back(create_args("unc", "rgb", interleave, "10", height, width));
 
   // Codec variations
   // v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));

@@ -71,6 +71,7 @@ heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, hei
   case heif_chroma_interleaved_RGBA:
     break;
   case heif_chroma_interleaved_RRGGBB_BE:
+    return convert_rgb_interleaved_hdr_be(rawImage);
     break;
   case heif_chroma_interleaved_RRGGBBAA_BE:
     break;
@@ -148,6 +149,41 @@ heif_image *LibheifWrapper::convert_rgb_interleaved(const RawImage &rawImage) {
   heif_colorspace colorspace = heif_colorspace_RGB;
   heif_channel channel = heif_channel_interleaved;
   heif_chroma chroma = heif_chroma_interleaved_RGB;
+
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
+
+  he(heif_image_create(width, height, colorspace, chroma, &img));
+  he(heif_image_add_plane(img, channel, width, height, bit_depth));
+
+  // Get Channels
+  int stride;
+  uint8_t *data = heif_image_get_plane(img, channel, &stride);
+
+  const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 1) {
+    cerr << "LibheifWrapper::add_image(): Expected exactly one plane, got " << planes.size() << endl;
+    exit(1);
+  }
+  const Plane &plane = planes[0];
+  const vector<uint8_t> &pixels = plane.m_pixels;
+  if (pixels.size() != stride * height) {
+    cerr << "LibheifWrapper::add_image(): Pixel data size does not match image dimensions." << endl;
+    exit(1);
+  }
+
+  memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
+
+  return img;
+}
+
+heif_image *LibheifWrapper::convert_rgb_interleaved_hdr_be(const RawImage &rawImage) {
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_RGB;
+  heif_channel channel = heif_channel_interleaved;
+  heif_chroma chroma = heif_chroma_interleaved_RRGGBB_BE;
 
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
