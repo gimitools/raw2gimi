@@ -1,9 +1,9 @@
 #include "libheif_wrapper.h"
+#include "error_handler.h"
 #include <cstring> // memcpy()
 #include <iostream>
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
-
 using namespace gimi;
 
 // Constructor
@@ -39,8 +39,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
     img = convert_gray_colorspace(rawImage, chroma);
     break;
   default:
-    cerr << "LibheifWrapper::add_image(): Unsupported colorspace: " << static_cast<int>(colorspace) << endl;
-    exit(1);
+    throw_error("Unsupported colorspace: %d", static_cast<int>(colorspace));
   }
 
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
@@ -58,8 +57,8 @@ void LibheifWrapper::write_to_heif() {
 // Helper Functions
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
-  cerr << "LibheifWrapper::convert_yuv_colorspace() is not implemented yet." << endl;
-  exit(1);
+  throw_error("Function not yet implemented");
+  return nullptr;
 }
 
 heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, heif_chroma chroma) {
@@ -80,16 +79,14 @@ heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, hei
   case heif_chroma_interleaved_RRGGBBAA_LE:
     break;
   default:
-    cerr << "LibheifWrapper::convert_rgb_colorspace(): Unsupported chroma format: " << static_cast<int>(chroma) << endl;
-    exit(1);
+    throw_error("Unsupported chroma format: %d", static_cast<int>(chroma));
   }
-  cerr << "LibheifWrapper::convert_rgb_colorspace(): Unsupported chroma format: " << static_cast<int>(chroma) << endl;
-  exit(1);
+  return nullptr;
 }
 
 heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, heif_chroma chroma) {
-  cerr << "LibheifWrapper::convert_gray_colorspace() is not implemented yet." << endl;
-  exit(1);
+  throw_error("Function not yet implemented");
+  return nullptr;
 }
 
 // Leaf Functions
@@ -120,8 +117,7 @@ heif_image *LibheifWrapper::convert_rgb_planar(const RawImage &rawImage) {
 
   const vector<Plane> &planes = rawImage.get_planes();
   if (planes.size() != 3) {
-    cerr << "LibheifWrapper::convert_rgb_planar(): Expected exactly three planes, got " << planes.size() << endl;
-    exit(1);
+    throw_error("Expected 3 planes, but got: %d", planes.size());
   }
 
   const Plane &plane = planes[0];
@@ -130,10 +126,7 @@ heif_image *LibheifWrapper::convert_rgb_planar(const RawImage &rawImage) {
   const vector<uint8_t> &plane_b = planes[2].m_pixels;
 
   if (plane_r.size() != stride * height) {
-    cerr << "LibheifWrapper::convert_rgb_planar(): Pixel data size does not match image dimensions." << endl;
-    cerr << "\tExpected size: " << stride * height << endl;
-    cerr << "\tActual size: " << plane_r.size() << endl;
-    exit(1);
+    throw_error("Expected size: %d, but got: %zu", stride * height, plane_r.size());
   }
 
   memcpy(data1, plane_r.data(), stride * height);
@@ -163,14 +156,12 @@ heif_image *LibheifWrapper::convert_rgb_interleaved(const RawImage &rawImage) {
 
   const vector<Plane> &planes = rawImage.get_planes();
   if (planes.size() != 1) {
-    cerr << "LibheifWrapper::add_image(): Expected exactly one plane, got " << planes.size() << endl;
-    exit(1);
+    throw_error("Expected 1 plane, but got: %d", planes.size());
   }
   const Plane &plane = planes[0];
   const vector<uint8_t> &pixels = plane.m_pixels;
   if (pixels.size() != stride * height) {
-    cerr << "LibheifWrapper::add_image(): Pixel data size does not match image dimensions." << endl;
-    exit(1);
+    throw_error("Expected size: %d, but got: %zu", stride * height, pixels.size());
   }
 
   memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
@@ -198,14 +189,12 @@ heif_image *LibheifWrapper::convert_rgb_interleaved_hdr_be(const RawImage &rawIm
 
   const vector<Plane> &planes = rawImage.get_planes();
   if (planes.size() != 1) {
-    cerr << "LibheifWrapper::add_image(): Expected exactly one plane, got " << planes.size() << endl;
-    exit(1);
+    throw_error("Expected 1 plane, but got: %d", planes.size());
   }
   const Plane &plane = planes[0];
   const vector<uint8_t> &pixels = plane.m_pixels;
   if (pixels.size() != stride * height) {
-    cerr << "LibheifWrapper::add_image(): Pixel data size does not match image dimensions." << endl;
-    exit(1);
+    throw_error("Expected size: %d, but got: %zu", stride * height, pixels.size());
   }
 
   memcpy(data, pixels.data(), stride * height); // Copy RGB data to image plane
@@ -261,8 +250,7 @@ heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleav
   case gimi::Chroma::yuv_420:
     return heif_colorspace_YCbCr;
   default:
-    cerr << "libheif_wrapper::extract_colorspace(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
-    exit(1);
+    throw_error("Unsupported chroma format: %d", (int)gimi_chroma);
   }
 
   return heif_colorspace_undefined;
@@ -305,10 +293,9 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
   case gimi::Chroma::yuv_420:
     return heif_chroma_420;
   case gimi::Chroma::yuv_411:
-    cerr << "libheif_wrapper::extract_chroma(): Unsupported chroma format: yuv_411" << endl;
-    exit(1);
+    throw_error("Unsupported chroma format: yuv_411");
   }
 
-  cerr << "libheif_wrapper::extract_chroma(): Unsupported chroma format: " << static_cast<int>(gimi_chroma) << endl;
+  throw_error("Unsupported chroma format: %d", (int)gimi_chroma);
   return heif_chroma_undefined;
 }
