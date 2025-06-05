@@ -61,7 +61,7 @@ void gimi::RawImage::add_rgb_interleaved_hdr(const vector<uint8_t> &pixel_data, 
   }
 
   // Pixel Data
-  Plane plane(pixel_data, m_width, m_height, PixelType::uint16);
+  Plane plane(pixel_data, m_width, m_height, pixel_type);
   planes.push_back(plane);
 
   // Metadata
