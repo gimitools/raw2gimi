@@ -36,6 +36,7 @@ public:
   void add_rgb_planar_8bit(const vector<uint8_t> &r,
                            const vector<uint8_t> &g,
                            const vector<uint8_t> &b);
+  void add_yuv_444_interleaved_8bit(const vector<uint8_t> &pixels);
 
 private:
   // Pixel Data

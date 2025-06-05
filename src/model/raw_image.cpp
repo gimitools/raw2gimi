@@ -1,4 +1,5 @@
 #include "raw_image.h"
+#include "error_handler.h"
 
 using namespace gimi;
 
@@ -108,5 +109,21 @@ void RawImage::add_rgb_planar_8bit(const vector<uint8_t> &pixels_r,
   // Metadata
   m_interleave = Interleave::planar;
   m_chroma = Chroma::rgb;
+  m_pixel_type = PixelType::uint8;
+}
+
+void RawImage::add_yuv_444_interleaved_8bit(const vector<uint8_t> &pixels) {
+  const int band_count = 3;     // RGB
+  const int bytes_per_band = 1; // 8-bit per channel
+  const uint64_t expected_pixel_count = m_width * m_height * band_count * bytes_per_band;
+  if (pixels.size() != expected_pixel_count) {
+    throw_error("Bad vector size: %zu, expected: %d", pixels.size(), expected_pixel_count);
+  }
+
+  Plane plane(pixels, m_width, m_height, PixelType::uint8);
+  planes.push_back(plane);
+
+  m_interleave = Interleave::interleaved;
+  m_chroma = Chroma::yuv_444;
   m_pixel_type = PixelType::uint8;
 }
