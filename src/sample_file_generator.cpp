@@ -33,6 +33,9 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
   // Default
   // v.push_back(create_args(codec, chroma, interleave, pixel_type, height, width));
 
+  // Testing
+  v.push_back(create_args("hevc", "rgb", "planar", pixel_type, height, width));
+
   // Codec variations
   // v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));
   // v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
@@ -48,7 +51,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
 
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "rgb", pixel_type, height, width));
-  v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
+  // v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "444", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));
   // v.push_back(create_args(codec, "yuv", "422", pixel_type, height, width));

@@ -65,9 +65,9 @@ heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, hei
 heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, heif_chroma chroma) {
   switch (chroma) {
   case heif_chroma_444: // planar
-    break;
+    return convert_rgb_planar(rawImage);
   case heif_chroma_interleaved_RGB:
-    return convert_interleaved_rgb(rawImage);
+    return convert_rgb_interleaved(rawImage);
   case heif_chroma_interleaved_RGBA:
     break;
   case heif_chroma_interleaved_RRGGBB_BE:
@@ -93,14 +93,14 @@ heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, he
 
 // Leaf Functions
 
-heif_image *LibheifWrapper::convert_interleaved_planar(const RawImage &rawImage) {
+heif_image *LibheifWrapper::convert_rgb_planar(const RawImage &rawImage) {
   heif_image *img;
 
   heif_colorspace colorspace = heif_colorspace_RGB;
   heif_channel channel1 = heif_channel_R;
   heif_channel channel2 = heif_channel_G;
   heif_channel channel3 = heif_channel_B;
-  heif_chroma chroma = heif_chroma_interleaved_RGB;
+  heif_chroma chroma = heif_chroma_444;
 
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
@@ -118,6 +118,10 @@ heif_image *LibheifWrapper::convert_interleaved_planar(const RawImage &rawImage)
   uint8_t *data3 = heif_image_get_plane(img, channel3, &stride);
 
   const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 3) {
+    cerr << "LibheifWrapper::convert_rgb_planar(): Expected exactly three planes, got " << planes.size() << endl;
+    exit(1);
+  }
 
   const Plane &plane = planes[0];
   const vector<uint8_t> &plane_r = planes[0].m_pixels;
@@ -125,7 +129,9 @@ heif_image *LibheifWrapper::convert_interleaved_planar(const RawImage &rawImage)
   const vector<uint8_t> &plane_b = planes[2].m_pixels;
 
   if (plane_r.size() != stride * height) {
-    cerr << "LibheifWrapper::convert_interleaved_planar(): Pixel data size does not match image dimensions." << endl;
+    cerr << "LibheifWrapper::convert_rgb_planar(): Pixel data size does not match image dimensions." << endl;
+    cerr << "\tExpected size: " << stride * height << endl;
+    cerr << "\tActual size: " << plane_r.size() << endl;
     exit(1);
   }
 
@@ -136,7 +142,7 @@ heif_image *LibheifWrapper::convert_interleaved_planar(const RawImage &rawImage)
   return img;
 }
 
-heif_image *LibheifWrapper::convert_interleaved_rgb(const RawImage &rawImage) {
+heif_image *LibheifWrapper::convert_rgb_interleaved(const RawImage &rawImage) {
   heif_image *img;
 
   heif_colorspace colorspace = heif_colorspace_RGB;

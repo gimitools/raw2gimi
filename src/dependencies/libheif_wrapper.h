@@ -27,8 +27,8 @@ protected:
 
 protected:
   // Leaf Functions
-  heif_image *convert_interleaved_planar(const RawImage &);
-  heif_image *convert_interleaved_rgb(const RawImage &);
+  heif_image *convert_rgb_planar(const RawImage &);
+  heif_image *convert_rgb_interleaved(const RawImage &);
 
 protected:
   // Static Functions
