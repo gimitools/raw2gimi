@@ -31,6 +31,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   uint32_t width = rawImage.get_width();
   uint32_t height = rawImage.get_height();
   uint32_t bit_depth = rawImage.get_bit_depth();
+  PixelType pixel_type = rawImage.get_pixel_type();
 
   heif_channel channel = heif_channel_interleaved; // HARD CODED!
   he(heif_image_create(width, height, colorspace, chroma, &img));
@@ -40,7 +41,6 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   int stride;
   uint8_t *data = heif_image_get_plane(img, channel, &stride);
 
-  // std::variant
   const vector<Plane> &planes = rawImage.get_planes();
   if (planes.size() != 1) {
     cerr << "LibheifWrapper::add_image(): Expected exactly one plane, got " << planes.size() << endl;

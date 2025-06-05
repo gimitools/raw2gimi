@@ -25,6 +25,7 @@ public:
   uint32_t get_height() const;
   uint32_t get_bit_depth() const;
   uint32_t get_band_count() const;
+  PixelType get_pixel_type() const;
   const vector<Plane> &get_planes() const;
 
 public:
