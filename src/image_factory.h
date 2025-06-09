@@ -14,7 +14,8 @@ public:
 
 public:
   gimi::RawImage create_image(const string &pixel_pattern = "solid");
-  vector<RawImage> create_sequence_in_memory(string pixel_algorithm);
+  vector<RawImage> create_sequence(string pixel_algorithm);
+  vector<RawImage> create_tiles(uint32_t tile_count_x, uint32_t tile_count_y);
 
 protected:
   // Colorspace Functions

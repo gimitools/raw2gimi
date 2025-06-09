@@ -13,7 +13,7 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Inter
 }
 
 // Public Functions
-gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
+RawImage ImageFactory::create_image(const string &pixel_pattern) {
 
   switch (m_chroma) {
   case Chroma::rgb:
@@ -34,7 +34,7 @@ gimi::RawImage ImageFactory::create_image(const string &pixel_pattern) {
   return image;
 }
 
-vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm) {
+vector<RawImage> ImageFactory::create_sequence(string pixel_algroithm) {
   vector<RawImage> images;
 
   for (uint32_t i = 0; i < m_frame_count; i++) {
@@ -49,6 +49,12 @@ vector<RawImage> ImageFactory::create_sequence_in_memory(string pixel_algroithm)
   }
 
   return images;
+}
+
+vector<RawImage> ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_count_y) {
+  vector<RawImage> tiles;
+  throw_error("Function not yet implemented");
+  return tiles;
 }
 
 // Colorspace Functions

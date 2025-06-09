@@ -38,15 +38,8 @@ void Raw2Gimi::write_grid_from_memory(MainArgs args) {
   string output_filename = args.extract_output_filename();
 
   // Create tiles
-  vector<RawImage> tiles;
   ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
-  RawImage image = imageFactory.create_image();
-
-  // TODO: imageFactory.create_tiles();
-  tiles.push_back(image);
-  tiles.push_back(image);
-  tiles.push_back(image);
-  tiles.push_back(image);
+  vector<RawImage> tiles = imageFactory.create_tiles(2, 2);
 
   WriteOptions options = Raw2Gimi::create_write_options(args);
 
