@@ -45,8 +45,8 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
 
-  // heif_item_id primary_id = heif_image_handle_get_item_id(handle);
-  // gimify(m_ctx, primary_id);
+  heif_item_id primary_id = heif_image_handle_get_item_id(handle);
+  gimify(primary_id);
 }
 
 void LibheifWrapper::write_to_heif() {
@@ -55,6 +55,11 @@ void LibheifWrapper::write_to_heif() {
 }
 
 // Helper Functions
+
+void LibheifWrapper::gimify(heif_item_id primary_id) {
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
+}
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
 

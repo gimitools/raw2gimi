@@ -21,6 +21,7 @@ public:
 
 protected:
   // Helper Functions
+  void gimify(heif_item_id primary_id);
   heif_image *convert_yuv_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_rgb_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_gray_colorspace(const RawImage &, heif_chroma);
