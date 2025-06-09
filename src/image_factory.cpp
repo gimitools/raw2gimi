@@ -34,11 +34,11 @@ RawImage ImageFactory::create_image(const string &pixel_pattern) {
   return image;
 }
 
-vector<RawImage> ImageFactory::create_sequence(string pixel_algroithm) {
+vector<RawImage> ImageFactory::create_sequence(string pixel_algorithm) {
   vector<RawImage> images;
 
   for (uint32_t i = 0; i < m_frame_count; i++) {
-    RawImage img = create_image(pixel_algroithm);
+    RawImage img = create_image(pixel_algorithm);
     images.push_back(img);
 
     // Shuffle Colors
