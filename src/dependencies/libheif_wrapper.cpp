@@ -35,7 +35,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_encoder *encoder;
   heif_compression_format compression = extract_compression(m_options.codec);
   heif_chroma chroma = extract_chroma(rawImage);
-  heif_colorspace colorspace = extract_colorspace(rawImage.get_chroma());
+  heif_colorspace colorspace = extract_colorspace(rawImage);
 
   img = convert_to_heif_image(rawImage, colorspace, chroma);
 
@@ -360,7 +360,8 @@ heif_compression_format LibheifWrapper::extract_compression(gimi::Codec codec) {
   return heif_compression_undefined;
 }
 
-heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma) {
+heif_colorspace LibheifWrapper::extract_colorspace(const RawImage &rawImage) {
+  Chroma gimi_chroma = rawImage.get_chroma();
   switch (gimi_chroma) {
   case gimi::Chroma::rgb:
     return heif_colorspace_RGB;
