@@ -61,12 +61,20 @@ void LibheifWrapper::write_to_heif() {
   he(heif_context_write_to_file(m_ctx, output_filename.c_str()));
 }
 
-// Helper Functions
+// GIMI
 
 void LibheifWrapper::gimify(heif_item_id primary_id) {
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
 
+  // Content Id
+  add_content_id(primary_id);
+
+  // Timestamp
+  add_timestamp(primary_id);
+}
+
+void LibheifWrapper::add_content_id(heif_item_id id) {
   // const char *extended_type_content_id = "0x261ef3741d975bbaacbd9d2c8ea73522";
   uint8_t extended_type_content_id[16] = {
       0x26, 0x1e, 0xf3, 0x74, 0x1d, 0x97, 0x5b, 0xba,
@@ -76,24 +84,27 @@ void LibheifWrapper::gimify(heif_item_id primary_id) {
   // Content Id
   he(heif_item_add_raw_property(
       m_ctx,
-      primary_id,
+      id,
       heif_fourcc('u', 'u', 'i', 'd'),
       (const uint8_t *)extended_type_content_id,
       (const uint8_t *)content_id.c_str(),
       content_id.length(),
       0, // is_essential - not essential for viewing
       nullptr));
+}
 
-  // Timestamp
+void LibheifWrapper::add_timestamp(heif_item_id id) {
   heif_tai_clock_info *clock = heif_tai_clock_info_alloc();
   heif_tai_timestamp_packet *timestamp = heif_tai_timestamp_packet_alloc();
 
-  heif_item_set_property_tai_clock_info(m_ctx, primary_id, clock, nullptr);
-  heif_item_set_property_tai_timestamp(m_ctx, primary_id, timestamp, nullptr);
+  heif_item_set_property_tai_clock_info(m_ctx, id, clock, nullptr);
+  heif_item_set_property_tai_timestamp(m_ctx, id, timestamp, nullptr);
 
   heif_tai_clock_info_release(clock);
   heif_tai_timestamp_packet_release(timestamp);
 }
+
+// Helper Functions
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
 

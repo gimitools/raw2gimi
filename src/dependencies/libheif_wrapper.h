@@ -20,8 +20,13 @@ public:
   void write_to_heif();
 
 protected:
-  // Helper Functions
+  // GIMI
   void gimify(heif_item_id primary_id);
+  void add_content_id(heif_item_id);
+  void add_timestamp(heif_item_id);
+
+protected:
+  // Helper Functions
   heif_image *convert_yuv_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_rgb_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_gray_colorspace(const RawImage &, heif_chroma);
