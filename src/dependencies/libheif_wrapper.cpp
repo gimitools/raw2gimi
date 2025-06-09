@@ -58,6 +58,10 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   gimify(primary_id);
 }
 
+void LibheifWrapper::add_grid(const vector<RawImage> &tiles) {
+  throw_error("Function not yet implemented");
+}
+
 void LibheifWrapper::write_to_heif() {
   string output_filename = m_options.output_filename;
   he(heif_context_write_to_file(m_ctx, output_filename.c_str()));

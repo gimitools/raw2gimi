@@ -12,7 +12,9 @@ void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
 }
 
 void Gimifier::write_grid_to_file(vector<RawImage> &images, WriteOptions options) {
-  throw_error("Function not yet implemented");
+  LibheifWrapper libheif(options);
+  libheif.add_grid(images);
+  libheif.write_to_heif();
 }
 
 void Gimifier::write_video_to_file(vector<RawImage> &, WriteOptions) {

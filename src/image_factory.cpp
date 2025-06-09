@@ -48,7 +48,15 @@ vector<RawImage> ImageFactory::create_sequence(string pixel_algorithm) {
 
 vector<RawImage> ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_count_y) {
   vector<RawImage> tiles;
-  throw_error("Function not yet implemented");
+
+  for (uint32_t row = 0; row < tile_count_y; row++) {
+    for (uint32_t col = 0; col < tile_count_x; col++) {
+      RawImage tile = create_image();
+      tiles.push_back(tile);
+      shuffle_colors();
+    }
+  }
+
   return tiles;
 }
 
