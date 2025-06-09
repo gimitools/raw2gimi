@@ -95,6 +95,16 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
           row,
           tiles[index],
           encoder));
+
+      heif_item_id out_tile_id;
+      bool process_image_transformations = 0;
+      heif_image_handle_get_grid_image_tile_id(
+          handle,
+          process_image_transformations,
+          column,
+          row,
+          &out_tile_id);
+      add_content_id(out_tile_id);
     }
   }
 
