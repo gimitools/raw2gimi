@@ -39,12 +39,12 @@ void Raw2Gimi::write_grid_from_memory(MainArgs args) {
 
   // Create tiles
   ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
-  vector<RawImage> tiles = imageFactory.create_tiles(2, 2);
+  RawImageGrid grid = imageFactory.create_tiles(2, 2);
 
   WriteOptions options = Raw2Gimi::create_write_options(args);
 
   // Write to File
-  Gimifier::write_grid_to_file(tiles, options);
+  Gimifier::write_grid_to_file(grid, options);
   cout << "Created: " << output_filename << endl;
 }
 

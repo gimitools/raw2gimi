@@ -57,4 +57,6 @@ private:
   bool little_endian = false;
 };
 
+using RawImageGrid = vector<vector<RawImage>>;
+
 } // namespace gimi

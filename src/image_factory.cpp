@@ -46,18 +46,20 @@ vector<RawImage> ImageFactory::create_sequence(string pixel_algorithm) {
   return images;
 }
 
-vector<RawImage> ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_count_y) {
-  vector<RawImage> tiles;
+RawImageGrid ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_count_y) {
+  RawImageGrid grid;
 
-  for (uint32_t row = 0; row < tile_count_y; row++) {
-    for (uint32_t col = 0; col < tile_count_x; col++) {
+  for (uint32_t r = 0; r < tile_count_y; r++) {
+    vector<RawImage> row;
+    for (uint32_t c = 0; c < tile_count_x; c++) {
       RawImage tile = create_image();
-      tiles.push_back(tile);
+      row.push_back(tile);
       shuffle_colors();
     }
+    grid.push_back(row);
   }
 
-  return tiles;
+  return grid;
 }
 
 // Colorspace Functions

@@ -46,19 +46,21 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   gimify(primary_id);
 }
 
-void LibheifWrapper::add_grid(const vector<RawImage> &rawImages) {
+void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
   vector<heif_image *> tiles;
   heif_image *img;
   heif_image_handle *handle;
   heif_encoder *encoder;
   heif_compression_format compression = extract_compression(m_options.codec);
-  heif_chroma chroma = extract_chroma(rawImages[0]);
-  heif_colorspace colorspace = extract_colorspace(rawImages[0]);
+  heif_chroma chroma = extract_chroma(rawImages[0][0]);
+  heif_colorspace colorspace = extract_colorspace(rawImages[0][0]);
 
   // Convert Tiles
-  for (const RawImage &rawImage : rawImages) {
-    img = convert_to_heif_image(rawImage, colorspace, chroma);
-    tiles.push_back(img);
+  for (const vector<RawImage> &rows : rawImages) {
+    for (const RawImage &tile : rows) {
+      img = convert_to_heif_image(tile, colorspace, chroma);
+      tiles.push_back(img);
+    }
   }
 
   // Get Encoder
