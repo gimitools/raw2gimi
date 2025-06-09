@@ -28,6 +28,7 @@ protected:
 
 protected:
   // Helper Functions
+  heif_image *convert_to_heif_image(const RawImage &, heif_colorspace, heif_chroma);
   heif_image *convert_yuv_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_rgb_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_gray_colorspace(const RawImage &, heif_chroma);

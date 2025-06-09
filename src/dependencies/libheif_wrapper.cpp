@@ -37,19 +37,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_chroma chroma = extract_chroma(rawImage, m_options);
   heif_colorspace colorspace = extract_colorspace(m_options.chroma, m_options.interleave);
 
-  switch (colorspace) {
-  case heif_colorspace_YCbCr:
-    img = convert_yuv_colorspace(rawImage, chroma);
-    break;
-  case heif_colorspace_RGB:
-    img = convert_rgb_colorspace(rawImage, chroma);
-    break;
-  case heif_colorspace_monochrome:
-    img = convert_gray_colorspace(rawImage, chroma);
-    break;
-  default:
-    throw_error("Unsupported colorspace: %d", static_cast<int>(colorspace));
-  }
+  img = convert_to_heif_image(rawImage, colorspace, chroma);
 
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
@@ -111,6 +99,24 @@ void LibheifWrapper::add_timestamp(heif_item_id id) {
 }
 
 // Helper Functions
+
+heif_image *LibheifWrapper::convert_to_heif_image(const RawImage &rawImage, heif_colorspace colorspace, heif_chroma chroma) {
+  heif_image *img;
+  switch (colorspace) {
+  case heif_colorspace_YCbCr:
+    img = convert_yuv_colorspace(rawImage, chroma);
+    break;
+  case heif_colorspace_RGB:
+    img = convert_rgb_colorspace(rawImage, chroma);
+    break;
+  case heif_colorspace_monochrome:
+    img = convert_gray_colorspace(rawImage, chroma);
+    break;
+  default:
+    throw_error("Unsupported colorspace: %d", static_cast<int>(colorspace));
+  }
+  return img;
+}
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
 
