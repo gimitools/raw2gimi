@@ -83,6 +83,21 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
       &handle));
 
   heif_item_id primary_id = heif_image_handle_get_item_id(handle);
+  heif_context_set_primary_image(m_ctx, handle);
+
+  for (uint32_t row = 0; row < tile_rows; row++) {
+    for (uint32_t column = 0; column < tile_columns; column++) {
+      uint32_t index = row * tile_columns + column;
+      he(heif_context_add_image_tile(
+          m_ctx,
+          handle,
+          column,
+          row,
+          tiles[index],
+          encoder));
+    }
+  }
+
   gimify(primary_id);
 
   heif_encoding_options_free(encoding_options);
