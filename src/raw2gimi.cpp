@@ -28,6 +28,33 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   cout << "Created: " << output_filename << endl;
 }
 
+void Raw2Gimi::write_grid_from_memory(MainArgs args) {
+  uint32_t width = args.extract_width();
+  uint32_t height = args.extract_height();
+  PixelType pixel_type = args.extract_pixel_type();
+  Chroma chroma = args.extract_chroma();
+  Interleave interleave = args.extract_interleave();
+  Codec codec = args.extract_codec();
+  string output_filename = args.extract_output_filename();
+
+  // Create tiles
+  vector<RawImage> tiles;
+  ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
+  RawImage image = imageFactory.create_image();
+
+  // TODO: imageFactory.create_tiles();
+  tiles.push_back(image);
+  tiles.push_back(image);
+  tiles.push_back(image);
+  tiles.push_back(image);
+
+  WriteOptions options = Raw2Gimi::create_write_options(args);
+
+  // Write to File
+  Gimifier::write_grid_to_file(tiles, options);
+  cout << "Created: " << output_filename << endl;
+}
+
 void Raw2Gimi::raw_to_gimi(MainArgs args) {
   const string input_filename = args.input_filename;
   const string output_filename = args.extract_output_filename();

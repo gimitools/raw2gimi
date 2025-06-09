@@ -13,7 +13,8 @@ namespace gimi {
 class Gimifier {
 public:
   static void write_to_file(const RawImage &, WriteOptions);
-  static void write_to_file(vector<RawImage> &, WriteOptions);
+  static void write_grid_to_file(vector<RawImage> &, WriteOptions);
+  static void write_video_to_file(vector<RawImage> &, WriteOptions);
 
 protected:
 };
