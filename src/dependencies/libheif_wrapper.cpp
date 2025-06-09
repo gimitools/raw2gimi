@@ -4,6 +4,8 @@
 #include <iostream>
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
+#include <libheif/heif_properties.h>
+#include <libheif/heif_tai_timestamps.h>
 using namespace gimi;
 
 // Constructor
@@ -59,6 +61,34 @@ void LibheifWrapper::write_to_heif() {
 void LibheifWrapper::gimify(heif_item_id primary_id) {
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
+
+  // const char *extended_type_content_id = "0x261ef3741d975bbaacbd9d2c8ea73522";
+  uint8_t extended_type_content_id[16] = {
+      0x26, 0x1e, 0xf3, 0x74, 0x1d, 0x97, 0x5b, 0xba,
+      0xac, 0xbd, 0x9d, 0x2c, 0x8e, 0xa7, 0x35, 0x22};
+  // const char *content_id = generate_content_id();
+  const char *content_id = "todo_random_id";
+
+  // Content Id
+  he(heif_item_add_raw_property(
+      m_ctx,
+      primary_id,
+      heif_fourcc('u', 'u', 'i', 'd'),
+      (const uint8_t *)extended_type_content_id,
+      (const uint8_t *)content_id,
+      strlen(content_id),
+      0, // is_essential - not essential for viewing
+      nullptr));
+
+  // Timestamp
+  heif_tai_clock_info *clock = heif_tai_clock_info_alloc();
+  heif_tai_timestamp_packet *timestamp = heif_tai_timestamp_packet_alloc();
+
+  heif_item_set_property_tai_clock_info(m_ctx, primary_id, clock, nullptr);
+  heif_item_set_property_tai_timestamp(m_ctx, primary_id, timestamp, nullptr);
+
+  heif_tai_clock_info_release(clock);
+  heif_tai_timestamp_packet_release(timestamp);
 }
 
 heif_image *LibheifWrapper::convert_yuv_colorspace(const RawImage &rawImage, heif_chroma chroma) {
