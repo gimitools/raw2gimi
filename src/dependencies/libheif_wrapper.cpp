@@ -14,6 +14,7 @@
 using namespace gimi;
 
 // Constructor
+
 LibheifWrapper::LibheifWrapper(WriteOptions options) {
   m_ctx = heif_context_alloc();
   m_options = options;
@@ -27,6 +28,7 @@ LibheifWrapper::~LibheifWrapper() {
 }
 
 // API
+
 void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_image *img;
   heif_image_handle *handle;
