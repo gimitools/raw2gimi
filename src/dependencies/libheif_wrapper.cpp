@@ -66,11 +66,13 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
   // Get Encoder
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
 
-  uint32_t image_width;
-  uint32_t image_height;
-  uint32_t tile_columns;
-  uint32_t tile_rows;
-  heif_encoding_options *encoding_options = nullptr;
+  uint32_t tile_rows = rawImages.size();
+  uint32_t tile_columns = rawImages[0].size();
+  uint32_t tile_width = rawImages[0][0].get_width();
+  uint32_t tile_height = rawImages[0][0].get_height();
+  uint32_t image_width = tile_width * tile_columns;
+  uint32_t image_height = tile_height * tile_rows;
+  heif_encoding_options *encoding_options = heif_encoding_options_alloc();
   heif_image_handle *out_grid_image_handle;
   heif_context_add_grid_image(
       m_ctx,
@@ -83,6 +85,8 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
 
   heif_item_id primary_id = heif_image_handle_get_item_id(handle);
   gimify(primary_id);
+
+  heif_encoding_options_free(encoding_options);
 }
 
 void LibheifWrapper::write_to_heif() {
