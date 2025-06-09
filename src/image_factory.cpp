@@ -40,12 +40,7 @@ vector<RawImage> ImageFactory::create_sequence(string pixel_algorithm) {
   for (uint32_t i = 0; i < m_frame_count; i++) {
     RawImage img = create_image(pixel_algorithm);
     images.push_back(img);
-
-    // Shuffle Colors
-    uint32_t temp = m_color_1;
-    m_color_1 = m_color_2;
-    m_color_2 = m_color_3;
-    m_color_3 = temp;
+    shuffle_colors();
   }
 
   return images;
@@ -180,7 +175,7 @@ RawImage ImageFactory::create_image_yuv_planar() {
   return image;
 }
 
-// Protected Functions
+// Leaf Functions
 
 RawImage ImageFactory::create_image_rgb_interleaved_8bit() {
   // Variables
@@ -286,4 +281,13 @@ RawImage ImageFactory::create_image_444_interleaved_8bit() {
   image.add_yuv_444_interleaved_8bit(pixels);
 
   return image;
+}
+
+// Helper Functions
+
+void ImageFactory::shuffle_colors() {
+  uint32_t temp = m_color_1;
+  m_color_1 = m_color_2;
+  m_color_2 = m_color_3;
+  m_color_3 = temp;
 }

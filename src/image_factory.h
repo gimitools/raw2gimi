@@ -37,17 +37,17 @@ protected:
   RawImage create_image_rgb_planar_8bit();
   RawImage create_image_444_interleaved_8bit();
 
+protected:
+  // Helper Functions
+  void shuffle_colors();
+
 private: // Member Variables
   uint32_t m_width;
   uint32_t m_height;
   Chroma m_chroma;
   Interleave m_interleave;
   PixelType m_pixel_type;
-
-public:
-  uint32_t m_frame_count = 5; // TODO: don't show your private parts in public
-
-private:
+  uint32_t m_frame_count = 5;
   uint32_t m_color_1 = 0x11; // R or Y
   uint32_t m_color_2 = 0xFF; // G or U
   uint32_t m_color_3 = 0x22; // B or V
