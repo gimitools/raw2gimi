@@ -34,7 +34,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_image_handle *handle;
   heif_encoder *encoder;
   heif_compression_format compression = extract_compression(m_options.codec);
-  heif_chroma chroma = extract_chroma(rawImage, m_options);
+  heif_chroma chroma = extract_chroma(rawImage);
   heif_colorspace colorspace = extract_colorspace(rawImage.get_chroma());
 
   img = convert_to_heif_image(rawImage, colorspace, chroma);
@@ -377,7 +377,7 @@ heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma) {
   return heif_colorspace_undefined;
 }
 
-heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions options) {
+heif_chroma LibheifWrapper::extract_chroma(const RawImage &image) {
 
   uint32_t nbands = image.get_band_count();
   uint32_t bit_depth = image.get_bit_depth();

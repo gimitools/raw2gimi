@@ -45,7 +45,7 @@ protected:
   static void he(struct heif_error);
   static heif_compression_format extract_compression(gimi::Codec);
   static heif_colorspace extract_colorspace(Chroma);
-  static heif_chroma extract_chroma(const RawImage &, gimi::WriteOptions);
+  static heif_chroma extract_chroma(const RawImage &);
   static string generate_content_id();
 
 private:
