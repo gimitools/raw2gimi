@@ -1,11 +1,16 @@
 #include "libheif_wrapper.h"
 #include "error_handler.h"
+#include <cstdint>
+#include <cstdlib>
 #include <cstring> // memcpy()
+#include <iomanip>
 #include <iostream>
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
 #include <libheif/heif_properties.h>
 #include <libheif/heif_tai_timestamps.h>
+#include <sstream>
+#include <string>
 using namespace gimi;
 
 // Constructor
@@ -66,8 +71,7 @@ void LibheifWrapper::gimify(heif_item_id primary_id) {
   uint8_t extended_type_content_id[16] = {
       0x26, 0x1e, 0xf3, 0x74, 0x1d, 0x97, 0x5b, 0xba,
       0xac, 0xbd, 0x9d, 0x2c, 0x8e, 0xa7, 0x35, 0x22};
-  // const char *content_id = generate_content_id();
-  const char *content_id = "todo_random_id";
+  string content_id = generate_content_id();
 
   // Content Id
   he(heif_item_add_raw_property(
@@ -75,8 +79,8 @@ void LibheifWrapper::gimify(heif_item_id primary_id) {
       primary_id,
       heif_fourcc('u', 'u', 'i', 'd'),
       (const uint8_t *)extended_type_content_id,
-      (const uint8_t *)content_id,
-      strlen(content_id),
+      (const uint8_t *)content_id.c_str(),
+      content_id.length(),
       0, // is_essential - not essential for viewing
       nullptr));
 
@@ -392,4 +396,19 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
 
   throw_error("Unsupported chroma format: %d", (int)gimi_chroma);
   return heif_chroma_undefined;
+}
+
+string LibheifWrapper::generate_content_id() {
+  uint64_t part5 = (static_cast<uint64_t>(rand()) << 32) | rand();
+
+  std::ostringstream oss;
+  oss << "urn:uuid:"
+      << std::hex << std::setfill('0')
+      << std::setw(8) << rand() << "-"
+      << std::setw(4) << (rand() % 0x10000) << "-"
+      << std::setw(4) << (rand() % 0x10000) << "-"
+      << std::setw(4) << (rand() % 0x10000) << "-"
+      << std::setw(12) << part5;
+
+  return oss.str();
 }

@@ -39,6 +39,7 @@ protected:
   static heif_compression_format extract_compression(gimi::Codec);
   static heif_colorspace extract_colorspace(gimi::Chroma, gimi::Interleave);
   static heif_chroma extract_chroma(const RawImage &image, WriteOptions);
+  static string generate_content_id();
 
 private:
   // Member Variables
