@@ -69,8 +69,6 @@ void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_fi
 WriteOptions Raw2Gimi::create_write_options(MainArgs args) {
   WriteOptions options;
   options.output_filename = args.extract_output_filename();
-  options.chroma = args.extract_chroma();
-  options.interleave = args.extract_interleave();
   options.codec = args.extract_codec();
   return options;
 }

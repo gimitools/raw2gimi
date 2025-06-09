@@ -35,7 +35,7 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_encoder *encoder;
   heif_compression_format compression = extract_compression(m_options.codec);
   heif_chroma chroma = extract_chroma(rawImage, m_options);
-  heif_colorspace colorspace = extract_colorspace(m_options.chroma, m_options.interleave);
+  heif_colorspace colorspace = extract_colorspace(rawImage.get_chroma());
 
   img = convert_to_heif_image(rawImage, colorspace, chroma);
 
@@ -360,7 +360,7 @@ heif_compression_format LibheifWrapper::extract_compression(gimi::Codec codec) {
   return heif_compression_undefined;
 }
 
-heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma, Interleave gimi_interleave) {
+heif_colorspace LibheifWrapper::extract_colorspace(Chroma gimi_chroma) {
   switch (gimi_chroma) {
   case gimi::Chroma::rgb:
     return heif_colorspace_RGB;
@@ -382,9 +382,9 @@ heif_chroma LibheifWrapper::extract_chroma(const RawImage &image, WriteOptions o
   uint32_t nbands = image.get_band_count();
   uint32_t bit_depth = image.get_bit_depth();
 
-  gimi::Chroma gimi_chroma = options.chroma;
-  gimi::Interleave gimi_interleave = options.interleave;
-  bool little_endian = options.little_endian;
+  gimi::Chroma gimi_chroma = image.get_chroma();
+  gimi::Interleave gimi_interleave = image.get_interleave();
+  bool little_endian = image.is_little_endian();
   bool big_endian = !little_endian;
 
   switch (gimi_chroma) {

@@ -36,6 +36,14 @@ PixelType RawImage::get_pixel_type() const {
   return m_pixel_type;
 }
 
+Chroma RawImage::get_chroma() const {
+  return m_chroma;
+}
+
+bool RawImage::is_little_endian() const {
+  return little_endian;
+}
+
 const vector<Plane> &RawImage::get_planes() const {
   return planes;
 }

@@ -27,6 +27,8 @@ public:
   uint32_t get_band_count() const;
   Interleave get_interleave() const;
   PixelType get_pixel_type() const;
+  Chroma get_chroma() const;
+  bool is_little_endian() const;
   const vector<Plane> &get_planes() const;
 
 public:
@@ -52,7 +54,7 @@ private:
   Interleave m_interleave = Interleave::planar;
   Chroma m_chroma = Chroma::rgb;
   PixelType m_pixel_type = PixelType::uint8;
-  // bool little_endian = false; // TODO (assume big-endian for now)
+  bool little_endian = false;
 };
 
 } // namespace gimi
