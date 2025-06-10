@@ -56,7 +56,7 @@ void Raw2Gimi::heif_to_gimi() {
   throw_error("Function not yet implemented");
 }
 
-void Raw2Gimi::write_image_and_rdf() {
+void Raw2Gimi::write_image_with_rdf() {
   throw_error("Function not yet implemented");
 }
 

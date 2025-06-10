@@ -16,10 +16,10 @@ bool execute_action(string action, MainArgs args) {
     raw2gimi.raw_to_gimi();
   } else if (action == "heif_to_gimi") {
     raw2gimi.heif_to_gimi();
-  } else if (action == "write_image_and_rdf") {
-    raw2gimi.write_image_and_rdf();
+  } else if (action == "write_image_with_rdf") {
+    raw2gimi.write_image_with_rdf();
   } else if (action == "generate_sample_files") {
-    SampleFileGenerator::generate_sample_files("out");
+    SampleFileGenerator::generate_sample_files("out"); // TODO: move to inside Raw2Gimi
   } else {
     return false; // action not found
   }

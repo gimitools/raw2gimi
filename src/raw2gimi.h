@@ -16,7 +16,7 @@ public:
   void write_grid();
   void raw_to_gimi();
   void heif_to_gimi();
-  void write_image_and_rdf();
+  void write_image_with_rdf();
 
 protected:
   // Primary Functions
