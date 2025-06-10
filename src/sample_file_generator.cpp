@@ -3,9 +3,14 @@
 using namespace gimi;
 
 void SampleFileGenerator::generate_sample_files(const string &output_directory) {
-  vector<MainArgs> data = SampleFileGenerator::simulate_user_cli();
-  for (const MainArgs &args : data) {
+  vector<MainArgs> simple_args = SampleFileGenerator::simulate_cli_simple();
+  for (const MainArgs &args : simple_args) {
     Raw2Gimi::write_image_from_memory(args);
+  }
+
+  vector<MainArgs> grid_args = SampleFileGenerator::simulate_cli_grid();
+  for (const MainArgs &args : grid_args) {
+    Raw2Gimi::write_grid_from_memory(args);
   }
 }
 
@@ -21,7 +26,7 @@ MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string
   return args;
 }
 
-const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
+const vector<MainArgs> SampleFileGenerator::simulate_cli_simple() {
   vector<MainArgs> v;
   string codec = "hevc";
   string chroma = "rgb";
@@ -63,6 +68,12 @@ const vector<MainArgs> SampleFileGenerator::simulate_user_cli() {
 
   return v;
 };
+
+const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
+  vector<MainArgs> v;
+
+  return v;
+}
 
 string SampleFileGenerator::create_filename(MainArgs p) {
   string filename = "out/" +
