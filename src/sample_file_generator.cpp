@@ -5,12 +5,12 @@ using namespace gimi;
 void SampleFileGenerator::generate_sample_files(const string &output_directory) {
   vector<MainArgs> simple_args = SampleFileGenerator::simulate_cli_simple();
   for (const MainArgs &args : simple_args) {
-    Raw2Gimi::write_image_from_memory(args);
+    Raw2Gimi::write_image(args);
   }
 
   vector<MainArgs> grid_args = SampleFileGenerator::simulate_cli_grid();
   for (const MainArgs &args : grid_args) {
-    Raw2Gimi::write_grid_from_memory(args);
+    Raw2Gimi::write_grid(args);
   }
 }
 
@@ -74,7 +74,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
 
   MainArgs grid_2x2;
   {
-    grid_2x2.action = "write_grid_from_memory";
+    grid_2x2.action = "write_grid";
     grid_2x2.rows = "2";
     grid_2x2.columns = "2";
     grid_2x2.output_filename = "out/hevc_grid_2x2.heif";
@@ -84,7 +84,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
 
   MainArgs grid_large;
   {
-    grid_large.action = "write_grid_from_memory";
+    grid_large.action = "write_grid";
     grid_large.rows = "10";
     grid_large.columns = "10";
     grid_large.output_filename = "out/hevc_grid_10x10.heif";

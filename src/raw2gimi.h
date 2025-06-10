@@ -8,8 +8,8 @@ namespace gimi {
 class Raw2Gimi {
 public:
   // CLI API
-  static void write_image_from_memory(MainArgs);
-  static void write_grid_from_memory(MainArgs);
+  static void write_image(MainArgs);
+  static void write_grid(MainArgs);
   static void raw_to_gimi(MainArgs);
   static void heif_to_gimi(MainArgs);
 

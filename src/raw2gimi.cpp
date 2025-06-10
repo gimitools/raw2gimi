@@ -8,7 +8,7 @@
 using namespace gimi;
 
 // CLI API
-void Raw2Gimi::write_image_from_memory(MainArgs args) {
+void Raw2Gimi::write_image(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
   PixelType pixel_type = args.extract_pixel_type();
@@ -28,7 +28,7 @@ void Raw2Gimi::write_image_from_memory(MainArgs args) {
   cout << "Created: " << output_filename << endl;
 }
 
-void Raw2Gimi::write_grid_from_memory(MainArgs args) {
+void Raw2Gimi::write_grid(MainArgs args) {
   uint32_t width = args.extract_width();
   uint32_t height = args.extract_height();
   PixelType pixel_type = args.extract_pixel_type();

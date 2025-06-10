@@ -7,10 +7,10 @@ using namespace std;
 using namespace gimi;
 
 bool execute_action(string action, MainArgs args) {
-  if (action == "write_image_from_memory" || action.empty()) {
-    Raw2Gimi::write_image_from_memory(args);
-  } else if (action == "write_grid_from_memory") {
-    Raw2Gimi::write_grid_from_memory(args);
+  if (action == "write_image" || action.empty()) {
+    Raw2Gimi::write_image(args);
+  } else if (action == "write_grid") {
+    Raw2Gimi::write_grid(args);
   } else if (action == "raw_to_gimi") {
     Raw2Gimi::raw_to_gimi(args);
   } else if (action == "heif_to_gimi") {
