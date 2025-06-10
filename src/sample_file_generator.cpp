@@ -72,6 +72,29 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_simple() {
 const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
   vector<MainArgs> v;
 
+  MainArgs grid_2x2;
+  {
+    grid_2x2.action = "write_grid_from_memory";
+    grid_2x2.rows = "2";
+    grid_2x2.columns = "2";
+    grid_2x2.output_filename = "out/hevc_grid_2x2.heif";
+    grid_2x2.codec = "hevc";
+    v.push_back(grid_2x2);
+  }
+
+  MainArgs grid_large;
+  {
+    grid_large.action = "write_grid_from_memory";
+    grid_large.rows = "200";
+    grid_large.columns = "200";
+    grid_large.output_filename = "out/hevc_grid_200x200.heif";
+    grid_large.codec = "hevc";
+    v.push_back(grid_large);
+  }
+
+  // MainArgs uncC_internal;
+  // MainArgs tili_item;
+
   return v;
 }
 
