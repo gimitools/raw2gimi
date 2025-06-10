@@ -36,10 +36,12 @@ void Raw2Gimi::write_grid_from_memory(MainArgs args) {
   Interleave interleave = args.extract_interleave();
   Codec codec = args.extract_codec();
   string output_filename = args.extract_output_filename();
+  uint32_t rows = args.extract_rows();
+  uint32_t columns = args.extract_columns();
 
   // Create tiles
   ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
-  RawImageGrid grid = imageFactory.create_tiles(2, 2);
+  RawImageGrid grid = imageFactory.create_tiles(columns, rows);
 
   WriteOptions options = Raw2Gimi::create_write_options(args);
 

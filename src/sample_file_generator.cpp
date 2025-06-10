@@ -85,9 +85,9 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
   MainArgs grid_large;
   {
     grid_large.action = "write_grid_from_memory";
-    grid_large.rows = "200";
-    grid_large.columns = "200";
-    grid_large.output_filename = "out/hevc_grid_200x200.heif";
+    grid_large.rows = "10";
+    grid_large.columns = "10";
+    grid_large.output_filename = "out/hevc_grid_10x10.heif";
     grid_large.codec = "hevc";
     v.push_back(grid_large);
   }
