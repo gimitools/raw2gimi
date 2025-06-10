@@ -13,6 +13,11 @@ add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 # Automatically find all .cpp files recursively
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
+# ================= Redland =================
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(REDLAND REQUIRED redland)
+# ================= Redland =================
+
 # ================= Executable =================
 add_executable(${PROJECT_NAME} ${SOURCES})
 # ================= Executable =================
@@ -29,6 +34,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # Link against libheif
 target_link_libraries(${PROJECT_NAME} PRIVATE heif)
+
+
+# ================= Redland =================
+target_include_directories(${PROJECT_NAME} PRIVATE ${REDLAND_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${REDLAND_LIBRARIES})
+# ================= Redland =================
+
 
 # === Add LibRaw ===
 find_path(LIBRAW_INCLUDE_DIR libraw/libraw.h)
