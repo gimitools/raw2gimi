@@ -1,5 +1,6 @@
 #include "gimifier.h"
 #include "dependencies/libheif_wrapper.h"
+#include "dependencies/redland_wrapper.h"
 #include "error_handler.h"
 #include <cstring> // memcpy()
 
@@ -19,4 +20,10 @@ void Gimifier::write_grid_to_file(const RawImageGrid &images, WriteOptions optio
 
 void Gimifier::write_video_to_file(vector<RawImage> &, WriteOptions) {
   throw_error("Function not yet implemented");
+}
+
+// Debugging
+
+void Gimifier::debug() {
+  throw_error("Gimifier::debug() not implemented yet");
 }

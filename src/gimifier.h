@@ -16,6 +16,10 @@ public:
   static void write_grid_to_file(const RawImageGrid &, WriteOptions);
   static void write_video_to_file(vector<RawImage> &, WriteOptions);
 
+public:
+  // Debugging
+  static void debug();
+
 protected:
 };
 

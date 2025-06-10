@@ -57,7 +57,7 @@ void Raw2Gimi::heif_to_gimi() {
 }
 
 void Raw2Gimi::write_image_with_rdf() {
-  throw_error("Function not yet implemented");
+  Gimifier::debug();
 }
 
 // Primary Functions
