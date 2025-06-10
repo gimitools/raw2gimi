@@ -12,7 +12,10 @@ add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 
 # Automatically find all .cpp files recursively
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+
+# ================= Executable =================
 add_executable(${PROJECT_NAME} ${SOURCES})
+# ================= Executable =================
 
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/src/model/
@@ -20,7 +23,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 # Include libheif headers
-target_include_directories(${PROJECT_NAME} BEFORE PRIVATE
+target_include_directories(${PROJECT_NAME} PRIVATE
   ${LIBHEIF_DIR}/libheif/api/
 )
 
