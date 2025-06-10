@@ -7,16 +7,17 @@ using namespace std;
 using namespace gimi;
 
 bool execute_action(string action, MainArgs args) {
+  Raw2Gimi raw2gimi(args);
   if (action == "write_image" || action.empty()) {
-    Raw2Gimi::write_image(args);
+    raw2gimi.write_image();
   } else if (action == "write_grid") {
-    Raw2Gimi::write_grid(args);
+    raw2gimi.write_grid();
   } else if (action == "raw_to_gimi") {
-    Raw2Gimi::raw_to_gimi(args);
+    raw2gimi.raw_to_gimi();
   } else if (action == "heif_to_gimi") {
-    Raw2Gimi::heif_to_gimi(args);
+    raw2gimi.heif_to_gimi();
   } else if (action == "write_image_and_rdf") {
-    Raw2Gimi::write_image_and_rdf(args);
+    raw2gimi.write_image_and_rdf();
   } else if (action == "generate_sample_files") {
     SampleFileGenerator::generate_sample_files("out");
   } else {

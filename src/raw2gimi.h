@@ -7,12 +7,16 @@ namespace gimi {
 
 class Raw2Gimi {
 public:
+  // Constructor
+  Raw2Gimi(MainArgs);
+
+public:
   // CLI API
-  static void write_image(MainArgs);
-  static void write_grid(MainArgs);
-  static void raw_to_gimi(MainArgs);
-  static void heif_to_gimi(MainArgs);
-  static void write_image_and_rdf(MainArgs);
+  void write_image();
+  void write_grid();
+  void raw_to_gimi();
+  void heif_to_gimi();
+  void write_image_and_rdf();
 
 protected:
   // Primary Functions
@@ -20,7 +24,20 @@ protected:
 
 private:
   // Helper Functions
-  static WriteOptions create_write_options(MainArgs);
+  WriteOptions create_write_options();
+
+private:
+  // Member Variables
+  uint32_t m_width;
+  uint32_t m_height;
+  uint32_t m_rows;
+  uint32_t m_columns;
+  PixelType m_pixel_type;
+  Chroma m_chroma;
+  Interleave m_interleave;
+  Codec m_codec;
+  string m_input_filename;
+  string m_output_filename;
 };
 
 } // namespace gimi

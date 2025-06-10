@@ -7,61 +7,55 @@
 
 using namespace gimi;
 
+// Constructor
+Raw2Gimi::Raw2Gimi(MainArgs args) {
+  m_width = args.extract_width();
+  m_height = args.extract_height();
+  m_rows = args.extract_rows();
+  m_columns = args.extract_columns();
+  m_pixel_type = args.extract_pixel_type();
+  m_chroma = args.extract_chroma();
+  m_interleave = args.extract_interleave();
+  m_codec = args.extract_codec();
+  m_output_filename = args.extract_output_filename();
+  m_input_filename = args.input_filename;
+}
+
 // CLI API
-void Raw2Gimi::write_image(MainArgs args) {
-  uint32_t width = args.extract_width();
-  uint32_t height = args.extract_height();
-  PixelType pixel_type = args.extract_pixel_type();
-  Chroma chroma = args.extract_chroma();
-  Interleave interleave = args.extract_interleave();
-  Codec codec = args.extract_codec();
-  string output_filename = args.extract_output_filename();
+void Raw2Gimi::write_image() {
 
   // Create RawImage
-  ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
+  ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   gimi::RawImage image = imageFactory.create_image();
 
-  WriteOptions options = Raw2Gimi::create_write_options(args);
+  WriteOptions options = create_write_options();
 
   // Write to File
   Gimifier::write_to_file(image, options);
-  cout << "Created: " << output_filename << endl;
+  cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::write_grid(MainArgs args) {
-  uint32_t width = args.extract_width();
-  uint32_t height = args.extract_height();
-  PixelType pixel_type = args.extract_pixel_type();
-  Chroma chroma = args.extract_chroma();
-  Interleave interleave = args.extract_interleave();
-  Codec codec = args.extract_codec();
-  string output_filename = args.extract_output_filename();
-  uint32_t rows = args.extract_rows();
-  uint32_t columns = args.extract_columns();
-
+void Raw2Gimi::write_grid() {
   // Create tiles
-  ImageFactory imageFactory(width, height, chroma, interleave, pixel_type);
-  RawImageGrid grid = imageFactory.create_tiles(columns, rows);
+  ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
+  RawImageGrid grid = imageFactory.create_tiles(m_columns, m_rows);
 
-  WriteOptions options = Raw2Gimi::create_write_options(args);
+  WriteOptions options = create_write_options();
 
   // Write to File
   Gimifier::write_grid_to_file(grid, options);
-  cout << "Created: " << output_filename << endl;
+  cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::raw_to_gimi(MainArgs args) {
-  const string input_filename = args.input_filename;
-  const string output_filename = args.extract_output_filename();
-
-  Raw2Gimi::raw_to_gimi(input_filename, output_filename);
+void Raw2Gimi::raw_to_gimi() {
+  Raw2Gimi::raw_to_gimi(m_input_filename, m_output_filename);
 }
 
-void Raw2Gimi::heif_to_gimi(MainArgs args) {
+void Raw2Gimi::heif_to_gimi() {
   throw_error("Function not yet implemented");
 }
 
-void Raw2Gimi::write_image_and_rdf(MainArgs) {
+void Raw2Gimi::write_image_and_rdf() {
   throw_error("Function not yet implemented");
 }
 
@@ -72,9 +66,9 @@ void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_fi
 
 // Helper Functions
 
-WriteOptions Raw2Gimi::create_write_options(MainArgs args) {
+WriteOptions Raw2Gimi::create_write_options() {
   WriteOptions options;
-  options.output_filename = args.extract_output_filename();
-  options.codec = args.extract_codec();
+  options.output_filename = m_output_filename;
+  options.codec = m_codec;
   return options;
 }
