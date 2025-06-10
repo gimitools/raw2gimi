@@ -25,5 +25,5 @@ void Gimifier::write_video_to_file(vector<RawImage> &, WriteOptions) {
 // Debugging
 
 void Gimifier::debug() {
-  throw_error("Gimifier::debug() not implemented yet");
+  RedlandWrapper::debug();
 }
