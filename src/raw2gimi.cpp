@@ -8,6 +8,7 @@
 using namespace gimi;
 
 // Constructor
+
 Raw2Gimi::Raw2Gimi(MainArgs args) {
   m_width = args.extract_width();
   m_height = args.extract_height();
@@ -60,6 +61,7 @@ void Raw2Gimi::write_image_and_rdf() {
 }
 
 // Primary Functions
+
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
   throw_error("Function not yet implemented");
 }
