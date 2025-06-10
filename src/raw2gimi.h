@@ -12,6 +12,7 @@ public:
   static void write_grid(MainArgs);
   static void raw_to_gimi(MainArgs);
   static void heif_to_gimi(MainArgs);
+  static void write_image_and_rdf(MainArgs);
 
 protected:
   // Primary Functions

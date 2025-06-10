@@ -61,6 +61,10 @@ void Raw2Gimi::heif_to_gimi(MainArgs args) {
   throw_error("Function not yet implemented");
 }
 
+void Raw2Gimi::write_image_and_rdf(MainArgs) {
+  throw_error("Function not yet implemented");
+}
+
 // Primary Functions
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
   throw_error("Function not yet implemented");

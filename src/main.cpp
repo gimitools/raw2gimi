@@ -15,6 +15,8 @@ bool execute_action(string action, MainArgs args) {
     Raw2Gimi::raw_to_gimi(args);
   } else if (action == "heif_to_gimi") {
     Raw2Gimi::heif_to_gimi(args);
+  } else if (action == "write_image_and_rdf") {
+    Raw2Gimi::write_image_and_rdf(args);
   } else if (action == "generate_sample_files") {
     SampleFileGenerator::generate_sample_files("out");
   } else {
