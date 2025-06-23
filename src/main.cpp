@@ -12,6 +12,8 @@ bool execute_action(string action, MainArgs args) {
     raw2gimi.write_image();
   } else if (action == "write_grid") {
     raw2gimi.write_grid();
+  } else if (action == "write_sequence") {
+    raw2gimi.write_sequence();
   } else if (action == "raw_to_gimi") {
     raw2gimi.raw_to_gimi();
   } else if (action == "heif_to_gimi") {

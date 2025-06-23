@@ -48,6 +48,20 @@ void Raw2Gimi::write_grid() {
   cout << "Created: " << m_output_filename << endl;
 }
 
+void Raw2Gimi::write_sequence() {
+  // Create sequence
+  ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
+  // imageFactory.set_frame_count(60);
+  imageFactory.set_width(m_width);
+  imageFactory.set_height(m_height);
+  vector<RawImage> sequence = imageFactory.create_sequence("solid");
+
+  WriteOptions options = create_write_options();
+
+  Gimifier::write_video_to_file(sequence, options);
+  cout << "Created: " << m_output_filename << endl;
+}
+
 void Raw2Gimi::raw_to_gimi() {
   Raw2Gimi::raw_to_gimi(m_input_filename, m_output_filename);
 }

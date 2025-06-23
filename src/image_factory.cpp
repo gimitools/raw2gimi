@@ -4,6 +4,7 @@
 #include <cstring> //memset()
 
 // Constructor
+
 ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Interleave interleave, PixelType pixel_type) {
   m_width = width;
   m_height = height;
@@ -13,6 +14,7 @@ ImageFactory::ImageFactory(uint32_t width, uint32_t height, Chroma chroma, Inter
 }
 
 // Public Functions
+
 RawImage ImageFactory::create_image(const string &pixel_pattern) {
 
   switch (m_chroma) {
@@ -60,6 +62,20 @@ RawImageGrid ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_cou
   }
 
   return grid;
+}
+
+// Setters
+
+void ImageFactory::set_width(uint32_t width) {
+  m_width = width;
+}
+
+void ImageFactory::set_height(uint32_t height) {
+  m_height = height;
+}
+
+void ImageFactory::set_frame_count(uint32_t frame_count) {
+  m_frame_count = frame_count;
 }
 
 // Colorspace Functions

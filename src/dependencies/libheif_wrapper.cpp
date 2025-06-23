@@ -8,6 +8,7 @@
 #include <libheif/heif.h>
 #include <libheif/heif_items.h>
 #include <libheif/heif_properties.h>
+#include <libheif/heif_sequences.h>
 #include <libheif/heif_tai_timestamps.h>
 #include <sstream>
 #include <string>
@@ -111,6 +112,45 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
   gimify(primary_id);
 
   heif_encoding_options_free(encoding_options);
+}
+
+void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
+  struct heif_track_builder *builder = heif_track_builder_alloc();
+  uint16_t width = rawImages[0].get_width();
+  uint16_t height = rawImages[0].get_height();
+  struct heif_encoding_options *options = heif_encoding_options_alloc();
+  struct heif_sequence_encoding_options *seq_options;
+  heif_track *out_track;
+  he(heif_context_add_visual_sequence_track(
+      m_ctx,
+      builder,
+      width, height,
+      heif_track_type_image_sequence,
+      options,
+      seq_options,
+      &out_track));
+  cout << "Added video track with ID: " << endl;
+
+  heif_image *img;
+  heif_chroma chroma = extract_chroma(rawImages[0]);
+  heif_colorspace colorspace = extract_colorspace(rawImages[0]);
+  img = convert_to_heif_image(rawImages[0], colorspace, chroma);
+
+  // Get Encoder
+  heif_compression_format compression = extract_compression(m_options.codec);
+  heif_encoder *encoder;
+  he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
+
+  // for each rawImage in rawImages
+  for (const RawImage &rawImage : rawImages) {
+    img = convert_to_heif_image(rawImage, colorspace, chroma);
+    he(heif_track_encode_sequence_image(
+        out_track,
+        img,
+        encoder,
+        options,
+        seq_options));
+  }
 }
 
 void LibheifWrapper::write_to_heif() {

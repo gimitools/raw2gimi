@@ -17,6 +17,12 @@ public:
   vector<RawImage> create_sequence(string pixel_algorithm);
   RawImageGrid create_tiles(uint32_t tile_count_x, uint32_t tile_count_y);
 
+public:
+  // Setters
+  void set_width(uint32_t width);
+  void set_height(uint32_t height);
+  void set_frame_count(uint32_t frame_count);
+
 protected:
   // Colorspace Functions
   RawImage create_image_yuv();

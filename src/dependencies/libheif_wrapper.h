@@ -18,6 +18,7 @@ public:
   // API
   void add_image(const RawImage &);
   void add_grid(const RawImageGrid &);
+  void add_video(const vector<RawImage> &);
   void write_to_heif();
 
 protected:
