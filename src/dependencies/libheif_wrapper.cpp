@@ -125,7 +125,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
       m_ctx,
       builder,
       width, height,
-      heif_track_type_image_sequence,
+      heif_track_type_video,
       options,
       seq_options,
       &out_track));
@@ -144,6 +144,8 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // for each rawImage in rawImages
   for (const RawImage &rawImage : rawImages) {
     img = convert_to_heif_image(rawImage, colorspace, chroma);
+    uint32_t duration = 90000;
+    heif_image_set_duration(img, duration);
     he(heif_track_encode_sequence_image(
         out_track,
         img,

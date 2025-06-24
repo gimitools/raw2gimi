@@ -8,6 +8,8 @@
 using namespace std;
 using namespace gimi;
 
+// TODO - Use Builder Design Pattern
+
 class ImageFactory {
 public:
   ImageFactory(uint32_t width, uint32_t height, Chroma, Interleave, PixelType);
