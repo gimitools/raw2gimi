@@ -178,12 +178,15 @@ void LibheifWrapper::add_metadata_track() {
       &track));
 
   heif_raw_sequence_sample *raw_sequence_sample = heif_raw_sequence_sample_alloc();
+
+  // Set Data
   const uint8_t *data;
   string dummy_data = "dummy data for sequence sample";
   size_t size = dummy_data.size();
 
   // Add Samples
   for (uint32_t i = 0; i < 10; i++) {
+    heif_raw_sequence_sample_set_gimi_sample_content_id(raw_sequence_sample, generate_content_id().c_str());
     he(heif_raw_sequence_sample_set_data(raw_sequence_sample, (uint8_t *)dummy_data.data(), size));
     heif_raw_sequence_sample_set_duration(raw_sequence_sample, 90000);
     he(heif_track_add_raw_sequence_sample(track, raw_sequence_sample));
