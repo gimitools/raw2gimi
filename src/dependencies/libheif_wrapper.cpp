@@ -115,7 +115,7 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
 }
 
 void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
-  struct heif_track_builder *builder = heif_track_builder_alloc();
+  struct heif_track_options *track_options = heif_track_options_alloc();
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
   struct heif_encoding_options *options = heif_encoding_options_alloc();
@@ -123,7 +123,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   heif_track *out_track;
   he(heif_context_add_visual_sequence_track(
       m_ctx,
-      builder,
+      track_options,
       width, height,
       heif_track_type_video,
       options,
