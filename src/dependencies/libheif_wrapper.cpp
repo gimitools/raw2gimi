@@ -120,7 +120,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   uint16_t height = rawImages[0].get_height();
   struct heif_encoding_options *options = heif_encoding_options_alloc();
   struct heif_sequence_encoding_options *seq_options;
-  heif_track *out_track;
+  heif_track *track;
   he(heif_context_add_visual_sequence_track(
       m_ctx,
       track_options,
@@ -128,8 +128,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
       heif_track_type_video,
       options,
       seq_options,
-      &out_track));
-  cout << "Added video track with ID: " << endl;
+      &track));
 
   heif_image *img;
   heif_chroma chroma = extract_chroma(rawImages[0]);
@@ -147,11 +146,47 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
     uint32_t duration = 90000;
     heif_image_set_duration(img, duration);
     he(heif_track_encode_sequence_image(
-        out_track,
+        track,
         img,
         encoder,
         options,
         seq_options));
+  }
+
+  // Add Track Content Id
+
+  // Sample Content IDs
+
+  // Timestamps
+
+  // KLV metadata
+  // struct heif_error heif_context_add_uri_metadata_sequence_track(
+  //   heif_context*,
+  //   struct heif_track_options* options,
+  //   const char* uri,
+  //   heif_track** out_track);
+}
+
+void LibheifWrapper::add_metadata_track() {
+  struct heif_track_options *options = nullptr;
+  const char *uri = "http://example.com/metadata";
+  heif_track *track;
+  he(heif_context_add_uri_metadata_sequence_track(
+      m_ctx,
+      options,
+      uri,
+      &track));
+
+  heif_raw_sequence_sample *raw_sequence_sample = heif_raw_sequence_sample_alloc();
+  const uint8_t *data;
+  string dummy_data = "dummy data for sequence sample";
+  size_t size = dummy_data.size();
+
+  // Add Samples
+  for (uint32_t i = 0; i < 10; i++) {
+    he(heif_raw_sequence_sample_set_data(raw_sequence_sample, (uint8_t *)dummy_data.data(), size));
+    heif_raw_sequence_sample_set_duration(raw_sequence_sample, 90000);
+    he(heif_track_add_raw_sequence_sample(track, raw_sequence_sample));
   }
 }
 

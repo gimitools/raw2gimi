@@ -21,6 +21,7 @@ void Gimifier::write_grid_to_file(const RawImageGrid &images, WriteOptions optio
 void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions options) {
   LibheifWrapper libheif(options);
   libheif.add_video(frames);
+  libheif.add_metadata_track(); // TESTING!
   libheif.write_to_heif();
 }
 

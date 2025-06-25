@@ -19,6 +19,7 @@ public:
   void add_image(const RawImage &);
   void add_grid(const RawImageGrid &);
   void add_video(const vector<RawImage> &);
+  void add_metadata_track();
   void write_to_heif();
 
 protected:
