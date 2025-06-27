@@ -129,7 +129,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
 
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
-  struct heif_sequence_encoding_options *seq_options;
+  struct heif_sequence_encoding_options *seq_options = heif_sequence_encoding_options_alloc();
   heif_track *track;
   he(heif_context_add_visual_sequence_track(
       m_ctx,
