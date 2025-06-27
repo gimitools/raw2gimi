@@ -121,6 +121,12 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // Track Content ID
   heif_track_options_set_gimi_track_id(track_options, generate_content_id().c_str());
 
+  // heif_sample_aux_info_presence_none = 0,
+  // heif_sample_aux_info_presence_optional = 1,
+  // heif_sample_aux_info_presence_mandatory = 2
+
+  heif_track_options_enable_gimi_content_ids(track_options, heif_sample_aux_info_presence_optional);
+
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
   struct heif_encoding_options *enc_options = heif_encoding_options_alloc();
@@ -150,6 +156,8 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
     img = convert_to_heif_image(rawImage, colorspace, chroma);
     uint32_t duration = 90000;
     heif_image_set_duration(img, duration);
+    // heif_image_set_gimi_sample_content_id(img, generate_content_id().c_str());
+    heif_image_set_gimi_sample_content_id(img, "foo bar");
     he(heif_track_encode_sequence_image(
         track,
         img,
@@ -157,8 +165,6 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
         enc_options,
         seq_options));
   }
-
-  // Add Track Content Id
 
   // Sample Content IDs
 

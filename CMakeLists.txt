@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
 
 # Add libheif submodule
+set(HEIF_ENABLE_EXPERIMENTAL_FEATURES ON CACHE BOOL "Enable experimental features in libheif")
 set(WITH_UNCOMPRESSED_CODEC ON CACHE BOOL "Enable Uncompressed codec in libheif")
 set(WITH_OpenJPEG ON CACHE BOOL "Enable OpenJPEG JPEG 2000 codec")
 set(LIBHEIF_DIR submodules/libheif)
