@@ -125,19 +125,17 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // heif_sample_aux_info_presence_optional = 1,
   // heif_sample_aux_info_presence_mandatory = 2
 
-  heif_track_options_enable_gimi_content_ids(track_options, heif_sample_aux_info_presence_optional);
+  heif_track_options_enable_sample_gimi_content_ids(track_options, heif_sample_aux_info_presence_optional);
 
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
-  struct heif_encoding_options *enc_options = heif_encoding_options_alloc();
   struct heif_sequence_encoding_options *seq_options;
   heif_track *track;
   he(heif_context_add_visual_sequence_track(
       m_ctx,
-      track_options,
       width, height,
       heif_track_type_video,
-      enc_options,
+      track_options,
       seq_options,
       &track));
 
@@ -162,7 +160,6 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
         track,
         img,
         encoder,
-        enc_options,
         seq_options));
   }
 
@@ -184,8 +181,8 @@ void LibheifWrapper::add_metadata_track() {
   heif_track *track;
   he(heif_context_add_uri_metadata_sequence_track(
       m_ctx,
-      options,
       uri,
+      options,
       &track));
 
   heif_raw_sequence_sample *raw_sequence_sample = heif_raw_sequence_sample_alloc();
