@@ -124,8 +124,8 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // heif_sample_aux_info_presence_none = 0,
   // heif_sample_aux_info_presence_optional = 1,
   // heif_sample_aux_info_presence_mandatory = 2
-
-  heif_track_options_enable_sample_gimi_content_ids(track_options, heif_sample_aux_info_presence_optional);
+  heif_sample_aux_info_presence presense = heif_sample_aux_info_presence_mandatory;
+  heif_track_options_enable_sample_gimi_content_ids(track_options, presense);
 
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
