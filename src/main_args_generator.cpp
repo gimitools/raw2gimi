@@ -97,6 +97,16 @@ void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
 
 void MainArgsGenerator::simulate_cli_sequence(vector<MainArgs> &v) {
   MainArgs sequence;
+  MainArgsBuilder builder;
+  builder.action("write_sequence")
+      .width("64")
+      .height("64")
+      .codec("hevc")
+      .chroma("444")
+      .interleave("planar")
+      .pixel_type("8")
+      .output_filename("out/hevc_sequence_64x64.heif");
+  sequence = std::move(builder.build());
   {
     sequence.action = "write_sequence";
     sequence.width = "64";

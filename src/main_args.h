@@ -48,5 +48,5 @@ public: // User Input
 
 private: // Helper Functions
   uint32_t string_to_int(string str, uint32_t default_value);
-  const uint32_t default_dimensions = 64;
+  static const uint32_t default_dimensions = 64;
 };

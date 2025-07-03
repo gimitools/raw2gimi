@@ -14,6 +14,7 @@ public:
   MainArgs build();
 
 public:
+  // Setters
   MainArgsBuilder &input_filename(const string &filename);
   MainArgsBuilder &output_filename(const string &filename);
   MainArgsBuilder &codec(const string &codec);
