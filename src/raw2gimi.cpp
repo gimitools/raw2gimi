@@ -99,7 +99,7 @@ void Raw2Gimi::write_image_with_rdf() {
 
 void Raw2Gimi::generate_sample_files() {
 
-  vector<MainArgs> all_args;
+  vector<MainArgs> all_args = MainArgsGenerator::generate_main_args();
   for (const MainArgs &args : all_args) {
     Raw2Gimi raw2gimi(args);
     raw2gimi.execute_action();
