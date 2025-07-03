@@ -3,6 +3,20 @@
 
 using namespace gimi;
 
+// Public
+
+const vector<MainArgs> MainArgsGenerator::generate_main_args() {
+  vector<MainArgs> all_args;
+
+  MainArgsGenerator::simulate_cli_simple(all_args);
+  MainArgsGenerator::simulate_cli_grid(all_args);
+  MainArgsGenerator::simulate_cli_sequence(all_args);
+
+  return all_args;
+}
+
+// Protected
+
 MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
   MainArgs args;
   args.codec = encoding;
@@ -15,8 +29,7 @@ MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string i
   return args;
 }
 
-const vector<MainArgs> MainArgsGenerator::simulate_cli_simple() {
-  vector<MainArgs> v;
+void MainArgsGenerator::simulate_cli_simple(vector<MainArgs> &v) {
   string codec = "hevc";
   string chroma = "rgb";
   string interleave = "interleaved";
@@ -54,13 +67,9 @@ const vector<MainArgs> MainArgsGenerator::simulate_cli_simple() {
   // 1. grid
   // 2. uncC internal
   // 3. tili
-
-  return v;
 };
 
-const vector<MainArgs> MainArgsGenerator::simulate_cli_grid() {
-  vector<MainArgs> v;
-
+void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
   MainArgs grid_2x2;
   {
     grid_2x2.action = "write_grid";
@@ -83,12 +92,9 @@ const vector<MainArgs> MainArgsGenerator::simulate_cli_grid() {
 
   // MainArgs uncC_internal;
   // MainArgs tili_item;
-
-  return v;
 }
 
-const vector<MainArgs> MainArgsGenerator::simulate_cli_sequence() {
-  vector<MainArgs> v;
+void MainArgsGenerator::simulate_cli_sequence(vector<MainArgs> &v) {
   MainArgs sequence;
   {
     sequence.action = "write_sequence";
@@ -101,7 +107,6 @@ const vector<MainArgs> MainArgsGenerator::simulate_cli_sequence() {
     sequence.output_filename = "out/hevc_sequence_64x64.heif";
   }
   v.push_back(sequence);
-  return v;
 }
 
 string MainArgsGenerator::create_filename(MainArgs p) {
