@@ -18,6 +18,11 @@ void SampleFileGenerator::generate_sample_files(const string &output_directory) 
   }
 
   // Image Sequences
+  vector<MainArgs> sequence_args = SampleFileGenerator::simulate_cli_sequence();
+  for (const MainArgs &args : sequence_args) {
+    Raw2Gimi raw2gimi(args);
+    raw2gimi.write_sequence();
+  }
 }
 
 MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
@@ -101,6 +106,23 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
   // MainArgs uncC_internal;
   // MainArgs tili_item;
 
+  return v;
+}
+
+const vector<MainArgs> SampleFileGenerator::simulate_cli_sequence() {
+  vector<MainArgs> v;
+  MainArgs sequence;
+  {
+    sequence.action = "write_sequence";
+    sequence.width = "64";
+    sequence.height = "64";
+    sequence.codec = "hevc";
+    sequence.chroma = "444";
+    sequence.interleave = "planar";
+    sequence.pixel_type = "8";
+    sequence.output_filename = "out/hevc_sequence_64x64.heif";
+  }
+  v.push_back(sequence);
   return v;
 }
 
