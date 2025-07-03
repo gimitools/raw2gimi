@@ -1,29 +1,7 @@
 #include "sample_file_generator.h"
+#include "raw2gimi.h"
 
 using namespace gimi;
-
-void SampleFileGenerator::generate_sample_files(const string &output_directory) {
-  // Simple Images
-  vector<MainArgs> simple_args = SampleFileGenerator::simulate_cli_simple();
-  for (const MainArgs &args : simple_args) {
-    Raw2Gimi raw2gimi(args);
-    raw2gimi.write_image();
-  }
-
-  // Grid Images
-  vector<MainArgs> grid_args = SampleFileGenerator::simulate_cli_grid();
-  for (const MainArgs &args : grid_args) {
-    Raw2Gimi raw2gimi(args);
-    raw2gimi.write_grid();
-  }
-
-  // Image Sequences
-  vector<MainArgs> sequence_args = SampleFileGenerator::simulate_cli_sequence();
-  for (const MainArgs &args : sequence_args) {
-    Raw2Gimi raw2gimi(args);
-    raw2gimi.write_sequence();
-  }
-}
 
 MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
   MainArgs args;
@@ -53,17 +31,17 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_simple() {
   // v.push_back(create_args("unc", "rgb", interleave, "10", height, width));
 
   // Codec variations
-  // v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));
-  // v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
-  // v.push_back(create_args("av1", chroma, interleave, pixel_type, height, width));
+  v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));
+  v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
+  v.push_back(create_args("av1", chroma, interleave, pixel_type, height, width));
   // Warning! OpenJPEG not compiled in!
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
 
   // HDR
-  // v.push_back(create_args("unc", chroma, interleave, "10", height, width));
-  // v.push_back(create_args("unc", chroma, interleave, "12", height, width));
-  // v.push_back(create_args("unc", chroma, interleave, "14", height, width));
-  // v.push_back(create_args("unc", chroma, interleave, "16", height, width));
+  v.push_back(create_args("unc", chroma, interleave, "10", height, width));
+  v.push_back(create_args("unc", chroma, interleave, "12", height, width));
+  v.push_back(create_args("unc", chroma, interleave, "14", height, width));
+  v.push_back(create_args("unc", chroma, interleave, "16", height, width));
 
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));

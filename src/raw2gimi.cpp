@@ -4,6 +4,7 @@
 #include "gimifier.h"
 #include "image_factory.h"
 #include "model/pixel_formats.h"
+#include "sample_file_generator.h"
 
 using namespace gimi;
 
@@ -70,6 +71,29 @@ void Raw2Gimi::heif_to_gimi() {
 
 void Raw2Gimi::write_image_with_rdf() {
   Gimifier::debug();
+}
+
+void Raw2Gimi::generate_sample_files() {
+  // Simple Images
+  vector<MainArgs> simple_args = SampleFileGenerator::simulate_cli_simple();
+  for (const MainArgs &args : simple_args) {
+    Raw2Gimi raw2gimi(args);
+    raw2gimi.write_image();
+  }
+
+  // Grid Images
+  vector<MainArgs> grid_args = SampleFileGenerator::simulate_cli_grid();
+  for (const MainArgs &args : grid_args) {
+    Raw2Gimi raw2gimi(args);
+    raw2gimi.write_grid();
+  }
+
+  // Image Sequences
+  vector<MainArgs> sequence_args = SampleFileGenerator::simulate_cli_sequence();
+  for (const MainArgs &args : sequence_args) {
+    Raw2Gimi raw2gimi(args);
+    raw2gimi.write_sequence();
+  }
 }
 
 // Primary Functions

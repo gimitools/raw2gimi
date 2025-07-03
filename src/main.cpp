@@ -1,6 +1,5 @@
 #include "main_args.h" // Custom header for argument parsing
 #include "raw2gimi.h"
-#include "sample_file_generator.h"
 #include <iostream>
 
 using namespace std;
@@ -21,7 +20,7 @@ bool execute_action(string action, MainArgs args) {
   } else if (action == "write_image_with_rdf") {
     raw2gimi.write_image_with_rdf();
   } else if (action == "generate_sample_files") {
-    SampleFileGenerator::generate_sample_files("out"); // TODO: move to inside Raw2Gimi
+    raw2gimi.generate_sample_files();
   } else {
     return false; // action not found
   }

@@ -1,6 +1,5 @@
 #pragma once
 #include "main_args.h"
-#include "raw2gimi.h"
 #include <string>
 #include <vector>
 
@@ -11,9 +10,9 @@ namespace gimi {
 class SampleFileGenerator {
   // TODO: move to inside Raw2Gimi
 public:
-  static void generate_sample_files(const string &output_directory);
+  // static void generate_sample_files(const string &output_directory);
 
-protected:
+public:
   static const vector<MainArgs> simulate_cli_simple();
   static const vector<MainArgs> simulate_cli_grid();
   static const vector<MainArgs> simulate_cli_sequence();

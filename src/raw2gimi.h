@@ -18,6 +18,7 @@ public:
   void raw_to_gimi();
   void heif_to_gimi();
   void write_image_with_rdf();
+  void generate_sample_files();
 
 protected:
   // Primary Functions
