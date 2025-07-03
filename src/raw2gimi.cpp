@@ -11,6 +11,7 @@ using namespace gimi;
 // Constructor
 
 Raw2Gimi::Raw2Gimi(MainArgs args) {
+  m_action = args.action;
   m_width = args.extract_width();
   m_height = args.extract_height();
   m_rows = args.extract_rows();
@@ -23,7 +24,30 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
   m_input_filename = args.input_filename;
 }
 
+// Primary API Function
+
+void Raw2Gimi::execute_action() {
+  if (m_action == "write_image" || m_action.empty()) {
+    write_image();
+  } else if (m_action == "write_grid") {
+    write_grid();
+  } else if (m_action == "write_sequence") {
+    write_sequence();
+  } else if (m_action == "raw_to_gimi") {
+    raw_to_gimi();
+  } else if (m_action == "heif_to_gimi") {
+    heif_to_gimi();
+  } else if (m_action == "write_image_with_rdf") {
+    write_image_with_rdf();
+  } else if (m_action == "generate_sample_files") {
+    generate_sample_files();
+  } else {
+    throw_error("Unrecognized action: %s", m_action);
+  }
+}
+
 // CLI API
+
 void Raw2Gimi::write_image() {
 
   // Create RawImage

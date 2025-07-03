@@ -11,6 +11,10 @@ public:
   Raw2Gimi(MainArgs);
 
 public:
+  // Primary API Function
+  void execute_action();
+
+public:
   // CLI API
   void write_image();
   void write_grid();
@@ -30,6 +34,7 @@ private:
 
 private:
   // Member Variables
+  string m_action;
   uint32_t m_width;
   uint32_t m_height;
   uint32_t m_rows;

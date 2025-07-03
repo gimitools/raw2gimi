@@ -5,43 +5,19 @@
 using namespace std;
 using namespace gimi;
 
-bool execute_action(string action, MainArgs args) {
-  Raw2Gimi raw2gimi(args);
-  if (action == "write_image" || action.empty()) {
-    raw2gimi.write_image();
-  } else if (action == "write_grid") {
-    raw2gimi.write_grid();
-  } else if (action == "write_sequence") {
-    raw2gimi.write_sequence();
-  } else if (action == "raw_to_gimi") {
-    raw2gimi.raw_to_gimi();
-  } else if (action == "heif_to_gimi") {
-    raw2gimi.heif_to_gimi();
-  } else if (action == "write_image_with_rdf") {
-    raw2gimi.write_image_with_rdf();
-  } else if (action == "generate_sample_files") {
-    raw2gimi.generate_sample_files();
-  } else {
-    return false; // action not found
-  }
-  return true; // action found
-}
-
 int main(int argc, const char *argv[]) {
   cout << "================= raw2gimi =================" << endl;
 
-  // Parse Options
+  // Parse CLI Options
   MainArgs args(argc, argv);
-  bool action_found = false;
-  string action = args.action;
 
-  action_found = execute_action(action, args);
+  // Create Primary Object
+  Raw2Gimi raw2gimi(args);
 
-  // End of Program
-  if (!action_found) {
-    cout << "Action not found: " << action << endl;
-  }
+  // Execute Action
+  raw2gimi.execute_action();
 
   cout << "=============== End of raw2gimi ===============" << endl;
+
   return 0;
 }
