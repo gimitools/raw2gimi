@@ -7,7 +7,7 @@ using namespace std;
 
 namespace gimi {
 
-class SampleFileGenerator {
+class MainArgsGenerator {
   // TODO: move to inside Raw2Gimi
 public:
   // static void generate_sample_files(const string &output_directory);

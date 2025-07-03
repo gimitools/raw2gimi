@@ -1,9 +1,9 @@
-#include "sample_file_generator.h"
+#include "main_args_generator.h"
 #include "raw2gimi.h"
 
 using namespace gimi;
 
-MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
+MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
   MainArgs args;
   args.codec = encoding;
   args.chroma = chroma;
@@ -15,7 +15,7 @@ MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string
   return args;
 }
 
-const vector<MainArgs> SampleFileGenerator::simulate_cli_simple() {
+const vector<MainArgs> MainArgsGenerator::simulate_cli_simple() {
   vector<MainArgs> v;
   string codec = "hevc";
   string chroma = "rgb";
@@ -58,7 +58,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_simple() {
   return v;
 };
 
-const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
+const vector<MainArgs> MainArgsGenerator::simulate_cli_grid() {
   vector<MainArgs> v;
 
   MainArgs grid_2x2;
@@ -87,7 +87,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_grid() {
   return v;
 }
 
-const vector<MainArgs> SampleFileGenerator::simulate_cli_sequence() {
+const vector<MainArgs> MainArgsGenerator::simulate_cli_sequence() {
   vector<MainArgs> v;
   MainArgs sequence;
   {
@@ -104,7 +104,7 @@ const vector<MainArgs> SampleFileGenerator::simulate_cli_sequence() {
   return v;
 }
 
-string SampleFileGenerator::create_filename(MainArgs p) {
+string MainArgsGenerator::create_filename(MainArgs p) {
   // TODO: move to Raw2Gimi constructor
   string filename = "out/" +
                     p.codec + "_" +
