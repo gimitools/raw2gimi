@@ -52,8 +52,6 @@ void Raw2Gimi::write_sequence() {
   // Create sequence
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   imageFactory.set_frame_count(60);
-  imageFactory.set_width(m_width);
-  imageFactory.set_height(m_height);
   vector<RawImage> sequence = imageFactory.create_sequence("solid");
 
   WriteOptions options = create_write_options();

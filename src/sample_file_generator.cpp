@@ -3,17 +3,21 @@
 using namespace gimi;
 
 void SampleFileGenerator::generate_sample_files(const string &output_directory) {
+  // Simple Images
   vector<MainArgs> simple_args = SampleFileGenerator::simulate_cli_simple();
   for (const MainArgs &args : simple_args) {
     Raw2Gimi raw2gimi(args);
     raw2gimi.write_image();
   }
 
+  // Grid Images
   vector<MainArgs> grid_args = SampleFileGenerator::simulate_cli_grid();
   for (const MainArgs &args : grid_args) {
     Raw2Gimi raw2gimi(args);
     raw2gimi.write_grid();
   }
+
+  // Image Sequences
 }
 
 MainArgs SampleFileGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
