@@ -96,16 +96,23 @@ void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
 }
 
 void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
-  MainArgs sequence;
+  MainArgs args;
   MainArgsBuilder builder;
+  // Defaults
   builder.action("create_sequence")
-      .codec("hevc")
       .chroma("rgb")
       .interleave("planar")
-      .pixel_type("8")
-      .output_filename("out/hevc_sequence_64x64.mp4");
-  sequence = std::move(builder.build());
-  v.push_back(sequence);
+      .pixel_type("8");
+
+  args = builder.codec("hevc")
+             .output_filename("out/hevc_sequence_64x64.mp4")
+             .build();
+  v.push_back(args);
+
+  args = builder.codec("av1")
+             .output_filename("out/av1_sequence_64x64.mp4")
+             .build();
+  v.push_back(args);
 }
 
 string MainArgsGenerator::create_filename(MainArgs p) {
