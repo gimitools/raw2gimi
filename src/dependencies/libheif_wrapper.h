@@ -53,5 +53,5 @@ protected:
 private:
   // Member Variables
   WriteOptions m_options;
-  heif_context *m_ctx; // TODO
+  heif_context *m_ctx;
 };

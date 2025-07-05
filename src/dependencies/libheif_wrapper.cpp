@@ -180,7 +180,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
 
 void LibheifWrapper::add_metadata_track() {
   struct heif_track_options *options = nullptr;
-  const char *uri = "http://example.com/metadata";
+  const char *uri = "dummy_uri_for_metadata_track";
   heif_track *track;
   he(heif_context_add_uri_metadata_sequence_track(
       m_ctx,
