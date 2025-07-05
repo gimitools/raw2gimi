@@ -56,13 +56,12 @@ MainArgs::MainArgs() {
   interleave = "interleaved";
   pixel_type = "8";
   action = "heif_to_gimi";
-  debug = "";
   pixel_algorithm = "solid";
   width = "64";
   height = "64";
   rows = "2";
   columns = "2";
-  tile_directory = "";
+  tile_directory = "in";
   scale_factor = "1.0";
   layers = "1";
 }

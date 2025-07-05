@@ -99,24 +99,12 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   MainArgs sequence;
   MainArgsBuilder builder;
   builder.action("create_sequence")
-      .width("64")
-      .height("64")
       .codec("hevc")
-      .chroma("444")
+      .chroma("rgb")
       .interleave("planar")
       .pixel_type("8")
-      .output_filename("out/hevc_sequence_64x64.heif");
+      .output_filename("out/hevc_sequence_64x64.mp4");
   sequence = std::move(builder.build());
-  {
-    sequence.action = "create_sequence";
-    sequence.width = "64";
-    sequence.height = "64";
-    sequence.codec = "hevc";
-    sequence.chroma = "444";
-    sequence.interleave = "planar";
-    sequence.pixel_type = "8";
-    sequence.output_filename = "out/hevc_sequence_64x64.heif";
-  }
   v.push_back(sequence);
 }
 
