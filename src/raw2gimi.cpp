@@ -27,8 +27,8 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
 // Primary API Function
 
 void Raw2Gimi::execute_action() {
-  if (m_action == "write_image" || m_action.empty()) {
-    write_image();
+  if (m_action == "create_image" || m_action.empty()) {
+    create_image();
   } else if (m_action == "write_grid") {
     write_grid();
   } else if (m_action == "write_sequence") {
@@ -48,7 +48,7 @@ void Raw2Gimi::execute_action() {
 
 // CLI API
 
-void Raw2Gimi::write_image() {
+void Raw2Gimi::create_image() {
 
   // Create RawImage
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
