@@ -10,10 +10,12 @@ using namespace std;
 class MainArgs {
 
 public:
+  // Constructors
   MainArgs(int argc, const char *argv[]);
-  MainArgs() = default;
+  MainArgs();
 
 public:
+  // Getters
   string extract_output_filename();
   gimi::Codec extract_codec();
   gimi::Chroma extract_chroma();
@@ -34,7 +36,7 @@ public: // User Input
   string chroma;
   string interleave;
   string pixel_type;
-  string action = "heif_to_gimi";
+  string action;
   string debug;
   string pixel_algorithm;
   string width;

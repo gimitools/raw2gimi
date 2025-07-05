@@ -48,6 +48,27 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   // }
 }
 
+MainArgs::MainArgs() {
+  input_filename = "in.heif";
+  output_filename = "out.heif";
+  codec = "hevc";
+  chroma = "rgb";
+  interleave = "interleaved";
+  pixel_type = "8";
+  action = "heif_to_gimi";
+  debug = "";
+  pixel_algorithm = "solid";
+  width = "64";
+  height = "64";
+  rows = "2";
+  columns = "2";
+  tile_directory = "";
+  scale_factor = "1.0";
+  layers = "1";
+}
+
+// Getters
+
 string MainArgs::extract_output_filename() {
   if (output_filename.empty()) {
     return "out/output.heif"; // default output filename
