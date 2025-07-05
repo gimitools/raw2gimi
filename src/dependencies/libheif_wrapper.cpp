@@ -119,6 +119,7 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // Variables
   struct heif_track_options *track_options = heif_track_options_alloc();
   struct heif_sequence_encoding_options *seq_options = heif_sequence_encoding_options_alloc();
+  struct heif_tai_clock_info *clock_info = heif_tai_clock_info_alloc();
   heif_track *track;
   uint16_t width = rawImages[0].get_width();
   uint16_t height = rawImages[0].get_height();
@@ -129,9 +130,10 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
   // Track Content ID
   heif_track_options_set_gimi_track_id(track_options, generate_content_id().c_str());
 
-  // Require Sample Content IDs
-  heif_sample_aux_info_presence presense = heif_sample_aux_info_presence_mandatory;
-  heif_track_options_enable_sample_gimi_content_ids(track_options, presense);
+  // Require GIMI metadata
+  heif_sample_aux_info_presence mandatory = heif_sample_aux_info_presence_mandatory;
+  heif_track_options_enable_sample_gimi_content_ids(track_options, mandatory);
+  heif_track_options_enable_sample_tai_timestamps(track_options, clock_info, mandatory);
 
   // Add Video Track
   he(heif_context_add_visual_sequence_track(
@@ -166,6 +168,11 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
         encoder,
         seq_options));
   }
+
+  // Cleanup
+  heif_tai_clock_info_release(clock_info);
+  heif_track_options_release(track_options);
+  heif_sequence_encoding_options_release(seq_options);
 }
 
 void LibheifWrapper::add_metadata_track() {
