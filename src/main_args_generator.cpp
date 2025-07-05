@@ -8,9 +8,9 @@ using namespace gimi;
 const vector<MainArgs> MainArgsGenerator::generate_main_args() {
   vector<MainArgs> all_args;
 
-  MainArgsGenerator::simulate_cli_simple(all_args);
-  MainArgsGenerator::simulate_cli_grid(all_args);
-  MainArgsGenerator::simulate_cli_sequence(all_args);
+  MainArgsGenerator::add_args_simple(all_args);
+  MainArgsGenerator::add_args_grid(all_args);
+  MainArgsGenerator::add_args_sequence(all_args);
 
   return all_args;
 }
@@ -30,7 +30,7 @@ MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string i
   return args;
 }
 
-void MainArgsGenerator::simulate_cli_simple(vector<MainArgs> &v) {
+void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   string codec = "hevc";
   string chroma = "rgb";
   string interleave = "interleaved";
@@ -70,7 +70,7 @@ void MainArgsGenerator::simulate_cli_simple(vector<MainArgs> &v) {
   // 3. tili
 };
 
-void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
+void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
   MainArgs grid_2x2;
   {
     grid_2x2.action = "create_grid";
@@ -95,7 +95,7 @@ void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
   // MainArgs tili_item;
 }
 
-void MainArgsGenerator::simulate_cli_sequence(vector<MainArgs> &v) {
+void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   MainArgs sequence;
   MainArgsBuilder builder;
   builder.action("create_sequence")
