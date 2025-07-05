@@ -116,21 +116,24 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
 
 void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
 
+  // Variables
   struct heif_track_options *track_options = heif_track_options_alloc();
+  struct heif_sequence_encoding_options *seq_options = heif_sequence_encoding_options_alloc();
+  heif_track *track;
+  uint16_t width = rawImages[0].get_width();
+  uint16_t height = rawImages[0].get_height();
+  heif_image *img;
+  heif_chroma chroma = extract_chroma(rawImages[0]);
+  heif_colorspace colorspace = extract_colorspace(rawImages[0]);
 
   // Track Content ID
   heif_track_options_set_gimi_track_id(track_options, generate_content_id().c_str());
 
-  // heif_sample_aux_info_presence_none = 0,
-  // heif_sample_aux_info_presence_optional = 1,
-  // heif_sample_aux_info_presence_mandatory = 2
+  // Require Sample Content IDs
   heif_sample_aux_info_presence presense = heif_sample_aux_info_presence_mandatory;
   heif_track_options_enable_sample_gimi_content_ids(track_options, presense);
 
-  uint16_t width = rawImages[0].get_width();
-  uint16_t height = rawImages[0].get_height();
-  struct heif_sequence_encoding_options *seq_options = heif_sequence_encoding_options_alloc();
-  heif_track *track;
+  // Add Video Track
   he(heif_context_add_visual_sequence_track(
       m_ctx,
       width, height,
@@ -139,40 +142,30 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
       seq_options,
       &track));
 
-  heif_image *img;
-  heif_chroma chroma = extract_chroma(rawImages[0]);
-  heif_colorspace colorspace = extract_colorspace(rawImages[0]);
-  img = convert_to_heif_image(rawImages[0], colorspace, chroma);
-
   // Get Encoder
   heif_compression_format compression = extract_compression(m_options.codec);
   heif_encoder *encoder;
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
 
-  // for each rawImage in rawImages
+  // Encode Samples
+  uint32_t duration = 90000;
   for (const RawImage &rawImage : rawImages) {
     img = convert_to_heif_image(rawImage, colorspace, chroma);
-    uint32_t duration = 90000;
     heif_image_set_duration(img, duration);
-    // heif_image_set_gimi_sample_content_id(img, generate_content_id().c_str());
-    heif_image_set_gimi_sample_content_id(img, "foo bar");
+
+    // Sample Content ID
+    heif_image_set_gimi_sample_content_id(img, generate_content_id().c_str());
+
+    // Timestamp
+    // TODO
+
+    // Encode Sample
     he(heif_track_encode_sequence_image(
         track,
         img,
         encoder,
         seq_options));
   }
-
-  // Sample Content IDs
-
-  // Timestamps
-
-  // KLV metadata
-  // struct heif_error heif_context_add_uri_metadata_sequence_track(
-  //   heif_context*,
-  //   struct heif_track_options* options,
-  //   const char* uri,
-  //   heif_track** out_track);
 }
 
 void LibheifWrapper::add_metadata_track() {

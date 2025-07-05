@@ -98,6 +98,9 @@ void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
 void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   MainArgs args;
   MainArgsBuilder builder;
+
+  // TODO: automate output_filename creation
+
   // Defaults
   builder.action("create_sequence")
       .chroma("rgb")
