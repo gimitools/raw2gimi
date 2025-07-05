@@ -2,9 +2,24 @@
 
 using namespace gimi;
 
+// Constructor
+
+MainArgsBuilder::MainArgsBuilder() {
+}
+
+// Build Function
+
 MainArgs MainArgsBuilder::build() {
+
+  // Set output filename if not set
+  if (args.output_filename.empty() || args.output_filename == MainArgs::default_output_filename) {
+    args.output_filename = create_output_filename();
+  }
+
   return args;
 }
+
+// Setters
 
 MainArgsBuilder &MainArgsBuilder::input_filename(const string &input_filename) {
   args.input_filename = input_filename;
@@ -79,4 +94,22 @@ MainArgsBuilder &MainArgsBuilder::tile_directory(const string &tile_directory) {
 MainArgsBuilder &MainArgsBuilder::scale_factor(const string &scale_factor) {
   args.scale_factor = scale_factor;
   return *this;
+}
+
+// Helper Functions
+
+string MainArgsBuilder::create_output_filename() const {
+  string extension = ".heif";
+  if (args.action == "create_sequence") {
+    extension = ".mp4"; // Use .mp4 for video sequences
+  }
+
+  string output_filename = "out/" +
+                           args.codec + "_" +
+                           args.chroma + "_" +
+                           args.interleave + "_" +
+                           args.pixel_type + "bit_" +
+                           args.width + "x" + args.height +
+                           extension;
+  return output_filename;
 }

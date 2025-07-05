@@ -4,6 +4,8 @@
 
 using namespace gimi;
 
+const std::string MainArgs::default_output_filename = "out/output.heif";
+
 // Constructor
 MainArgs::MainArgs(int argc, const char *argv[]) {
   OptionHandler option_handler;
@@ -50,7 +52,7 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
 
 MainArgs::MainArgs() {
   input_filename = "in.heif";
-  output_filename = "out.heif";
+  output_filename = default_output_filename;
   codec = "hevc";
   chroma = "rgb";
   interleave = "interleaved";

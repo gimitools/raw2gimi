@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class MainArgs {
+struct MainArgs {
 
 public:
   // Constructors
@@ -29,7 +29,8 @@ public:
   double extract_scale_factor();
   void print();
 
-public: // User Input
+public:
+  // User Input
   string input_filename;
   string output_filename;
   string codec;
@@ -47,6 +48,9 @@ public: // User Input
   string scale_factor;
   string layers;
   bool flag1;
+
+public:
+  static const string default_output_filename;
 
 private: // Helper Functions
   uint32_t string_to_int(string str, uint32_t default_value);

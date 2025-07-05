@@ -7,7 +7,7 @@ namespace gimi {
 class MainArgsBuilder {
 public:
   // Constructor
-  MainArgsBuilder() = default;
+  MainArgsBuilder();
 
 public:
   // Build Function
@@ -30,6 +30,10 @@ public:
   MainArgsBuilder &columns(const string &columns);
   MainArgsBuilder &tile_directory(const string &tile_directory);
   MainArgsBuilder &scale_factor(const string &scale_factor);
+
+protected:
+  // Helper Functions
+  string create_output_filename() const;
 
 private:
   MainArgs args;

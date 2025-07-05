@@ -108,12 +108,12 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
       .pixel_type("8");
 
   args = builder.codec("hevc")
-             .output_filename("out/hevc_sequence_64x64.mp4")
+             //  .output_filename("out/hevc_sequence_64x64.mp4")
              .build();
   v.push_back(args);
 
   args = builder.codec("av1")
-             .output_filename("out/av1_sequence_64x64.mp4")
+             //  .output_filename("out/av1_sequence_64x64.mp4")
              .build();
   v.push_back(args);
 }
