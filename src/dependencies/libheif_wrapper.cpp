@@ -159,7 +159,8 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
     heif_image_set_gimi_sample_content_id(img, generate_content_id().c_str());
 
     // Timestamp
-    // TODO
+    heif_tai_timestamp_packet *timestamp = heif_tai_timestamp_packet_alloc();
+    heif_image_set_tai_timestamp(img, timestamp);
 
     // Encode Sample
     he(heif_track_encode_sequence_image(
@@ -167,6 +168,8 @@ void LibheifWrapper::add_video(const vector<RawImage> &rawImages) {
         img,
         encoder,
         seq_options));
+
+    heif_tai_timestamp_packet_release(timestamp);
   }
 
   // Cleanup
