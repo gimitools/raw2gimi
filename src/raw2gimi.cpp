@@ -31,8 +31,8 @@ void Raw2Gimi::execute_action() {
     create_image();
   } else if (m_action == "create_grid") {
     create_grid();
-  } else if (m_action == "write_sequence") {
-    write_sequence();
+  } else if (m_action == "create_sequence") {
+    create_sequence();
   } else if (m_action == "raw_to_gimi") {
     raw_to_gimi();
   } else if (m_action == "heif_to_gimi") {
@@ -73,7 +73,7 @@ void Raw2Gimi::create_grid() {
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::write_sequence() {
+void Raw2Gimi::create_sequence() {
   // Create sequence
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   imageFactory.set_frame_count(60);

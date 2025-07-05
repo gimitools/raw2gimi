@@ -18,7 +18,7 @@ public:
   // CLI API
   void create_image();
   void create_grid();
-  void write_sequence();
+  void create_sequence();
   void raw_to_gimi();
   void heif_to_gimi();
   void write_image_with_rdf();
