@@ -73,7 +73,7 @@ void MainArgsGenerator::simulate_cli_simple(vector<MainArgs> &v) {
 void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
   MainArgs grid_2x2;
   {
-    grid_2x2.action = "write_grid";
+    grid_2x2.action = "create_grid";
     grid_2x2.rows = "2";
     grid_2x2.columns = "2";
     grid_2x2.output_filename = "out/hevc_grid_2x2.heif";
@@ -83,7 +83,7 @@ void MainArgsGenerator::simulate_cli_grid(vector<MainArgs> &v) {
 
   MainArgs grid_large;
   {
-    grid_large.action = "write_grid";
+    grid_large.action = "create_grid";
     grid_large.rows = "10";
     grid_large.columns = "10";
     grid_large.output_filename = "out/hevc_grid_10x10.heif";

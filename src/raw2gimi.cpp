@@ -29,8 +29,8 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
 void Raw2Gimi::execute_action() {
   if (m_action == "create_image" || m_action.empty()) {
     create_image();
-  } else if (m_action == "write_grid") {
-    write_grid();
+  } else if (m_action == "create_grid") {
+    create_grid();
   } else if (m_action == "write_sequence") {
     write_sequence();
   } else if (m_action == "raw_to_gimi") {
@@ -61,7 +61,7 @@ void Raw2Gimi::create_image() {
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::write_grid() {
+void Raw2Gimi::create_grid() {
   // Create tiles
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   RawImageGrid grid = imageFactory.create_tiles(m_columns, m_rows);
