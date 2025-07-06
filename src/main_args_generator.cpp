@@ -37,6 +37,14 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   string pixel_type = "8";
   string width = "64";
   string height = "64";
+  MainArgs args;
+
+  args.set_action("create_image");
+
+  // Mono
+  args.set_chroma("gray")
+      .set_output_filename();
+  v.push_back(args);
 
   // Default
   // v.push_back(create_args(codec, chroma, interleave, pixel_type, height, width));
@@ -63,11 +71,6 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   v.push_back(create_args(codec, "444", "planar", pixel_type, height, width));
   // v.push_back(create_args(codec, "422", "planar", pixel_type, height, width));
   // v.push_back(create_args(codec, "420", "planar", pixel_type, height, width));
-
-  // Tiled
-  // 1. grid
-  // 2. uncC internal
-  // 3. tili
 };
 
 void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
