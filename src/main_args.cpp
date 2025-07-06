@@ -207,7 +207,14 @@ MainArgs &MainArgs::set_output_filename() {
   if (action == "create_sequence") {
     extension = ".mp4";
   }
-  throw_error("Not yet implemented!!!");
+  string filename = "out/" +
+                    codec + "_" +
+                    chroma + "_" +
+                    interleave + "_" +
+                    pixel_type + "bit_" +
+                    width + "x" +
+                    height +
+                    extension;
   return *this;
 }
 

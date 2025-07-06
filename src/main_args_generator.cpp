@@ -25,8 +25,8 @@ MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string i
       .set_interleave(interleave)
       .set_pixel_type(pixel_type)
       .set_width(width)
-      .set_height(height);
-  args.output_filename = create_filename(args);
+      .set_height(height)
+      .set_output_filename();
   return args;
 }
 
@@ -111,16 +111,4 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
 
   args.set_codec("av1");
   v.push_back(args);
-}
-
-string MainArgsGenerator::create_filename(MainArgs p) {
-  // TODO: move to Raw2Gimi constructor
-  string filename = "out/" +
-                    p.codec + "_" +
-                    p.chroma + "_" +
-                    p.interleave + "_" +
-                    p.pixel_type + "bit_" +
-                    p.width + "x" +
-                    p.height + ".heif";
-  return filename;
 }
