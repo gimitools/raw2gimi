@@ -109,8 +109,17 @@ RawImage ImageFactory::create_image_rgb() {
 }
 
 RawImage ImageFactory::create_image_mono() {
+  switch (m_interleave) {
+  case Interleave::interleaved:
+    return create_image_mono_interleaved();
+  case Interleave::planar:
+    return create_image_mono_planar();
+  default:
+    throw_error("Unsupported Interleave Type: %s", to_string(m_interleave).c_str());
+  }
   throw_error("Unsupported Feature: Monochrome Image Creation!");
-  return RawImage(0, 0);
+  RawImage image(0, 0);
+  return image;
 }
 
 // Interleave Functions
@@ -306,6 +315,18 @@ RawImage ImageFactory::create_image_444_interleaved_8bit() {
   // Add Pixels
   image.add_yuv_444_interleaved_8bit(pixels);
 
+  return image;
+}
+
+RawImage ImageFactory::create_image_mono_interleaved() {
+  throw_error("Unsupported Feature: Monochrome Image Creation!");
+  RawImage image(0, 0);
+  return image;
+}
+
+RawImage ImageFactory::create_image_mono_planar() {
+  throw_error("Unsupported Feature: Monochrome Image Creation!");
+  RawImage image(0, 0);
   return image;
 }
 

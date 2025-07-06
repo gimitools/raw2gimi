@@ -37,6 +37,8 @@ protected:
   RawImage create_image_rgb_planar();
   RawImage create_image_yuv_interleaved();
   RawImage create_image_yuv_planar();
+  RawImage create_image_mono_interleaved();
+  RawImage create_image_mono_planar();
 
 protected:
   // Leaf Functions
