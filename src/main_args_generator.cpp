@@ -71,25 +71,22 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
 };
 
 void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
-  MainArgs grid_2x2;
-  {
-    grid_2x2.action = "create_grid";
-    grid_2x2.rows = "2";
-    grid_2x2.columns = "2";
-    grid_2x2.output_filename = "out/hevc_grid_2x2.heif";
-    grid_2x2.codec = "hevc";
-    v.push_back(grid_2x2);
-  }
+  MainArgs args;
+  args.set_action("create_grid");
 
-  MainArgs grid_large;
-  {
-    grid_large.action = "create_grid";
-    grid_large.rows = "10";
-    grid_large.columns = "10";
-    grid_large.output_filename = "out/hevc_grid_10x10.heif";
-    grid_large.codec = "hevc";
-    v.push_back(grid_large);
-  }
+  // 2x2 Grid
+  args.set_rows("2")
+      .set_columns("2")
+      .set_codec("hevc")
+      .set_output_filename();
+  v.push_back(args);
+
+  // 10x10 Grid
+  args.set_rows("10")
+      .set_columns("10")
+      .set_codec("hevc")
+      .set_output_filename();
+  v.push_back(args);
 
   // MainArgs uncC_internal;
   // MainArgs tili_item;
@@ -106,9 +103,11 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
       .set_interleave("planar")
       .set_pixel_type("8");
 
-  args.set_codec("hevc");
+  args.set_codec("hevc")
+      .set_output_filename();
   v.push_back(args);
 
-  args.set_codec("av1");
+  args.set_codec("av1")
+      .set_output_filename();
   v.push_back(args);
 }
