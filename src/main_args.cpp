@@ -203,18 +203,24 @@ MainArgs &MainArgs::set_output_filename(const string &output_filename) {
 }
 
 MainArgs &MainArgs::set_output_filename() {
+
+  output_filename = "out/";
+  output_filename.append("_" + codec);
+  output_filename.append("_" + chroma);
+  output_filename.append("_" + interleave);
+  output_filename.append("_" + pixel_type + "bit");
+  output_filename.append("_" + width + "x" + height);
+
+  if (action == "create_grid") {
+    output_filename.append("_" + rows + "x" + columns + "_grid");
+  }
+
   string extension = ".heif";
   if (action == "create_sequence") {
     extension = ".mp4";
   }
-  output_filename = "out/" +
-                    codec + "_" +
-                    chroma + "_" +
-                    interleave + "_" +
-                    pixel_type + "bit_" +
-                    width + "x" +
-                    height +
-                    extension;
+
+  output_filename.append(extension);
   return *this;
 }
 
