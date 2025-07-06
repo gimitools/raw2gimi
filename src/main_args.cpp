@@ -207,7 +207,7 @@ MainArgs &MainArgs::set_output_filename() {
   if (action == "create_sequence") {
     extension = ".mp4";
   }
-  string filename = "out/" +
+  output_filename = "out/" +
                     codec + "_" +
                     chroma + "_" +
                     interleave + "_" +
