@@ -205,7 +205,7 @@ MainArgs &MainArgs::set_output_filename(const string &output_filename) {
 MainArgs &MainArgs::set_output_filename() {
 
   output_filename = "out/";
-  output_filename.append("_" + codec);
+  output_filename.append(codec);
   output_filename.append("_" + chroma);
   output_filename.append("_" + interleave);
   output_filename.append("_" + pixel_type + "bit");
