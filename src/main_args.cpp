@@ -202,6 +202,15 @@ MainArgs &MainArgs::set_output_filename(const string &output_filename) {
   return *this;
 }
 
+MainArgs &MainArgs::set_output_filename() {
+  string extension = ".heif";
+  if (action == "create_sequence") {
+    extension = ".mp4";
+  }
+  throw_error("Not yet implemented!!!");
+  return *this;
+}
+
 MainArgs &MainArgs::set_codec(const string &codec) {
   this->codec = codec;
   return *this;

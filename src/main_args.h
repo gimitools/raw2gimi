@@ -33,6 +33,7 @@ public:
   // Setters
   MainArgs &set_input_filename(const string &filename);
   MainArgs &set_output_filename(const string &filename);
+  MainArgs &set_output_filename();
   MainArgs &set_codec(const string &codec);
   MainArgs &set_chroma(const string &chroma);
   MainArgs &set_interleave(const string &interleave);

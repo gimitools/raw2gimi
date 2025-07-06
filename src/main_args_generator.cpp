@@ -19,13 +19,13 @@ const vector<MainArgs> MainArgsGenerator::generate_main_args() {
 
 MainArgs MainArgsGenerator::create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height) {
   MainArgs args;
-  args.action = "create_image";
-  args.codec = encoding;
-  args.chroma = chroma;
-  args.interleave = interleave;
-  args.pixel_type = pixel_type;
-  args.width = width;
-  args.height = height;
+  args.set_action("create_image")
+      .set_codec(encoding)
+      .set_chroma(chroma)
+      .set_interleave(interleave)
+      .set_pixel_type(pixel_type)
+      .set_width(width)
+      .set_height(height);
   args.output_filename = create_filename(args);
   return args;
 }
