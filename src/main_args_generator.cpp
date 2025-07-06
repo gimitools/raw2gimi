@@ -97,24 +97,19 @@ void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
 
 void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   MainArgs args;
-  MainArgsBuilder builder;
 
   // TODO: automate output_filename creation
 
   // Defaults
-  builder.action("create_sequence")
-      .chroma("rgb")
-      .interleave("planar")
-      .pixel_type("8");
+  args.set_action("create_sequence")
+      .set_chroma("rgb")
+      .set_interleave("planar")
+      .set_pixel_type("8");
 
-  args = builder.codec("hevc")
-             //  .output_filename("out/hevc_sequence_64x64.mp4")
-             .build();
+  args.set_codec("hevc");
   v.push_back(args);
 
-  args = builder.codec("av1")
-             //  .output_filename("out/av1_sequence_64x64.mp4")
-             .build();
+  args.set_codec("av1");
   v.push_back(args);
 }
 

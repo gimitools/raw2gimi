@@ -15,7 +15,7 @@ public:
   MainArgs();
 
 public:
-  // Getters
+  // Extractors
   string extract_output_filename();
   gimi::Codec extract_codec();
   gimi::Chroma extract_chroma();
@@ -28,6 +28,24 @@ public:
   uint32_t extract_layers();
   double extract_scale_factor();
   void print();
+
+public:
+  // Setters
+  MainArgs &set_input_filename(const string &filename);
+  MainArgs &set_output_filename(const string &filename);
+  MainArgs &set_codec(const string &codec);
+  MainArgs &set_chroma(const string &chroma);
+  MainArgs &set_interleave(const string &interleave);
+  MainArgs &set_pixel_type(const string &pixel_type);
+  MainArgs &set_action(const string &action);
+  MainArgs &set_debug(const string &debug);
+  MainArgs &set_pixel_algorithm(const string &pixel_algorithm);
+  MainArgs &set_width(const string &width);
+  MainArgs &set_height(const string &height);
+  MainArgs &set_rows(const string &rows);
+  MainArgs &set_columns(const string &columns);
+  MainArgs &set_tile_directory(const string &tile_directory);
+  MainArgs &set_scale_factor(const string &scale_factor);
 
 public:
   // User Input

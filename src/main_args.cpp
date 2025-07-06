@@ -190,7 +190,85 @@ void MainArgs::print() {
   cout << "flag1 = " << flag1 << endl;
 };
 
+// Setters
+
+MainArgs &MainArgs::set_input_filename(const string &input_filename) {
+  this->input_filename = input_filename;
+  return *this;
+}
+
+MainArgs &MainArgs::set_output_filename(const string &output_filename) {
+  this->output_filename = output_filename;
+  return *this;
+}
+
+MainArgs &MainArgs::set_codec(const string &codec) {
+  this->codec = codec;
+  return *this;
+}
+
+MainArgs &MainArgs::set_chroma(const string &chroma) {
+  this->chroma = chroma;
+  return *this;
+}
+
+MainArgs &MainArgs::set_interleave(const string &interleave) {
+  this->interleave = interleave;
+  return *this;
+}
+
+MainArgs &MainArgs::set_pixel_type(const string &pixel_type) {
+  this->pixel_type = pixel_type;
+  return *this;
+}
+
+MainArgs &MainArgs::set_action(const string &action) {
+  this->action = action;
+  return *this;
+}
+
+MainArgs &MainArgs::set_debug(const string &debug) {
+  this->debug = debug;
+  return *this;
+}
+
+MainArgs &MainArgs::set_pixel_algorithm(const string &pixel_algorithm) {
+  this->pixel_algorithm = pixel_algorithm;
+  return *this;
+}
+
+MainArgs &MainArgs::set_width(const string &width) {
+  this->width = width;
+  return *this;
+}
+
+MainArgs &MainArgs::set_height(const string &height) {
+  this->height = height;
+  return *this;
+}
+
+MainArgs &MainArgs::set_rows(const string &rows) {
+  this->rows = rows;
+  return *this;
+}
+
+MainArgs &MainArgs::set_columns(const string &columns) {
+  this->columns = columns;
+  return *this;
+}
+
+MainArgs &MainArgs::set_tile_directory(const string &tile_directory) {
+  this->tile_directory = tile_directory;
+  return *this;
+}
+
+MainArgs &MainArgs::set_scale_factor(const string &scale_factor) {
+  this->scale_factor = scale_factor;
+  return *this;
+}
+
 // Helper Functions
+
 uint32_t MainArgs::string_to_int(string str, uint32_t default_value) {
   if (str == "") {
     return default_value;
