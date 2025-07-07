@@ -123,4 +123,11 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
       .set_chroma("mono")
       .set_output_filename();
   v.push_back(args);
+
+  args.set_codec("hevc")
+      .set_chroma("rgb")
+      .set_interleave("interleaved")
+      .set_pixel_type("10")
+      .set_output_filename();
+  v.push_back(args);
 }
