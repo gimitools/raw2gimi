@@ -127,7 +127,11 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   args.set_codec("hevc")
       .set_chroma("rgb")
       .set_interleave("interleaved")
-      .set_pixel_type("10")
+      .set_pixel_type("10") // See hvvC: bit_depth_luma_minus8 & bit_depth_chroma_minus8
+      .set_output_filename();
+  v.push_back(args);
+
+  args.set_pixel_type("12")
       .set_output_filename();
   v.push_back(args);
 }
