@@ -118,4 +118,9 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
       .set_chroma("mono")
       .set_output_filename();
   v.push_back(args);
+
+  args.set_codec("hevc")
+      .set_chroma("mono")
+      .set_output_filename();
+  v.push_back(args);
 }
