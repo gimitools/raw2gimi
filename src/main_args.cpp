@@ -221,6 +221,8 @@ MainArgs &MainArgs::set_output_filename() {
   string extension = ".heif";
   if (action == "create_sequence") {
     extension = ".mp4";
+  } else if (codec == "av1") {
+    extension = ".avif";
   }
 
   output_filename.append(extension);
