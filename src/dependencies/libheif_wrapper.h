@@ -41,6 +41,8 @@ protected:
   heif_image *convert_rgb_interleaved(const RawImage &);
   heif_image *convert_rgb_interleaved_hdr_be(const RawImage &);
   heif_image *convert_yuv_444_planar_8bit(const RawImage &);
+  heif_image *convert_mono_8bit(const RawImage &);
+  heif_image *convert_mono_16bit(const RawImage &);
 
 protected:
   // Static Functions

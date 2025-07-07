@@ -21,7 +21,7 @@ RawImage ImageFactory::create_image(const string &pixel_pattern) {
   case Chroma::rgb:
     return create_image_rgb();
   case Chroma::gray:
-    throw_error("Unsupported Feature: Monochrome Image Creation!");
+    return create_image_mono();
   case Chroma::yuv_444:
   case Chroma::yuv_422:
   case Chroma::yuv_420:
@@ -210,6 +210,31 @@ RawImage ImageFactory::create_image_yuv_planar() {
   return image;
 }
 
+RawImage ImageFactory::create_image_mono_interleaved() {
+  switch (m_pixel_type) {
+  case PixelType::uint8:
+    return create_image_mono_interleaved_8bit();
+  case PixelType::uint10:
+  case PixelType::uint12:
+  case PixelType::uint14:
+  case PixelType::uint16:
+  case PixelType::int8:
+  case PixelType::int16:
+  case PixelType::float32:
+  case PixelType::complex:
+  case PixelType::mixed:
+  default:
+    throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
+  }
+  return RawImage(0, 0);
+}
+
+RawImage ImageFactory::create_image_mono_planar() {
+  throw_error("Unsupported Feature: Monochrome Image Creation!");
+  RawImage image(0, 0);
+  return image;
+}
+
 // Leaf Functions
 
 RawImage ImageFactory::create_image_rgb_interleaved_8bit() {
@@ -318,15 +343,25 @@ RawImage ImageFactory::create_image_444_interleaved_8bit() {
   return image;
 }
 
-RawImage ImageFactory::create_image_mono_interleaved() {
-  throw_error("Unsupported Feature: Monochrome Image Creation!");
-  RawImage image(0, 0);
-  return image;
-}
+RawImage ImageFactory::create_image_mono_interleaved_8bit() {
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 1;     // Mono
+  const uint32_t bytes_per_band = 1; // 8-bit per channel
+  uint64_t size = m_width * m_height * band_count * bytes_per_band;
+  vector<uint8_t> pixels;
+  pixels.reserve(size);
 
-RawImage ImageFactory::create_image_mono_planar() {
-  throw_error("Unsupported Feature: Monochrome Image Creation!");
-  RawImage image(0, 0);
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint8_t>(m_color_1));
+    }
+  }
+
+  // Add Pixels
+  image.add_mono_interleaved_8bit(pixels);
+
   return image;
 }
 

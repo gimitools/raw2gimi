@@ -42,6 +42,7 @@ public:
   void add_yuv_444_planar_8bit(const vector<uint8_t> &y,
                                const vector<uint8_t> &u,
                                const vector<uint8_t> &v);
+  void add_mono_interleaved_8bit(const vector<uint8_t> &pixels);
 
 private:
   // Pixel Data

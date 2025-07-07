@@ -320,7 +320,25 @@ heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, hei
 }
 
 heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, heif_chroma chroma) {
-  throw_error("Function not yet implemented");
+
+  gimi::PixelType pixel_type = rawImage.get_pixel_type();
+
+  if (chroma != heif_chroma_monochrome) {
+    throw_error("Expected monochrome chroma but got: %d", chroma);
+  }
+
+  switch (pixel_type) {
+  case gimi::PixelType::uint8:
+    return convert_mono_8bit(rawImage);
+  case gimi::PixelType::uint10:
+  case gimi::PixelType::uint12:
+  case gimi::PixelType::uint14:
+  case gimi::PixelType::uint16:
+    return convert_mono_16bit(rawImage);
+  default:
+    throw_error("Unsupported pixel type for monochrome: %s", to_string(pixel_type).c_str());
+  }
+
   return nullptr;
 }
 
@@ -480,6 +498,15 @@ heif_image *LibheifWrapper::convert_yuv_444_planar_8bit(const RawImage &rawImage
   memcpy(data3, plane_v.data(), stride * height);
 
   return img;
+}
+
+heif_image *LibheifWrapper::convert_mono_8bit(const RawImage &) {
+  throw_error("Unsuported function");
+  return nullptr;
+}
+heif_image *LibheifWrapper::convert_mono_16bit(const RawImage &) {
+  throw_error("Unsuported function");
+  return nullptr;
 }
 
 // Static Functions
