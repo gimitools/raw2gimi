@@ -338,14 +338,32 @@ RawImage ImageFactory::create_image_mono_8bit() {
   }
 
   // Add Pixels
-  image.add_mono_interleaved_8bit(pixels);
+  image.add_mono_8bit(pixels);
 
   return image;
 }
 
 RawImage ImageFactory::create_image_mono_16bit() {
-  throw_error("Unsupported Feature: Monochrome 16-bit Image Creation!");
-  return RawImage(0, 0);
+  // Variables
+  RawImage image(m_width, m_height);
+  const uint32_t band_count = 1;     // Mono
+  const uint32_t bytes_per_band = 2; // 8-bit per channel
+  uint64_t size = m_width * m_height * band_count * bytes_per_band;
+  vector<uint8_t> pixels;
+  pixels.reserve(size);
+
+  // Fill Pixels
+  for (uint32_t y = 0; y < m_height; y++) {
+    for (uint32_t x = 0; x < m_width; x++) {
+      pixels.push_back(static_cast<uint8_t>(m_color_1));
+      pixels.push_back(static_cast<uint8_t>(m_color_1));
+    }
+  }
+
+  // Add Pixels
+  image.add_mono_16bit(pixels);
+
+  return image;
 }
 
 // Helper Functions

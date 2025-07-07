@@ -168,7 +168,7 @@ void RawImage::add_yuv_444_planar_8bit(const vector<uint8_t> &pixels_y,
   m_pixel_type = PixelType::uint8;
 }
 
-void RawImage::add_mono_interleaved_8bit(const vector<uint8_t> &pixels) {
+void RawImage::add_mono_8bit(const vector<uint8_t> &pixels) {
   const int band_count = 1;     // Mono
   const int bytes_per_band = 1; // 8-bit per channel
   const uint64_t expected_pixel_count = m_width * m_height * band_count * bytes_per_band;
@@ -179,7 +179,21 @@ void RawImage::add_mono_interleaved_8bit(const vector<uint8_t> &pixels) {
   Plane plane(pixels, m_width, m_height, PixelType::uint8);
   planes.push_back(plane);
 
-  m_interleave = Interleave::interleaved;
   m_chroma = Chroma::gray;
   m_pixel_type = PixelType::uint8;
+}
+
+void RawImage::add_mono_16bit(const vector<uint8_t> &pixels) {
+  const int band_count = 1;     // Mono
+  const int bytes_per_band = 2; // 16-bit per channel
+  const uint64_t expected_pixel_count = m_width * m_height * band_count * bytes_per_band;
+  if (pixels.size() != expected_pixel_count) {
+    throw_error("Bad vector size: %zu, expected: %d", pixels.size(), expected_pixel_count);
+  }
+
+  Plane plane(pixels, m_width, m_height, PixelType::uint16);
+  planes.push_back(plane);
+
+  m_chroma = Chroma::gray;
+  m_pixel_type = PixelType::uint16;
 }
