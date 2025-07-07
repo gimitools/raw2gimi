@@ -67,7 +67,22 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
 
   // Monochrome
   v.push_back(create_args("unc", "mono", interleave, "8", height, width));
+  v.push_back(create_args("unc", "mono", interleave, "10", height, width));
+  v.push_back(create_args("unc", "mono", interleave, "12", height, width));
+  v.push_back(create_args("unc", "mono", interleave, "14", height, width));
   v.push_back(create_args("unc", "mono", interleave, "16", height, width));
+
+  v.push_back(create_args("hevc", "mono", interleave, "8", height, width));
+  // v.push_back(create_args("hevc", "mono", interleave, "10", height, width));
+  // v.push_back(create_args("hevc", "mono", interleave, "12", height, width));
+  // v.push_back(create_args("hevc", "mono", interleave, "14", height, width));
+  // v.push_back(create_args("hevc", "mono", interleave, "16", height, width));
+
+  v.push_back(create_args("hevc", "rgb", interleave, "8", height, width));
+  v.push_back(create_args("hevc", "rgb", interleave, "10", height, width));
+  v.push_back(create_args("hevc", "rgb", interleave, "12", height, width));
+  // v.push_back(create_args("hevc", "rgb", interleave, "14", height, width));
+  // v.push_back(create_args("hevc", "rgb", interleave, "16", height, width));
 
   // Formats variations
   v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));
