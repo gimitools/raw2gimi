@@ -37,47 +37,11 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   string pixel_type = "8";
   string width = "64";
   string height = "64";
-  MainArgs args;
-
-  args.set_action("create_image");
 
   add_args_simple_uncompressed(v);
-
-  // Mono
-  args.set_chroma("mono")
-      .set_output_filename();
-  v.push_back(args);
-
-  // Default
-  // v.push_back(create_args(codec, chroma, interleave, pixel_type, height, width));
-
-  // Testing
-  // v.push_back(create_args("unc", "rgb", interleave, "10", height, width));
-
-  // Codec variations
-  v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
-  v.push_back(create_args("av1", chroma, interleave, pixel_type, height, width));
-  // Warning! OpenJPEG not compiled in!
-  // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
-
-  v.push_back(create_args("hevc", "mono", interleave, "8", height, width));
-  // v.push_back(create_args("hevc", "mono", interleave, "10", height, width));
-  // v.push_back(create_args("hevc", "mono", interleave, "12", height, width));
-  // v.push_back(create_args("hevc", "mono", interleave, "14", height, width));
-  // v.push_back(create_args("hevc", "mono", interleave, "16", height, width));
-
-  v.push_back(create_args("hevc", "rgb", interleave, "8", height, width));
-  v.push_back(create_args("hevc", "rgb", interleave, "10", height, width));
-  v.push_back(create_args("hevc", "rgb", interleave, "12", height, width));
-  // v.push_back(create_args("hevc", "rgb", interleave, "14", height, width));
-  // v.push_back(create_args("hevc", "rgb", interleave, "16", height, width));
-
-  // Formats variations
-  v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));
-  v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
-  v.push_back(create_args(codec, "444", "planar", pixel_type, height, width));
-  v.push_back(create_args(codec, "422", "planar", pixel_type, height, width));
-  v.push_back(create_args(codec, "420", "planar", pixel_type, height, width));
+  add_args_simple_hevc(v);
+  add_args_simple_av1(v);
+  add_args_simple_j2k(v);
 };
 
 void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
@@ -142,7 +106,6 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
 }
 
 void MainArgsGenerator::add_args_simple_uncompressed(vector<MainArgs> &v) {
-  string interleave = "interleaved";
   string width = "64";
   string height = "64";
 
@@ -164,4 +127,37 @@ void MainArgsGenerator::add_args_simple_uncompressed(vector<MainArgs> &v) {
   v.push_back(create_args("unc", "mono", "", "12", height, width));
   v.push_back(create_args("unc", "mono", "", "14", height, width));
   v.push_back(create_args("unc", "mono", "", "16", height, width));
+}
+
+void MainArgsGenerator::add_args_simple_hevc(vector<MainArgs> &v) {
+  string width = "64";
+  string height = "64";
+
+  v.push_back(create_args("hevc", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("hevc", "mono", "interleaved", "8", height, width));
+  // v.push_back(create_args("hevc", "mono", "interleaved", "10", height, width));
+  // v.push_back(create_args("hevc", "mono", "interleaved", "12", height, width));
+  // v.push_back(create_args("hevc", "mono", "interleaved", "14", height, width));
+  // v.push_back(create_args("hevc", "mono", "interleaved", "16", height, width));
+
+  v.push_back(create_args("hevc", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("hevc", "rgb", "interleaved", "10", height, width));
+  v.push_back(create_args("hevc", "rgb", "interleaved", "12", height, width));
+  // v.push_back(create_args("hevc", "rgb", "interleaved", "14", height, width));
+  // v.push_back(create_args("hevc", "rgb", "interleaved", "16", height, width));
+
+  v.push_back(create_args("hevc", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("hevc", "rgb", "planar", "8", height, width));
+  v.push_back(create_args("hevc", "444", "planar", "8", height, width));
+  v.push_back(create_args("hevc", "422", "planar", "8", height, width));
+  v.push_back(create_args("hevc", "420", "planar", "8", height, width));
+}
+void MainArgsGenerator::add_args_simple_av1(vector<MainArgs> &v) {
+  string width = "64";
+  string height = "64";
+  v.push_back(create_args("av1", "rgb", "interleaved", "8", height, width));
+}
+void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
+  // Warning! OpenJPEG not compiled in!
+  // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
 }
