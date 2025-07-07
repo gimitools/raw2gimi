@@ -98,7 +98,7 @@ Codec MainArgs::extract_codec() {
 gimi::Chroma MainArgs::extract_chroma() {
   if (chroma == "rgb" || chroma.empty()) {
     return Chroma::rgb;
-  } else if (chroma == "gray" || chroma == "grey" || chroma == "mono" || chroma == "monochrome") {
+  } else if (chroma_is_mono(chroma)) {
     return Chroma::gray;
   } else if (chroma == "444" || chroma == "yuv") {
     return Chroma::yuv_444;
@@ -207,7 +207,10 @@ MainArgs &MainArgs::set_output_filename() {
   output_filename = "out/";
   output_filename.append(codec);
   output_filename.append("_" + chroma);
-  output_filename.append("_" + interleave);
+
+  if (!chroma_is_mono(chroma))
+    output_filename.append("_" + interleave); // interleave is not applicable when there is only 1 band
+
   output_filename.append("_" + pixel_type + "bit");
   output_filename.append("_" + width + "x" + height);
 
@@ -309,4 +312,14 @@ uint32_t MainArgs::string_to_int(string str, uint32_t default_value) {
     cout << "Unknown error" << endl;
     exit(1);
   }
+}
+
+bool MainArgs::chroma_is_mono(const string &chroma) {
+  if (chroma == "gray" ||
+      chroma == "grey" ||
+      chroma == "mono" ||
+      chroma == "monochrome") {
+    return true;
+  }
+  return false;
 }

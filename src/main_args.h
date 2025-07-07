@@ -74,4 +74,5 @@ public:
 private: // Helper Functions
   uint32_t string_to_int(string str, uint32_t default_value);
   static const uint32_t default_dimensions = 64;
+  static bool chroma_is_mono(const string &chroma);
 };
