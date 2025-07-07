@@ -113,4 +113,9 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   args.set_codec("av1")
       .set_output_filename();
   v.push_back(args);
+
+  args.set_codec("unc")
+      .set_chroma("mono")
+      .set_output_filename();
+  v.push_back(args);
 }

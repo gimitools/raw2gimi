@@ -37,8 +37,6 @@ protected:
   RawImage create_image_rgb_planar();
   RawImage create_image_yuv_interleaved();
   RawImage create_image_yuv_planar();
-  RawImage create_image_mono_interleaved();
-  RawImage create_image_mono_planar();
 
 protected:
   // Leaf Functions
@@ -46,7 +44,8 @@ protected:
   RawImage create_image_rgb_interleaved_hdr();
   RawImage create_image_rgb_planar_8bit();
   RawImage create_image_444_interleaved_8bit();
-  RawImage create_image_mono_interleaved_8bit();
+  RawImage create_image_mono_8bit();
+  RawImage create_image_mono_16bit();
 
 protected:
   // Helper Functions

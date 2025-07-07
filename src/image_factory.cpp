@@ -109,17 +109,20 @@ RawImage ImageFactory::create_image_rgb() {
 }
 
 RawImage ImageFactory::create_image_mono() {
-  switch (m_interleave) {
-  case Interleave::interleaved:
-    return create_image_mono_interleaved();
-  case Interleave::planar:
-    return create_image_mono_planar();
+  switch (m_pixel_type) {
+  case PixelType::uint8:
+    return create_image_mono_8bit();
+  case PixelType::uint10:
+  case PixelType::uint12:
+  case PixelType::uint14:
+  case PixelType::uint16:
+    return create_image_mono_16bit();
   default:
-    throw_error("Unsupported Interleave Type: %s", to_string(m_interleave).c_str());
+    throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
   }
+
   throw_error("Unsupported Feature: Monochrome Image Creation!");
-  RawImage image(0, 0);
-  return image;
+  return RawImage(0, 0);
 }
 
 // Interleave Functions
@@ -207,31 +210,6 @@ RawImage ImageFactory::create_image_yuv_planar() {
   // Add Pixels
   image.add_yuv_444_planar_8bit(Y, u, v);
 
-  return image;
-}
-
-RawImage ImageFactory::create_image_mono_interleaved() {
-  switch (m_pixel_type) {
-  case PixelType::uint8:
-    return create_image_mono_interleaved_8bit();
-  case PixelType::uint10:
-  case PixelType::uint12:
-  case PixelType::uint14:
-  case PixelType::uint16:
-  case PixelType::int8:
-  case PixelType::int16:
-  case PixelType::float32:
-  case PixelType::complex:
-  case PixelType::mixed:
-  default:
-    throw_error("Unsupported Pixel Type: %s", to_string(m_pixel_type).c_str());
-  }
-  return RawImage(0, 0);
-}
-
-RawImage ImageFactory::create_image_mono_planar() {
-  throw_error("Unsupported Feature: Monochrome Image Creation!");
-  RawImage image(0, 0);
   return image;
 }
 
@@ -343,7 +321,7 @@ RawImage ImageFactory::create_image_444_interleaved_8bit() {
   return image;
 }
 
-RawImage ImageFactory::create_image_mono_interleaved_8bit() {
+RawImage ImageFactory::create_image_mono_8bit() {
   // Variables
   RawImage image(m_width, m_height);
   const uint32_t band_count = 1;     // Mono
@@ -363,6 +341,11 @@ RawImage ImageFactory::create_image_mono_interleaved_8bit() {
   image.add_mono_interleaved_8bit(pixels);
 
   return image;
+}
+
+RawImage ImageFactory::create_image_mono_16bit() {
+  throw_error("Unsupported Feature: Monochrome 16-bit Image Creation!");
+  return RawImage(0, 0);
 }
 
 // Helper Functions
