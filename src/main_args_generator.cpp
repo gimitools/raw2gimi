@@ -65,6 +65,9 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   v.push_back(create_args("unc", chroma, interleave, "14", height, width));
   v.push_back(create_args("unc", chroma, interleave, "16", height, width));
 
+  // Monochrome
+  v.push_back(create_args("unc", "mono", interleave, "8", height, width));
+
   // Formats variations
   // v.push_back(create_args(codec, "rgb", "interleaved", pixel_type, height, width));
   // v.push_back(create_args(codec, "rgb", "planar", pixel_type, height, width));
