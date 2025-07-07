@@ -42,7 +42,7 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   args.set_action("create_image");
 
   // Mono
-  args.set_chroma("gray")
+  args.set_chroma("mono")
       .set_output_filename();
   v.push_back(args);
 
