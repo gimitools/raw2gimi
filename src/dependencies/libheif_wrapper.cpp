@@ -500,10 +500,41 @@ heif_image *LibheifWrapper::convert_yuv_444_planar_8bit(const RawImage &rawImage
   return img;
 }
 
-heif_image *LibheifWrapper::convert_mono_8bit(const RawImage &) {
-  throw_error("Unsuported function");
-  return nullptr;
+heif_image *LibheifWrapper::convert_mono_8bit(const RawImage &rawImage) {
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_monochrome;
+  heif_channel channel1 = heif_channel_Y;
+  heif_chroma chroma = heif_chroma_monochrome;
+
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
+
+  he(heif_image_create(width, height, colorspace, chroma, &img));
+  he(heif_image_add_plane(img, channel1, width, height, bit_depth));
+
+  // Get Channels
+  int stride;
+  uint8_t *data1 = heif_image_get_plane(img, channel1, &stride);
+
+  const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 1) {
+    throw_error("Expected 1 planes, but got: %d", planes.size());
+  }
+
+  const Plane &plane = planes[0];
+  const vector<uint8_t> &plane_r = planes[0].m_pixels;
+
+  if (plane_r.size() != stride * height) {
+    throw_error("Expected size: %d, but got: %zu", stride * height, plane_r.size());
+  }
+
+  memcpy(data1, plane_r.data(), stride * height);
+
+  return img;
 }
+
 heif_image *LibheifWrapper::convert_mono_16bit(const RawImage &) {
   throw_error("Unsuported function");
   return nullptr;
