@@ -33,16 +33,14 @@ protected:
   heif_image *convert_to_heif_image(const RawImage &, heif_colorspace, heif_chroma);
   heif_image *convert_yuv_colorspace(const RawImage &, heif_chroma);
   heif_image *convert_rgb_colorspace(const RawImage &, heif_chroma);
-  heif_image *convert_gray_colorspace(const RawImage &, heif_chroma);
 
 protected:
   // Leaf Functions
+  heif_image *convert_gray(const RawImage &);
   heif_image *convert_rgb_planar(const RawImage &);
   heif_image *convert_rgb_interleaved(const RawImage &);
   heif_image *convert_rgb_interleaved_hdr_be(const RawImage &);
   heif_image *convert_yuv_444_planar_8bit(const RawImage &);
-  heif_image *convert_mono_8bit(const RawImage &);
-  heif_image *convert_mono_16bit(const RawImage &);
 
 protected:
   // Static Functions

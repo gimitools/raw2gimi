@@ -264,7 +264,7 @@ heif_image *LibheifWrapper::convert_to_heif_image(const RawImage &rawImage, heif
     img = convert_rgb_colorspace(rawImage, chroma);
     break;
   case heif_colorspace_monochrome:
-    img = convert_gray_colorspace(rawImage, chroma);
+    img = convert_gray(rawImage);
     break;
   default:
     throw_error("Unsupported colorspace: %d", static_cast<int>(colorspace));
@@ -319,30 +319,45 @@ heif_image *LibheifWrapper::convert_rgb_colorspace(const RawImage &rawImage, hei
   return nullptr;
 }
 
-heif_image *LibheifWrapper::convert_gray_colorspace(const RawImage &rawImage, heif_chroma chroma) {
+// Leaf Functions
+
+heif_image *LibheifWrapper::convert_gray(const RawImage &rawImage) {
 
   gimi::PixelType pixel_type = rawImage.get_pixel_type();
 
-  if (chroma != heif_chroma_monochrome) {
-    throw_error("Expected monochrome chroma but got: %d", chroma);
+  heif_image *img;
+
+  heif_colorspace colorspace = heif_colorspace_monochrome;
+  heif_channel channel = heif_channel_Y;
+  heif_chroma chroma = heif_chroma_monochrome;
+
+  uint32_t width = rawImage.get_width();
+  uint32_t height = rawImage.get_height();
+  uint32_t bit_depth = rawImage.get_bit_depth();
+
+  he(heif_image_create(width, height, colorspace, chroma, &img));
+  he(heif_image_add_plane(img, channel, width, height, bit_depth));
+
+  // Get Channels
+  int stride;
+  uint8_t *data = heif_image_get_plane(img, channel, &stride);
+
+  const vector<Plane> &planes = rawImage.get_planes();
+  if (planes.size() != 1) {
+    throw_error("Expected 1 planes, but got: %d", planes.size());
   }
 
-  switch (pixel_type) {
-  case gimi::PixelType::uint8:
-    return convert_mono_8bit(rawImage);
-  case gimi::PixelType::uint10:
-  case gimi::PixelType::uint12:
-  case gimi::PixelType::uint14:
-  case gimi::PixelType::uint16:
-    return convert_mono_16bit(rawImage);
-  default:
-    throw_error("Unsupported pixel type for monochrome: %s", to_string(pixel_type).c_str());
+  const Plane &plane = planes[0];
+  const vector<uint8_t> &plane_y = planes[0].m_pixels;
+
+  if (plane_y.size() != stride * height) {
+    throw_error("Expected size: %d, but got: %zu", stride * height, plane_y.size());
   }
 
-  return nullptr;
+  memcpy(data, plane_y.data(), stride * height);
+
+  return img;
 }
-
-// Leaf Functions
 
 heif_image *LibheifWrapper::convert_rgb_planar(const RawImage &rawImage) {
   heif_image *img;
@@ -498,46 +513,6 @@ heif_image *LibheifWrapper::convert_yuv_444_planar_8bit(const RawImage &rawImage
   memcpy(data3, plane_v.data(), stride * height);
 
   return img;
-}
-
-heif_image *LibheifWrapper::convert_mono_8bit(const RawImage &rawImage) {
-  heif_image *img;
-
-  heif_colorspace colorspace = heif_colorspace_monochrome;
-  heif_channel channel1 = heif_channel_Y;
-  heif_chroma chroma = heif_chroma_monochrome;
-
-  uint32_t width = rawImage.get_width();
-  uint32_t height = rawImage.get_height();
-  uint32_t bit_depth = rawImage.get_bit_depth();
-
-  he(heif_image_create(width, height, colorspace, chroma, &img));
-  he(heif_image_add_plane(img, channel1, width, height, bit_depth));
-
-  // Get Channels
-  int stride;
-  uint8_t *data1 = heif_image_get_plane(img, channel1, &stride);
-
-  const vector<Plane> &planes = rawImage.get_planes();
-  if (planes.size() != 1) {
-    throw_error("Expected 1 planes, but got: %d", planes.size());
-  }
-
-  const Plane &plane = planes[0];
-  const vector<uint8_t> &plane_r = planes[0].m_pixels;
-
-  if (plane_r.size() != stride * height) {
-    throw_error("Expected size: %d, but got: %zu", stride * height, plane_r.size());
-  }
-
-  memcpy(data1, plane_r.data(), stride * height);
-
-  return img;
-}
-
-heif_image *LibheifWrapper::convert_mono_16bit(const RawImage &) {
-  throw_error("Unsuported function");
-  return nullptr;
 }
 
 // Static Functions
