@@ -41,6 +41,8 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
 
   args.set_action("create_image");
 
+  add_args_simple_uncompressed(v);
+
   // Mono
   args.set_chroma("mono")
       .set_output_filename();
@@ -53,24 +55,10 @@ void MainArgsGenerator::add_args_simple(vector<MainArgs> &v) {
   // v.push_back(create_args("unc", "rgb", interleave, "10", height, width));
 
   // Codec variations
-  v.push_back(create_args("unc", chroma, interleave, pixel_type, height, width));
   v.push_back(create_args("hevc", chroma, interleave, pixel_type, height, width));
   v.push_back(create_args("av1", chroma, interleave, pixel_type, height, width));
   // Warning! OpenJPEG not compiled in!
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
-
-  // HDR
-  v.push_back(create_args("unc", chroma, interleave, "10", height, width));
-  v.push_back(create_args("unc", chroma, interleave, "12", height, width));
-  v.push_back(create_args("unc", chroma, interleave, "14", height, width));
-  v.push_back(create_args("unc", chroma, interleave, "16", height, width));
-
-  // Monochrome
-  v.push_back(create_args("unc", "mono", interleave, "8", height, width));
-  v.push_back(create_args("unc", "mono", interleave, "10", height, width));
-  v.push_back(create_args("unc", "mono", interleave, "12", height, width));
-  v.push_back(create_args("unc", "mono", interleave, "14", height, width));
-  v.push_back(create_args("unc", "mono", interleave, "16", height, width));
 
   v.push_back(create_args("hevc", "mono", interleave, "8", height, width));
   // v.push_back(create_args("hevc", "mono", interleave, "10", height, width));
@@ -151,4 +139,29 @@ void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   args.set_pixel_type("12")
       .set_output_filename();
   v.push_back(args);
+}
+
+void MainArgsGenerator::add_args_simple_uncompressed(vector<MainArgs> &v) {
+  string interleave = "interleaved";
+  string width = "64";
+  string height = "64";
+
+  // Uncompressed
+  v.push_back(create_args("unc", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("unc", "rgb", "interleaved", "10", height, width));
+  v.push_back(create_args("unc", "rgb", "interleaved", "12", height, width));
+  v.push_back(create_args("unc", "rgb", "interleaved", "14", height, width));
+  v.push_back(create_args("unc", "rgb", "interleaved", "16", height, width));
+
+  v.push_back(create_args("unc", "rgb", "planar", "8", height, width));
+  // v.push_back(create_args("unc", "rgb", "planar", "10", height, width));
+  // v.push_back(create_args("unc", "rgb", "planar", "12", height, width));
+  // v.push_back(create_args("unc", "rgb", "planar", "14", height, width));
+  // v.push_back(create_args("unc", "rgb", "planar", "16", height, width));
+
+  v.push_back(create_args("unc", "mono", "", "8", height, width));
+  v.push_back(create_args("unc", "mono", "", "10", height, width));
+  v.push_back(create_args("unc", "mono", "", "12", height, width));
+  v.push_back(create_args("unc", "mono", "", "14", height, width));
+  v.push_back(create_args("unc", "mono", "", "16", height, width));
 }

@@ -18,5 +18,8 @@ protected:
   static void add_args_sequence(vector<MainArgs> &);
   static string create_filename(MainArgs args);
   static MainArgs create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height);
+
+protected:
+  static void add_args_simple_uncompressed(vector<MainArgs> &);
 };
 } // namespace gimi
