@@ -118,10 +118,10 @@ void MainArgsGenerator::add_args_simple_uncompressed(vector<MainArgs> &v) {
 
   // RGB Planar
   v.push_back(create_args("unc", "rgb", "planar", "8", height, width));
-  // v.push_back(create_args("unc", "rgb", "planar", "10", height, width));
-  // v.push_back(create_args("unc", "rgb", "planar", "12", height, width));
-  // v.push_back(create_args("unc", "rgb", "planar", "14", height, width));
-  // v.push_back(create_args("unc", "rgb", "planar", "16", height, width));
+  v.push_back(create_args("unc", "rgb", "planar", "10", height, width));
+  v.push_back(create_args("unc", "rgb", "planar", "12", height, width));
+  v.push_back(create_args("unc", "rgb", "planar", "14", height, width));
+  v.push_back(create_args("unc", "rgb", "planar", "16", height, width));
 
   // Monochrome
   v.push_back(create_args("unc", "mono", "", "8", height, width));
@@ -199,6 +199,7 @@ void MainArgsGenerator::add_args_simple_av1(vector<MainArgs> &v) {
   v.push_back(create_args("av1", "422", "planar", "8", height, width));
   v.push_back(create_args("av1", "420", "planar", "8", height, width));
 }
+
 void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
   // Warning! OpenJPEG not compiled in!
   // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
