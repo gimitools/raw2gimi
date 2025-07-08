@@ -43,6 +43,7 @@ protected:
   RawImage create_image_rgb_interleaved_8bit();
   RawImage create_image_rgb_interleaved_hdr();
   RawImage create_image_rgb_planar_8bit();
+  RawImage create_image_rgb_planar_hdr();
   RawImage create_image_444_interleaved_8bit();
   RawImage create_image_mono_8bit();
   RawImage create_image_mono_16bit();

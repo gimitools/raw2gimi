@@ -155,6 +155,7 @@ RawImage ImageFactory::create_image_rgb_planar() {
   case PixelType::uint12:
   case PixelType::uint14:
   case PixelType::uint16:
+    return create_image_rgb_planar_hdr();
   case PixelType::int8:
   case PixelType::int16:
   case PixelType::float32:
@@ -295,6 +296,11 @@ RawImage ImageFactory::create_image_rgb_planar_8bit() {
   image.add_rgb_planar_8bit(r, g, b);
 
   return image;
+}
+
+RawImage ImageFactory::create_image_rgb_planar_hdr() {
+  throw_error("Unsupported Feature: RGB Planar HDR Image Creation!");
+  return RawImage(0, 0);
 }
 
 RawImage ImageFactory::create_image_444_interleaved_8bit() {
