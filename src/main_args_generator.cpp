@@ -166,6 +166,7 @@ void MainArgsGenerator::add_args_simple_hevc(vector<MainArgs> &v) {
   v.push_back(create_args("hevc", "422", "planar", "8", height, width));
   v.push_back(create_args("hevc", "420", "planar", "8", height, width));
 }
+
 void MainArgsGenerator::add_args_simple_av1(vector<MainArgs> &v) {
   string width = "64";
   string height = "64";
