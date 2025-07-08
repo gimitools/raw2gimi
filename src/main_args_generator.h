@@ -24,5 +24,8 @@ protected:
   static void add_args_simple_hevc(vector<MainArgs> &);
   static void add_args_simple_av1(vector<MainArgs> &);
   static void add_args_simple_j2k(vector<MainArgs> &);
+
+protected:
+  static void debug(vector<MainArgs> &v);
 };
 } // namespace gimi

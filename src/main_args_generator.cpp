@@ -11,6 +11,7 @@ const vector<MainArgs> MainArgsGenerator::generate_main_args() {
   MainArgsGenerator::add_args_simple(all_args);
   MainArgsGenerator::add_args_grid(all_args);
   MainArgsGenerator::add_args_sequence(all_args);
+  MainArgsGenerator::debug(all_args);
 
   return all_args;
 }
@@ -203,5 +204,13 @@ void MainArgsGenerator::add_args_simple_av1(vector<MainArgs> &v) {
 
 void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
   // Warning! OpenJPEG not compiled in!
-  // v.push_back(create_args("j2k", chroma, interleave, pixel_type, height, width));
+  string width = "64";
+  string height = "64";
+
+  // RGB Interleaved
+  // v.push_back(create_args("j2k", "rgb", "interleaved", "8", height, width));
+}
+
+void MainArgsGenerator::debug(vector<MainArgs> &v) {
+  // v.push_back(create_args("j2k", "rgb", "interleaved", "8", "64", "64"));
 }
