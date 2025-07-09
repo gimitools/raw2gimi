@@ -212,10 +212,35 @@ void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
   string height = "64";
 
   // RGB Interleaved
-  // v.push_back(create_args("j2k", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "8", height, width));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "10", height, width));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "12", height, width));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "14", height, width));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "16", height, width));
+
+  // RGB Planar
+  v.push_back(create_args("j2k", "rgb", "planar", "8", height, width));
+  v.push_back(create_args("j2k", "rgb", "planar", "10", height, width));
+  v.push_back(create_args("j2k", "rgb", "planar", "12", height, width));
+  v.push_back(create_args("j2k", "rgb", "planar", "14", height, width));
+  v.push_back(create_args("j2k", "rgb", "planar", "16", height, width));
+
+  // Monochrome
+  v.push_back(create_args("j2k", "mono", "", "8", height, width));
+  v.push_back(create_args("j2k", "mono", "", "10", height, width));
+  v.push_back(create_args("j2k", "mono", "", "12", height, width));
+  v.push_back(create_args("j2k", "mono", "", "14", height, width));
+  v.push_back(create_args("j2k", "mono", "", "16", height, width));
+
+  // YUV
+  // v.push_back(create_args("j2k", "444", "interleaved", "8", height, width));
+  // v.push_back(create_args("j2k", "422", "interleaved", "8", height, width));
+  // v.push_back(create_args("j2k", "420", "interleaved", "8", height, width));
+  v.push_back(create_args("j2k", "444", "planar", "8", height, width));
+  v.push_back(create_args("j2k", "422", "planar", "8", height, width));
+  v.push_back(create_args("j2k", "420", "planar", "8", height, width));
 }
 
 void MainArgsGenerator::debug(vector<MainArgs> &v) {
-
-  v.push_back(create_args("j2k", "rgb", "interleaved", "8", "64", "64"));
+  add_args_simple_j2k(v);
 }
