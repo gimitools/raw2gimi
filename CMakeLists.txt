@@ -7,8 +7,20 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g") # Turn off optimizations for debugging
 # Add libheif submodule
 set(HEIF_ENABLE_EXPERIMENTAL_FEATURES ON CACHE BOOL "Enable experimental features in libheif")
 set(WITH_UNCOMPRESSED_CODEC ON CACHE BOOL "Enable Uncompressed codec in libheif")
-set(WITH_OpenJPEG ON CACHE BOOL "Enable OpenJPEG JPEG 2000 codec")
 set(LIBHEIF_DIR submodules/libheif)
+
+### Find OpenJPEG ### (TODO: remove hardcoded path)
+set(OpenJPEG_DIR "/usr/local/lib/cmake/openjpeg-2.5" CACHE PATH "Path to OpenJPEGConfig.cmake")
+set(WITH_OpenJPEG_ENCODER ON CACHE BOOL "Enable OpenJPEG encoder support")
+set(WITH_OpenJPEG_DECODER ON CACHE BOOL "Enable OpenJPEG decoder support")
+set(ENABLE_PLUGIN_LOADING OFF CACHE BOOL "")
+set(WITH_OpenJPEG_ENCODER_PLUGIN OFF CACHE BOOL "")
+set(WITH_OpenJPEG_DECODER_PLUGIN OFF CACHE BOOL "")
+set(CMAKE_PREFIX_PATH "/usr/local" CACHE STRING "Prefix for finding OpenJPEG")
+message(STATUS "[raw2gimi] OpenJPEG_DIR = ${OpenJPEG_DIR}")
+message(STATUS "[raw2gimi] CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
+### Find OpenJPEG ### (TODO: remove hardcoded path)
+
 add_subdirectory(${LIBHEIF_DIR})  # Builds libheif from source
 
 # Automatically find all .cpp files recursively

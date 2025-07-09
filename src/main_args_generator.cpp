@@ -8,10 +8,14 @@ using namespace gimi;
 const vector<MainArgs> MainArgsGenerator::generate_main_args() {
   vector<MainArgs> all_args;
 
-  MainArgsGenerator::add_args_simple(all_args);
-  MainArgsGenerator::add_args_grid(all_args);
-  MainArgsGenerator::add_args_sequence(all_args);
-  MainArgsGenerator::debug(all_args);
+  bool debug = true;
+  if (debug) {
+    MainArgsGenerator::debug(all_args);
+  } else {
+    MainArgsGenerator::add_args_simple(all_args);
+    MainArgsGenerator::add_args_grid(all_args);
+    MainArgsGenerator::add_args_sequence(all_args);
+  }
 
   return all_args;
 }
@@ -213,5 +217,5 @@ void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
 
 void MainArgsGenerator::debug(vector<MainArgs> &v) {
 
-  // v.push_back(create_args("j2k", "rgb", "interleaved", "8", "64", "64"));
+  v.push_back(create_args("j2k", "rgb", "interleaved", "8", "64", "64"));
 }
