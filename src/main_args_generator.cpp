@@ -10,7 +10,7 @@ const vector<MainArgs> MainArgsGenerator::generate_main_args() {
 
   bool debug = true;
   if (debug) {
-    MainArgsGenerator::debug(all_args);
+    MainArgsGenerator::add_args_sequence(all_args);
   } else {
     MainArgsGenerator::add_args_simple(all_args);
     MainArgsGenerator::add_args_grid(all_args);
@@ -74,38 +74,58 @@ void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
 void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
   MainArgs args;
 
-  // Defaults
-  args.set_action("create_sequence")
-      .set_chroma("rgb")
-      .set_interleave("planar")
-      .set_pixel_type("8");
+  // Action
+  args.set_action("create_sequence");
 
-  args.set_codec("hevc")
-      .set_output_filename();
-  v.push_back(args);
+  // HEVC
+  {
+    // HEVC RGB Interleaved
+    args.set_codec("hevc").set_interleave("interleaved").set_chroma("rgb");
+    v.push_back(args.set_pixel_type("8").set_output_filename());
+    v.push_back(args.set_pixel_type("10").set_output_filename());
+    v.push_back(args.set_pixel_type("12").set_output_filename());
+    // v.push_back(args.set_pixel_type("14").set_output_filename());
+    // v.push_back(args.set_pixel_type("16").set_output_filename());
 
+    // HEVC RGB Planar
+    args.set_codec("hevc").set_interleave("planar").set_chroma("rgb");
+    v.push_back(args.set_pixel_type("8").set_output_filename());
+    // v.push_back(args.set_pixel_type("10").set_output_filename());
+    // v.push_back(args.set_pixel_type("12").set_output_filename());
+    // v.push_back(args.set_pixel_type("14").set_output_filename());
+    // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+    // HEVC Monochrome
+    args.set_codec("hevc").set_chroma("mono");
+    v.push_back(args.set_pixel_type("8").set_output_filename());
+    // v.push_back(args.set_pixel_type("10").set_output_filename());
+    // v.push_back(args.set_pixel_type("12").set_output_filename());
+    // v.push_back(args.set_pixel_type("14").set_output_filename());
+    // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+    // HEVC YUV
+    args.set_codec("hevc").set_interleave("planar").set_pixel_type("8");
+    v.push_back(args.set_chroma("444").set_output_filename());
+    v.push_back(args.set_chroma("422").set_output_filename());
+    v.push_back(args.set_chroma("420").set_output_filename());
+  }
+
+  // J2K
+  {
+    args.set_codec("j2k").set_interleave("interleaved").set_chroma("rgb");
+    v.push_back(args.set_pixel_type("8").set_output_filename());
+    v.push_back(args.set_pixel_type("10").set_output_filename());
+    v.push_back(args.set_pixel_type("12").set_output_filename());
+    v.push_back(args.set_pixel_type("14").set_output_filename());
+    v.push_back(args.set_pixel_type("16").set_output_filename());
+  }
   args.set_codec("av1")
+      .set_pixel_type("8")
       .set_output_filename();
   v.push_back(args);
 
   args.set_codec("unc")
       .set_chroma("mono")
-      .set_output_filename();
-  v.push_back(args);
-
-  args.set_codec("hevc")
-      .set_chroma("mono")
-      .set_output_filename();
-  v.push_back(args);
-
-  args.set_codec("hevc")
-      .set_chroma("rgb")
-      .set_interleave("interleaved")
-      .set_pixel_type("10") // See hvvC: bit_depth_luma_minus8 & bit_depth_chroma_minus8
-      .set_output_filename();
-  v.push_back(args);
-
-  args.set_pixel_type("12")
       .set_output_filename();
   v.push_back(args);
 }
