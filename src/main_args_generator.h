@@ -19,12 +19,21 @@ protected:
   static MainArgs create_args(string encoding, string chroma, string interleave, string pixel_type, string width, string height);
 
 protected:
+  // Simple Images
   static void add_args_simple_uncompressed(vector<MainArgs> &);
   static void add_args_simple_hevc(vector<MainArgs> &);
   static void add_args_simple_av1(vector<MainArgs> &);
   static void add_args_simple_j2k(vector<MainArgs> &);
 
 protected:
+  // Sequences
+  static void add_args_sequence_hevc(vector<MainArgs> &);
+  static void add_args_sequence_uncompressed(vector<MainArgs> &);
+  static void add_args_sequence_av1(vector<MainArgs> &);
+  static void add_args_sequence_j2k(vector<MainArgs> &);
+
+protected:
+  // Debug
   static void debug(vector<MainArgs> &v);
 };
 } // namespace gimi

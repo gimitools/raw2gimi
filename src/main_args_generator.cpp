@@ -72,63 +72,13 @@ void MainArgsGenerator::add_args_grid(vector<MainArgs> &v) {
 }
 
 void MainArgsGenerator::add_args_sequence(vector<MainArgs> &v) {
-  MainArgs args;
-
-  // Action
-  args.set_action("create_sequence");
-
-  // HEVC
-  {
-    // HEVC RGB Interleaved
-    args.set_codec("hevc").set_interleave("interleaved").set_chroma("rgb");
-    v.push_back(args.set_pixel_type("8").set_output_filename());
-    v.push_back(args.set_pixel_type("10").set_output_filename());
-    v.push_back(args.set_pixel_type("12").set_output_filename());
-    // v.push_back(args.set_pixel_type("14").set_output_filename());
-    // v.push_back(args.set_pixel_type("16").set_output_filename());
-
-    // HEVC RGB Planar
-    args.set_codec("hevc").set_interleave("planar").set_chroma("rgb");
-    v.push_back(args.set_pixel_type("8").set_output_filename());
-    // v.push_back(args.set_pixel_type("10").set_output_filename());
-    // v.push_back(args.set_pixel_type("12").set_output_filename());
-    // v.push_back(args.set_pixel_type("14").set_output_filename());
-    // v.push_back(args.set_pixel_type("16").set_output_filename());
-
-    // HEVC Monochrome
-    args.set_codec("hevc").set_chroma("mono");
-    v.push_back(args.set_pixel_type("8").set_output_filename());
-    // v.push_back(args.set_pixel_type("10").set_output_filename());
-    // v.push_back(args.set_pixel_type("12").set_output_filename());
-    // v.push_back(args.set_pixel_type("14").set_output_filename());
-    // v.push_back(args.set_pixel_type("16").set_output_filename());
-
-    // HEVC YUV
-    args.set_codec("hevc").set_interleave("planar").set_pixel_type("8");
-    v.push_back(args.set_chroma("444").set_output_filename());
-    v.push_back(args.set_chroma("422").set_output_filename());
-    v.push_back(args.set_chroma("420").set_output_filename());
-  }
-
-  // J2K
-  {
-    args.set_codec("j2k").set_interleave("interleaved").set_chroma("rgb");
-    v.push_back(args.set_pixel_type("8").set_output_filename());
-    v.push_back(args.set_pixel_type("10").set_output_filename());
-    v.push_back(args.set_pixel_type("12").set_output_filename());
-    v.push_back(args.set_pixel_type("14").set_output_filename());
-    v.push_back(args.set_pixel_type("16").set_output_filename());
-  }
-  args.set_codec("av1")
-      .set_pixel_type("8")
-      .set_output_filename();
-  v.push_back(args);
-
-  args.set_codec("unc")
-      .set_chroma("mono")
-      .set_output_filename();
-  v.push_back(args);
+  add_args_sequence_uncompressed(v);
+  add_args_sequence_hevc(v);
+  add_args_sequence_av1(v);
+  add_args_sequence_j2k(v);
 }
+
+// Simple Images
 
 void MainArgsGenerator::add_args_simple_uncompressed(vector<MainArgs> &v) {
   string width = "64";
@@ -227,7 +177,6 @@ void MainArgsGenerator::add_args_simple_av1(vector<MainArgs> &v) {
 }
 
 void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
-  // Warning! OpenJPEG not compiled in!
   string width = "64";
   string height = "64";
 
@@ -260,6 +209,83 @@ void MainArgsGenerator::add_args_simple_j2k(vector<MainArgs> &v) {
   v.push_back(create_args("j2k", "422", "planar", "8", height, width));
   v.push_back(create_args("j2k", "420", "planar", "8", height, width));
 }
+
+// Sequences
+
+void MainArgsGenerator::add_args_sequence_hevc(vector<MainArgs> &v) {
+  MainArgs args;
+
+  args.set_action("create_sequence");
+  args.set_codec("hevc");
+
+  // HEVC RGB Interleaved
+  args.set_interleave("interleaved").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  v.push_back(args.set_pixel_type("10").set_output_filename());
+  v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // HEVC RGB Planar
+  args.set_interleave("planar").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  // v.push_back(args.set_pixel_type("10").set_output_filename());
+  // v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // HEVC Monochrome
+  args.set_chroma("mono");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  // v.push_back(args.set_pixel_type("10").set_output_filename());
+  // v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // HEVC YUV
+  // args.set_interleave("interleaved").set_pixel_type("8");
+  // v.push_back(args.set_chroma("444").set_output_filename());
+  // v.push_back(args.set_chroma("422").set_output_filename());
+  // v.push_back(args.set_chroma("420").set_output_filename());
+  args.set_interleave("planar").set_pixel_type("8");
+  v.push_back(args.set_chroma("444").set_output_filename());
+  v.push_back(args.set_chroma("422").set_output_filename());
+  v.push_back(args.set_chroma("420").set_output_filename());
+}
+
+void MainArgsGenerator::add_args_sequence_uncompressed(vector<MainArgs> &v) {
+  MainArgs args;
+  args.set_action("create_sequence");
+
+  args.set_codec("unc")
+      .set_chroma("mono")
+      .set_output_filename();
+  v.push_back(args);
+}
+
+void MainArgsGenerator::add_args_sequence_av1(vector<MainArgs> &v) {
+  MainArgs args;
+  args.set_action("create_sequence");
+
+  args.set_codec("av1")
+      .set_pixel_type("8")
+      .set_output_filename();
+  v.push_back(args);
+}
+
+void MainArgsGenerator::add_args_sequence_j2k(vector<MainArgs> &v) {
+  MainArgs args;
+  args.set_action("create_sequence");
+
+  args.set_codec("j2k").set_interleave("interleaved").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  v.push_back(args.set_pixel_type("10").set_output_filename());
+  v.push_back(args.set_pixel_type("12").set_output_filename());
+  v.push_back(args.set_pixel_type("14").set_output_filename());
+  v.push_back(args.set_pixel_type("16").set_output_filename());
+}
+
+// Debug
 
 void MainArgsGenerator::debug(vector<MainArgs> &v) {
   add_args_simple_j2k(v);
