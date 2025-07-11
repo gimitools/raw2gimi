@@ -10,7 +10,7 @@ const vector<MainArgs> MainArgsGenerator::generate_main_args() {
 
   bool debug = true;
   if (debug) {
-    MainArgsGenerator::add_args_sequence(all_args);
+    MainArgsGenerator::add_args_sequence_j2k(all_args);
   } else {
     MainArgsGenerator::add_args_simple(all_args);
     MainArgsGenerator::add_args_grid(all_args);
@@ -296,23 +296,81 @@ void MainArgsGenerator::add_args_sequence_uncompressed(vector<MainArgs> &v) {
 void MainArgsGenerator::add_args_sequence_av1(vector<MainArgs> &v) {
   MainArgs args;
   args.set_action("create_sequence");
+  args.set_codec("av1");
 
-  args.set_codec("av1")
-      .set_pixel_type("8")
-      .set_output_filename();
-  v.push_back(args);
+  // RGB Interleaved
+  args.set_interleave("interleaved").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  v.push_back(args.set_pixel_type("10").set_output_filename());
+  v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // RGB Planar
+  args.set_interleave("planar").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  // v.push_back(args.set_pixel_type("10").set_output_filename());
+  // v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // Monochrome
+  args.set_chroma("mono");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  // v.push_back(args.set_pixel_type("10").set_output_filename());
+  // v.push_back(args.set_pixel_type("12").set_output_filename());
+  // v.push_back(args.set_pixel_type("14").set_output_filename());
+  // v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // YUV
+  // args.set_interleave("interleaved").set_pixel_type("8");
+  // v.push_back(args.set_chroma("444").set_output_filename());
+  // v.push_back(args.set_chroma("422").set_output_filename());
+  // v.push_back(args.set_chroma("420").set_output_filename());
+  args.set_interleave("planar").set_pixel_type("8");
+  v.push_back(args.set_chroma("444").set_output_filename());
+  v.push_back(args.set_chroma("422").set_output_filename());
+  v.push_back(args.set_chroma("420").set_output_filename());
 }
 
 void MainArgsGenerator::add_args_sequence_j2k(vector<MainArgs> &v) {
   MainArgs args;
   args.set_action("create_sequence");
+  args.set_codec("j2k");
 
-  args.set_codec("j2k").set_interleave("interleaved").set_chroma("rgb");
+  // RGB Interleaved
+  args.set_interleave("interleaved").set_chroma("rgb");
   v.push_back(args.set_pixel_type("8").set_output_filename());
   v.push_back(args.set_pixel_type("10").set_output_filename());
   v.push_back(args.set_pixel_type("12").set_output_filename());
   v.push_back(args.set_pixel_type("14").set_output_filename());
   v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // RGB Planar
+  args.set_interleave("planar").set_chroma("rgb");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  v.push_back(args.set_pixel_type("10").set_output_filename());
+  v.push_back(args.set_pixel_type("12").set_output_filename());
+  v.push_back(args.set_pixel_type("14").set_output_filename());
+  v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // Monochrome
+  args.set_chroma("mono");
+  v.push_back(args.set_pixel_type("8").set_output_filename());
+  v.push_back(args.set_pixel_type("10").set_output_filename());
+  v.push_back(args.set_pixel_type("12").set_output_filename());
+  v.push_back(args.set_pixel_type("14").set_output_filename());
+  v.push_back(args.set_pixel_type("16").set_output_filename());
+
+  // YUV
+  // args.set_interleave("interleaved").set_pixel_type("8");
+  // v.push_back(args.set_chroma("444").set_output_filename());
+  // v.push_back(args.set_chroma("422").set_output_filename());
+  // v.push_back(args.set_chroma("420").set_output_filename());
+  args.set_interleave("planar").set_pixel_type("8");
+  v.push_back(args.set_chroma("444").set_output_filename());
+  v.push_back(args.set_chroma("422").set_output_filename());
+  v.push_back(args.set_chroma("420").set_output_filename());
 }
 
 // Debug
