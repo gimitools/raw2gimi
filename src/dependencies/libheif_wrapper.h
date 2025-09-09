@@ -39,6 +39,9 @@ protected:
   gimi::RawImage convert_ycbcr_colorspace(heif_image *);
   gimi::RawImage convert_rgb_colorspace(heif_image *);
   gimi::RawImage convert_gray_colorspace(heif_image *);
+  gimi::RawImage convert_yuv_444(heif_image *);
+  gimi::RawImage convert_yuv_422(heif_image *);
+  gimi::RawImage convert_yuv_420(heif_image *);
 
 protected:
   // Writing Helpers

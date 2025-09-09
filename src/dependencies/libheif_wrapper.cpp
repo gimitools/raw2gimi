@@ -305,18 +305,17 @@ gimi::RawImage LibheifWrapper::convert_ycbcr_colorspace(heif_image *img) {
   heif_chroma chroma = heif_image_get_chroma_format(img);
   switch (chroma) {
   case heif_chroma_444:
-    printf("ycbcr 444\n");
-    break;
+    return convert_yuv_444(img);
   case heif_chroma_422:
-    printf("ycbcr 422\n");
-    break;
+    return convert_yuv_422(img);
   case heif_chroma_420:
-    printf("ycbcr 420\n");
-    break;
+    return convert_yuv_420(img);
   default:
     throw_error("Unsupported ycbcr chroma format: %d", static_cast<int>(chroma));
     break;
   }
+  gimi::RawImage image(0, 0);
+  return image;
 }
 
 gimi::RawImage LibheifWrapper::convert_rgb_colorspace(heif_image *) {
@@ -326,6 +325,24 @@ gimi::RawImage LibheifWrapper::convert_rgb_colorspace(heif_image *) {
 }
 
 gimi::RawImage LibheifWrapper::convert_gray_colorspace(heif_image *) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+gimi::RawImage LibheifWrapper::convert_yuv_444(heif_image *) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+gimi::RawImage LibheifWrapper::convert_yuv_422(heif_image *) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+gimi::RawImage LibheifWrapper::convert_yuv_420(heif_image *) {
   throw_error("Function not yet implemented");
   gimi::RawImage image(0, 0);
   return image;
