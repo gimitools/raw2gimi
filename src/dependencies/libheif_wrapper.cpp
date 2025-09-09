@@ -242,6 +242,10 @@ void LibheifWrapper::write_to_heif() {
 void LibheifWrapper::gimify(heif_item_id primary_id) {
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('s', 'm', '0', '1'));
+
+  // Security Markings
+  add_security_markings();
 
   // Content Id
   add_content_id(primary_id);
@@ -278,6 +282,40 @@ void LibheifWrapper::add_timestamp(heif_item_id id) {
 
   heif_tai_clock_info_release(clock);
   heif_tai_timestamp_packet_release(timestamp);
+}
+
+heif_item_id LibheifWrapper::add_security_markings() {
+
+  std::string security_markings = R"(
+  <?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../ISM/Schematron/ISMCAT/ISMCAT_XML.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../ISM/Schematron/ISM/ISM_XML.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<GIMISecurity
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="urn:us:mil:nga:stnd:0076:ism" xmlns:ism="urn:us:gov:ic:ism"
+xmlns:gimi="urn:us:mil:nga:stnd:0076:ism" xmlns:arh="urn:us:gov:ic:arh"
+xsi:schemaLocation="urn:us:mil:nga:stnd:0076:ism NGA.STND.0076_Security-V1.xsd"
+ism:DESVersion="202405" ism:ISMCATCESVersion="202405" GIMISecVer="1">
+<File>
+<arh:Security ism:compliesWith="USGov USIC"
+ism:resourceElement="true" ism:createDate="2006-05-04"
+ism:classification="U" ism:ownerProducer="USA" />
+</arh:Security>
+<Content id="urn:uuid:6385695b-b429-4a55-832e-f9a9c68b1342"
+ism:classification="U" ism:ownerProducer="USA" />
+</File>
+</GIMISecurity>
+)";
+  heif_item_id security_markings_id;
+
+  heif_context_add_mime_item(m_ctx,
+                             "application/x.fake-dni-arh+xml",
+                             heif_metadata_compression_off,
+                             (const uint8_t *)security_markings.c_str(),
+                             security_markings.length(),
+                             &security_markings_id);
+  heif_item_set_item_name(m_ctx, security_markings_id, "Fake Security Markings");
+  return security_markings_id;
 }
 
 // Reading Helpers

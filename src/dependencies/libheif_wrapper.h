@@ -32,6 +32,7 @@ protected:
   void gimify(heif_item_id primary_id);
   void add_content_id(heif_item_id);
   void add_timestamp(heif_item_id);
+  heif_item_id add_security_markings();
 
 protected:
   // Reading Helpers
@@ -59,7 +60,6 @@ protected:
 
 protected:
   // Static Functions
-
   static void he(struct heif_error);
   static heif_compression_format extract_compression(gimi::Codec);
   static heif_colorspace extract_colorspace(const RawImage &);
