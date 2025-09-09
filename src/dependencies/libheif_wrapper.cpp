@@ -14,11 +14,22 @@
 #include <string>
 using namespace gimi;
 
-// Constructor
+// Constructors
 
 LibheifWrapper::LibheifWrapper(WriteOptions options) {
   m_ctx = heif_context_alloc();
   m_options = options;
+}
+
+LibheifWrapper::LibheifWrapper(string input_filename) {
+  m_ctx = heif_context_alloc();
+  heif_error error = heif_context_read_from_file(m_ctx, input_filename.c_str(), nullptr);
+  if (error.code) {
+    printf("libheif wrapper error!!\n");
+    printf("File not found: %s\n", input_filename.c_str());
+    printf("ERROR! - subcode: %d  Message: %s\n", error.subcode, error.message);
+    exit(error.code);
+  }
 }
 
 LibheifWrapper::~LibheifWrapper() {
@@ -28,7 +39,24 @@ LibheifWrapper::~LibheifWrapper() {
   }
 }
 
-// API
+gimi::RawImage LibheifWrapper::get_primary_image() {
+
+  heif_image_handle *handle;
+  he(heif_context_get_primary_image_handle(m_ctx, &handle));
+
+  // GET IMAGE
+  heif_image *img;
+  heif_chroma chroma = heif_chroma_undefined; // heif_chroma_interleaved_RGB;
+  heif_colorspace colorspace = heif_colorspace_undefined;
+  he(heif_decode_image(handle, &img, colorspace, chroma, nullptr)); // decode the image and convert colorspace to RGB, saved as 24bit interleaved
+
+  // Convert to RawImage
+  gimi::RawImage rawImage = convert_to_RawImage(img);
+
+  return rawImage;
+}
+
+// Writing API
 
 void LibheifWrapper::add_image(const RawImage &rawImage) {
   heif_image *img;
@@ -252,7 +280,58 @@ void LibheifWrapper::add_timestamp(heif_item_id id) {
   heif_tai_timestamp_packet_release(timestamp);
 }
 
-// Helper Functions
+// Reading Helpers
+
+gimi::RawImage LibheifWrapper::convert_to_RawImage(heif_image *img) {
+  printf("testing\n");
+  heif_colorspace colorspace = heif_image_get_colorspace(img);
+  switch (colorspace) {
+  case heif_colorspace_YCbCr:
+    return convert_ycbcr_colorspace(img);
+  case heif_colorspace_RGB:
+    return convert_rgb_colorspace(img);
+  case heif_colorspace_monochrome:
+    return convert_gray_colorspace(img);
+  default:
+    printf("undefined colorspace\n");
+    break;
+  }
+
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+gimi::RawImage LibheifWrapper::convert_ycbcr_colorspace(heif_image *img) {
+  heif_chroma chroma = heif_image_get_chroma_format(img);
+  switch (chroma) {
+  case heif_chroma_444:
+    printf("ycbcr 444\n");
+    break;
+  case heif_chroma_422:
+    printf("ycbcr 422\n");
+    break;
+  case heif_chroma_420:
+    printf("ycbcr 420\n");
+    break;
+  default:
+    throw_error("Unsupported ycbcr chroma format: %d", static_cast<int>(chroma));
+    break;
+  }
+}
+
+gimi::RawImage LibheifWrapper::convert_rgb_colorspace(heif_image *) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+gimi::RawImage LibheifWrapper::convert_gray_colorspace(heif_image *) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+// Writing Helpers
 
 heif_image *LibheifWrapper::convert_to_heif_image(const RawImage &rawImage, heif_colorspace colorspace, heif_chroma chroma) {
   heif_image *img;

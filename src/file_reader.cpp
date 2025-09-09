@@ -1,4 +1,5 @@
 #include "file_reader.h"
+#include "dependencies/libheif_wrapper.h"
 #include "error_handler.h"
 #include <libraw/libraw.h>
 
@@ -12,9 +13,9 @@ gimi::RawImage FileReader::read_file(string input_filename) {
 }
 
 gimi::RawImage FileReader::read_heif(string input_filename) {
-  throw_error("Function not yet implemented");
-  gimi::RawImage image(0, 0);
-  return image;
+  LibheifWrapper libheif(input_filename);
+  auto rawImage = libheif.get_primary_image();
+  return rawImage;
 }
 
 // Helper Functions

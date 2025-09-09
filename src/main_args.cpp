@@ -44,10 +44,10 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
     exit(0);
   }
 
-  // input_filename = urls[0];
-  // if (urls.size() >= 2) {
-  //   output_filename = urls[1];
-  // }
+  input_filename = urls[0];
+  if (urls.size() >= 2) {
+    output_filename = urls[1];
+  }
 }
 
 MainArgs::MainArgs() {
