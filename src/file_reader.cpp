@@ -4,10 +4,20 @@
 
 using namespace std;
 
+// Public API
+
 gimi::RawImage FileReader::read_file(string input_filename) {
   gimi::RawImage image = libraw_decode(input_filename);
   return image;
 }
+
+gimi::RawImage FileReader::read_heif(string input_filename) {
+  throw_error("Function not yet implemented");
+  gimi::RawImage image(0, 0);
+  return image;
+}
+
+// Helper Functions
 
 gimi::RawImage FileReader::libraw_decode(const string &input_filename) {
 

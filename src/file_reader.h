@@ -6,9 +6,12 @@
 using namespace std;
 
 class FileReader {
+  // Public API
 public:
   static gimi::RawImage read_file(string input_filename);
+  static gimi::RawImage read_heif(string input_filename);
 
+  // Helper Functions
 protected:
   static gimi::RawImage libraw_decode(const string &input_filename);
   static gimi::RawImage libraw_to_gimi(const libraw_processed_image_t *);

@@ -90,7 +90,7 @@ void Raw2Gimi::raw_to_gimi() {
 }
 
 void Raw2Gimi::heif_to_gimi() {
-  throw_error("Function not yet implemented");
+  Raw2Gimi::heif_to_gimi(m_input_filename, m_output_filename);
 }
 
 void Raw2Gimi::write_image_with_rdf() {
@@ -110,6 +110,15 @@ void Raw2Gimi::generate_sample_files() {
 
 void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_filename) {
   throw_error("Function not yet implemented");
+}
+
+void Raw2Gimi::heif_to_gimi(const string &input_filename, const string &output_filename) {
+
+  // Read HEIF File
+  auto rawImage = FileReader::read_heif(input_filename);
+
+  // Write to GIMI
+  // TODO
 }
 
 // Helper Functions

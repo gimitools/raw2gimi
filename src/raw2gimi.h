@@ -27,6 +27,7 @@ public:
 protected:
   // Primary Functions
   static void raw_to_gimi(const string &input_filename, const string &output_filename);
+  static void heif_to_gimi(const string &input_filename, const string &output_filename);
 
 private:
   // Helper Functions
