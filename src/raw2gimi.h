@@ -19,6 +19,7 @@ namespace gimi {
     void create_image();
     void create_grid();
     void create_sequence();
+    void image_to_gimi();
     void raw_to_gimi();
     void heif_to_gimi();
     void write_image_with_rdf();

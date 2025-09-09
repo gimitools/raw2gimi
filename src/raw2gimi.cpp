@@ -33,6 +33,8 @@ void Raw2Gimi::execute_action() {
     create_grid();
   } else if (m_action == "create_sequence") {
     create_sequence();
+  } else if (m_action == "image_to_gimi") {
+    image_to_gimi();
   } else if (m_action == "raw_to_gimi") {
     raw_to_gimi();
   } else if (m_action == "heif_to_gimi") {
@@ -82,6 +84,15 @@ void Raw2Gimi::create_sequence() {
   WriteOptions options = create_write_options();
 
   Gimifier::write_video_to_file(sequence, options);
+  cout << "Created: " << m_output_filename << endl;
+}
+
+void Raw2Gimi::image_to_gimi() {
+  auto rawImage = FileReader::read_file(m_input_filename);
+
+  WriteOptions writeOptions = create_write_options();
+
+  Gimifier::write_to_file(rawImage, writeOptions);
   cout << "Created: " << m_output_filename << endl;
 }
 

@@ -8,6 +8,20 @@ using namespace std;
 // Public API
 
 gimi::RawImage FileReader::read_file(string input_filename) {
+  string file_extension = input_filename.substr(input_filename.find_last_of(".") + 1);
+
+  if (file_extension == "heic" || file_extension == "heif") {
+    return read_heif(input_filename);
+  } else if (file_extension == "dng") {
+    return libraw_decode(input_filename);
+  } else if (file_extension == "png") {
+    throw_error("PNG reading not yet implemented");
+  } else if (file_extension == "jpg" || file_extension == "jpeg") {
+    throw_error("JPEG reading not yet implemented");
+  } else {
+    throw_error("Unsupported file format: %s", file_extension.c_str());
+  }
+
   gimi::RawImage image = libraw_decode(input_filename);
   return image;
 }
