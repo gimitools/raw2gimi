@@ -196,8 +196,50 @@ void RawImage::add_yuv_444_planar_8bit(const vector<uint8_t> &pixels_y,
 
   // Metadata
   m_interleave = Interleave::planar;
-  m_chroma = Chroma::rgb;
+  m_chroma = Chroma::yuv_444;
   m_pixel_type = PixelType::uint8;
+}
+
+void RawImage::add_yuv_420_planar_8bit(const vector<uint8_t> &y,
+                                       const vector<uint8_t> &u,
+                                       const vector<uint8_t> &v) {
+  auto yuv444 = convert_420_to_444(y, u, v);
+  add_yuv_444_planar_8bit(yuv444[0], yuv444[1], yuv444[2]);
+}
+
+vector<vector<uint8_t>> RawImage::convert_420_to_444(const vector<uint8_t> &y,
+                                                     const vector<uint8_t> &u_420,
+                                                     const vector<uint8_t> &v_420) {
+  vector<vector<uint8_t>> yuv444;
+  yuv444.push_back(y);
+
+  // convert u_420 to u_444
+  vector<uint8_t> u_444;
+  for (uint32_t row = 0; row < m_height; ++row) {
+    for (uint32_t col = 0; col < m_width; ++col) {
+      // Find the corresponding pixel in the 420 image
+      uint32_t src_row = row / 2;
+      uint32_t src_col = col / 2;
+      uint32_t src_index = src_row * (m_width / 2) + src_col;
+      u_444.push_back(u_420[src_index]);
+    }
+  }
+  yuv444.push_back(u_444);
+
+  // convert v_420 to v_444
+  vector<uint8_t> v_444;
+  for (uint32_t row = 0; row < m_height; ++row) {
+    for (uint32_t col = 0; col < m_width; ++col) {
+      // Find the corresponding pixel in the 420 image
+      uint32_t src_row = row / 2;
+      uint32_t src_col = col / 2;
+      uint32_t src_index = src_row * (m_width / 2) + src_col;
+      v_444.push_back(v_420[src_index]);
+    }
+  }
+  yuv444.push_back(v_444);
+
+  return yuv444;
 }
 
 void RawImage::add_mono_8bit(const vector<uint8_t> &pixels) {

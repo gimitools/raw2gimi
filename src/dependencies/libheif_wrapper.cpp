@@ -283,7 +283,6 @@ void LibheifWrapper::add_timestamp(heif_item_id id) {
 // Reading Helpers
 
 gimi::RawImage LibheifWrapper::convert_to_RawImage(heif_image *img) {
-  printf("testing\n");
   heif_colorspace colorspace = heif_image_get_colorspace(img);
   switch (colorspace) {
   case heif_colorspace_YCbCr:
@@ -318,33 +317,55 @@ gimi::RawImage LibheifWrapper::convert_ycbcr_colorspace(heif_image *img) {
   return image;
 }
 
-gimi::RawImage LibheifWrapper::convert_rgb_colorspace(heif_image *) {
+gimi::RawImage LibheifWrapper::convert_rgb_colorspace(heif_image *img) {
   throw_error("Function not yet implemented");
   gimi::RawImage image(0, 0);
   return image;
 }
 
-gimi::RawImage LibheifWrapper::convert_gray_colorspace(heif_image *) {
+gimi::RawImage LibheifWrapper::convert_gray_colorspace(heif_image *img) {
   throw_error("Function not yet implemented");
   gimi::RawImage image(0, 0);
   return image;
 }
 
-gimi::RawImage LibheifWrapper::convert_yuv_444(heif_image *) {
+gimi::RawImage LibheifWrapper::convert_yuv_444(heif_image *img) {
   throw_error("Function not yet implemented");
   gimi::RawImage image(0, 0);
   return image;
 }
 
-gimi::RawImage LibheifWrapper::convert_yuv_422(heif_image *) {
+gimi::RawImage LibheifWrapper::convert_yuv_422(heif_image *img) {
   throw_error("Function not yet implemented");
   gimi::RawImage image(0, 0);
   return image;
 }
 
-gimi::RawImage LibheifWrapper::convert_yuv_420(heif_image *) {
-  throw_error("Function not yet implemented");
-  gimi::RawImage image(0, 0);
+gimi::RawImage LibheifWrapper::convert_yuv_420(heif_image *img) {
+
+  int width_y = heif_image_get_width(img, heif_channel_Y);
+  int width_cb = heif_image_get_width(img, heif_channel_Cb);
+  int width_cr = heif_image_get_width(img, heif_channel_Cr);
+
+  int height_y = heif_image_get_height(img, heif_channel_Y);
+  int height_cb = heif_image_get_height(img, heif_channel_Cb);
+  int height_cr = heif_image_get_height(img, heif_channel_Cr);
+
+  int stride_y, stride_cb, stride_cr;
+  const uint8_t *data_y = heif_image_get_plane_readonly(img, heif_channel_Y, &stride_y);
+  const uint8_t *data_cb = heif_image_get_plane_readonly(img, heif_channel_Cb, &stride_cb);
+  const uint8_t *data_cr = heif_image_get_plane_readonly(img, heif_channel_Cr, &stride_cr);
+
+  // Convert to Vector
+  const uint8_t *data_y_end = data_y + stride_y * height_y;
+  const uint8_t *data_cb_end = data_cb + stride_cb * height_cb;
+  const uint8_t *data_cr_end = data_cr + stride_cr * height_cr;
+  vector<uint8_t> vector_y(data_y, data_y_end);
+  vector<uint8_t> vector_cb(data_cb, data_cb_end);
+  vector<uint8_t> vector_cr(data_cr, data_cr_end);
+
+  gimi::RawImage image(width_y, height_y);
+  image.add_yuv_420_planar_8bit(vector_y, vector_cb, vector_cr);
   return image;
 }
 

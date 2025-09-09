@@ -90,7 +90,8 @@ void Raw2Gimi::raw_to_gimi() {
 }
 
 void Raw2Gimi::heif_to_gimi() {
-  Raw2Gimi::heif_to_gimi(m_input_filename, m_output_filename);
+  WriteOptions writeOptions = create_write_options();
+  Raw2Gimi::heif_to_gimi(m_input_filename, writeOptions);
 }
 
 void Raw2Gimi::write_image_with_rdf() {
@@ -112,13 +113,16 @@ void Raw2Gimi::raw_to_gimi(const string &input_filename, const string &output_fi
   throw_error("Function not yet implemented");
 }
 
-void Raw2Gimi::heif_to_gimi(const string &input_filename, const string &output_filename) {
+void Raw2Gimi::heif_to_gimi(const string &input_filename, WriteOptions write_options) {
+
+  string output_filename = write_options.output_filename;
 
   // Read HEIF File
   auto rawImage = FileReader::read_heif(input_filename);
 
-  // Write to GIMI
-  // TODO
+  // Write to File
+  Gimifier::write_to_file(rawImage, write_options);
+  cout << "Created: " << output_filename << endl;
 }
 
 // Helper Functions
