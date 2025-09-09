@@ -72,6 +72,9 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   he(heif_context_encode_image(m_ctx, img, encoder, nullptr, &handle));
 
   heif_item_id primary_id = heif_image_handle_get_item_id(handle);
+
+  heif_item_set_item_name(m_ctx, primary_id, "Primary Image");
+
   gimify(primary_id);
 }
 
@@ -245,7 +248,9 @@ void LibheifWrapper::gimify(heif_item_id primary_id) {
   heif_context_add_compatible_brand(m_ctx, heif_fourcc('s', 'm', '0', '1'));
 
   // Security Markings
-  add_security_markings();
+  // Warning! Uncomment when this PR is approved:
+  //  - https://github.com/strukturag/libheif/pull/1591
+  // add_security_markings();
 
   // Content Id
   add_content_id(primary_id);
