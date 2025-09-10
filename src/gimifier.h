@@ -1,5 +1,6 @@
 #pragma once
 
+#include "model/iso_file.h"
 #include "model/raw_image.h"
 #include "model/write_options.h"
 #include <iostream>
@@ -9,18 +10,19 @@ using namespace std;
 
 namespace gimi {
 
-// The Gimifier class writes GIMI files.
-class Gimifier {
-public:
-  static void write_to_file(const RawImage &, WriteOptions);
-  static void write_grid_to_file(const RawImageGrid &, WriteOptions);
-  static void write_video_to_file(vector<RawImage> &, WriteOptions);
+  // The Gimifier class writes GIMI files.
+  class Gimifier {
+  public:
+    static void write_to_file(const ISOFile &, WriteOptions);
+    static void write_to_file(const RawImage &, WriteOptions);
+    static void write_grid_to_file(const RawImageGrid &, WriteOptions);
+    static void write_video_to_file(vector<RawImage> &, WriteOptions);
 
-public:
-  // Debugging
-  static void debug();
+  public:
+    // Debugging
+    static void debug();
 
-protected:
-};
+  protected:
+  };
 
 } // namespace gimi

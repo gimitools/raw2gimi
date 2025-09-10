@@ -6,6 +6,10 @@
 
 using namespace gimi;
 
+void Gimifier::write_to_file(const ISOFile &isoFile, WriteOptions options) {
+  throw_error("Function not yet implemented");
+}
+
 void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
   LibheifWrapper libheif(options);
   libheif.add_image(image);

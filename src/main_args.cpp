@@ -51,8 +51,9 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
 }
 
 MainArgs::MainArgs() {
-  input_filename = "in.heif";
+  input_filename = "";
   output_filename = default_output_filename;
+  input_rdf_filename = "";
   codec = "hevc";
   chroma = "rgb";
   interleave = "interleaved";
@@ -68,7 +69,7 @@ MainArgs::MainArgs() {
   layers = "1";
 }
 
-// Getters
+// Extractors
 
 string MainArgs::extract_output_filename() {
   if (output_filename.empty()) {
@@ -194,6 +195,11 @@ void MainArgs::print() {
 
 MainArgs &MainArgs::set_input_filename(const string &input_filename) {
   this->input_filename = input_filename;
+  return *this;
+}
+
+MainArgs &MainArgs::set_input_rdf_filename(const string &input_rdf_filename) {
+  this->input_rdf_filename = input_rdf_filename;
   return *this;
 }
 

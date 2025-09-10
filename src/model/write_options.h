@@ -7,9 +7,9 @@ using namespace std;
 
 namespace gimi {
 
-struct WriteOptions {
-  WriteOptions(); // Constructor
-  string output_filename;
-  Codec codec;
-};
+  struct WriteOptions {
+    WriteOptions(); // Constructor
+    string output_filename;
+    Codec codec;
+  };
 } // namespace gimi

@@ -32,6 +32,7 @@ public:
 public:
   // Setters
   MainArgs &set_input_filename(const string &filename);
+  MainArgs &set_input_rdf_filename(const string &filename);
   MainArgs &set_output_filename(const string &filename);
   MainArgs &set_output_filename();
   MainArgs &set_codec(const string &codec);
@@ -51,6 +52,7 @@ public:
 public:
   // User Input
   string input_filename;
+  string input_rdf_filename;
   string output_filename;
   string codec;
   string chroma;
