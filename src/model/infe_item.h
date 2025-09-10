@@ -9,6 +9,10 @@ namespace gimi {
   using InfeItems = vector<shared_ptr<class InfeItem>>;
 
   class InfeItem {
+  public:
+    string get_item_type() const;
+    virtual ~InfeItem() = default;
+
   protected:
     string m_item_type;
     string m_item_name;
@@ -18,6 +22,7 @@ namespace gimi {
 
   public: // Constructor
     ImageItem(const RawImage &);
+    RawImage get_image() const;
 
   private:
     RawImage m_image;

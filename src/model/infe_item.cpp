@@ -4,11 +4,19 @@ using namespace gimi;
 
 // InfeItem
 
+string InfeItem::get_item_type() const {
+  return m_item_type;
+}
+
 // ImageItem
 
 ImageItem::ImageItem(const RawImage &image) : m_image(image) {
   m_item_type = "unci";
   // m_image = image;
+}
+
+RawImage ImageItem::get_image() const {
+  return m_image;
 }
 
 // MimeItem

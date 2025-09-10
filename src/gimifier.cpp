@@ -8,8 +8,29 @@ using namespace gimi;
 
 void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
   InfeItems items = isoFile.get_items();
-
   LibheifWrapper libheif(options);
+
+  for (const auto &item : items) {
+    string type = item->get_item_type();
+    if (type == "unci") {
+
+      // Downcast to Child Class
+      auto imageItem = dynamic_pointer_cast<ImageItem>(item);
+      if (!imageItem) {
+        throw_error("Failed to cast InfeItem to ImageItem");
+      }
+
+      RawImage rawImage = imageItem->get_image();
+
+      libheif.add_image(rawImage);
+    } else if (type == "mime") {
+      // todo
+    } else {
+      throw_error("Unsupported item type: %s", type.c_str());
+    }
+  }
+
+  libheif.write_to_heif();
 }
 
 void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
