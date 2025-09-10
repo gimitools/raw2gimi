@@ -7,7 +7,8 @@
 using namespace gimi;
 
 void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
-  throw_error("Function not yet implemented");
+  InfeItems items = isoFile.get_items();
+
   LibheifWrapper libheif(options);
 }
 

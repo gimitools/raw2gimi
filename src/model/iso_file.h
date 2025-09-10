@@ -10,6 +10,8 @@ namespace gimi {
 
     // Getters
   public:
+    InfeItems get_items() const;
+
     // Setters
   public:
     void add_image(const RawImage &image);

@@ -1,6 +1,14 @@
 #include "iso_file.h"
 
-// public
+using namespace gimi;
+
+// Getters
+
+InfeItems IsoFile::get_items() const {
+  return m_metaBox.get_items();
+}
+
+// Setters
 
 void gimi::IsoFile::add_image(const RawImage &rawImage) {
 
