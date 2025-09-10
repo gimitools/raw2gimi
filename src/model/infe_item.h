@@ -5,7 +5,7 @@
 using namespace std;
 
 namespace gimi {
-  // An Item Information Entry found in the ISOFile's meta box.
+  // An Item Information Entry found in the IsoFile's meta box.
   class InfeItem {
   protected:
     string m_item_type;
@@ -13,13 +13,22 @@ namespace gimi {
   };
 
   class ImageItem : public InfeItem {
+
+  public: // Constructor
+    ImageItem(const RawImage &);
+
   private:
     RawImage m_image;
   };
 
   class MimeItem : public InfeItem {
+
+  public: // Constructor
+    MimeItem(const string &mime_type, const string &data);
+
   private:
     string m_mime_type;
+    string m_data;
   };
 
   class GridItem : public InfeItem {

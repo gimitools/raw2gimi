@@ -32,6 +32,17 @@ gimi::RawImage FileReader::read_heif(string input_filename) {
   return rawImage;
 }
 
+string FileReader::read_text_file(string input_filename) {
+  ifstream file(input_filename);
+  if (!file.is_open()) {
+    throw runtime_error("Failed to open file: " + input_filename);
+  }
+
+  ostringstream buffer;
+  buffer << file.rdbuf();
+  return buffer.str();
+}
+
 // Helper Functions
 
 gimi::RawImage FileReader::libraw_decode(const string &input_filename) {

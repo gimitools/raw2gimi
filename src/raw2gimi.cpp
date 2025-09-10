@@ -4,6 +4,7 @@
 #include "gimifier.h"
 #include "image_factory.h"
 #include "main_args_generator.h"
+#include "model/iso_file.h"
 #include "model/pixel_formats.h"
 
 using namespace gimi;
@@ -89,6 +90,10 @@ void Raw2Gimi::create_sequence() {
 
 void Raw2Gimi::image_to_gimi() {
   auto rawImage = FileReader::read_file(m_input_filename);
+  string rdf_filename = "todo";
+  const string rdf = FileReader::read_text_file(rdf_filename);
+
+  IsoFile isoFile;
 
   WriteOptions writeOptions = create_write_options();
 

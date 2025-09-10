@@ -13,7 +13,7 @@ namespace gimi {
   // The Gimifier class writes GIMI files.
   class Gimifier {
   public:
-    static void write_to_file(const ISOFile &, WriteOptions);
+    static void write_to_file(const IsoFile &, WriteOptions);
     static void write_to_file(const RawImage &, WriteOptions);
     static void write_grid_to_file(const RawImageGrid &, WriteOptions);
     static void write_video_to_file(vector<RawImage> &, WriteOptions);
