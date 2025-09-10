@@ -33,6 +33,10 @@ namespace gimi {
   public: // Constructor
     MimeItem(const string &mime_type, const string &data);
 
+  public: // Getters
+    string get_mime_type() const;
+    string get_data() const;
+
   private:
     string m_mime_type;
     string m_data;

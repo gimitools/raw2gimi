@@ -22,6 +22,7 @@ public:
 public:
   // Writing API
   void add_image(const RawImage &);
+  heif_item_id add_mime_item(const string &mime_type, const string &data);
   void add_grid(const RawImageGrid &);
   void add_video(const vector<RawImage> &);
   void add_metadata_track();

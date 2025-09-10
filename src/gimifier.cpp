@@ -24,7 +24,16 @@ void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
 
       libheif.add_image(rawImage);
     } else if (type == "mime") {
-      // todo
+      // Downcast
+      auto mimeItem = dynamic_pointer_cast<MimeItem>(item);
+      if (!mimeItem) {
+        throw_error("Failed to cast InfeItem to MimeItem");
+      }
+
+      string mime_type = mimeItem->get_mime_type();
+      string data = mimeItem->get_data();
+      libheif.add_mime_item(mime_type, data);
+
     } else {
       throw_error("Unsupported item type: %s", type.c_str());
     }

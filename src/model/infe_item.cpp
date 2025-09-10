@@ -25,3 +25,11 @@ MimeItem::MimeItem(const string &mime_type, const string &data) {
   m_mime_type = mime_type;
   m_data = data;
 }
+
+string MimeItem::get_mime_type() const {
+  return m_mime_type;
+}
+
+string MimeItem::get_data() const {
+  return m_data;
+}

@@ -78,6 +78,18 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
   gimify(primary_id);
 }
 
+heif_item_id LibheifWrapper::add_mime_item(const string &mime_type, const string &data) {
+  heif_item_id item_id;
+  he(heif_context_add_mime_item(
+      m_ctx,
+      mime_type.c_str(),
+      heif_metadata_compression_off,
+      (const uint8_t *)data.c_str(),
+      data.size(),
+      &item_id));
+  return item_id;
+}
+
 void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
   vector<heif_image *> tiles;
   heif_image *img;
