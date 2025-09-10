@@ -9,10 +9,11 @@ namespace gimi {
   class MetaBox {
 
   public:
+    InfeItems get_items() const;
     void add_item(const shared_ptr<InfeItem>);
 
   private:
-    vector<shared_ptr<InfeItem>> m_items;
+    InfeItems m_items;
     // references
     // groups
   };

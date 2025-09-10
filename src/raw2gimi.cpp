@@ -90,14 +90,16 @@ void Raw2Gimi::create_sequence() {
 
 void Raw2Gimi::image_to_gimi() {
   auto rawImage = FileReader::read_file(m_input_filename);
-  string rdf_filename = "todo";
+  string rdf_filename = "in/dataset_9_capture_1.ttl";
   const string rdf = FileReader::read_text_file(rdf_filename);
 
   IsoFile isoFile;
+  isoFile.add_image(rawImage);
+  isoFile.add_rdf_turtle(rdf);
 
   WriteOptions writeOptions = create_write_options();
 
-  Gimifier::write_to_file(rawImage, writeOptions);
+  Gimifier::write_to_file(isoFile, writeOptions);
   cout << "Created: " << m_output_filename << endl;
 }
 

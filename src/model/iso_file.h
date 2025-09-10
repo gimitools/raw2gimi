@@ -8,6 +8,9 @@ namespace gimi {
   // A file as defined in ISO/IEC 14496-12
   class IsoFile {
 
+    // Getters
+  public:
+    // Setters
   public:
     void add_image(const RawImage &image);
     void add_mime_item(const string &mime_type, const string &data);

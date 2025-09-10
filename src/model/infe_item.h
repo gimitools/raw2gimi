@@ -6,6 +6,8 @@ using namespace std;
 
 namespace gimi {
   // An Item Information Entry found in the IsoFile's meta box.
+  using InfeItems = vector<shared_ptr<class InfeItem>>;
+
   class InfeItem {
   protected:
     string m_item_type;

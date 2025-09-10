@@ -8,6 +8,7 @@ using namespace gimi;
 
 void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
   throw_error("Function not yet implemented");
+  LibheifWrapper libheif(options);
 }
 
 void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
