@@ -7,6 +7,18 @@
 
 using namespace std;
 
+enum MainArgArctions {
+  // TODO: Use enum instead of string
+  CREATE_IMAGE,
+  CREATE_GRID,
+  CREATE_SEQUENCE,
+  IMAGE_TO_GIMI,
+  RAW_TO_GIMI,
+  HEIF_TO_GIMI,
+  WRITE_IMAGE_WITH_RDF,
+  GENERATE_SAMPLE_FILES
+};
+
 struct MainArgs {
 
 public:
