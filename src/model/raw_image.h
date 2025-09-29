@@ -2,6 +2,7 @@
 
 #include "model/pixel_formats.h"
 #include "model/plane.h"
+#include "model/resource.h"
 
 #include <complex>
 #include <cstdint>
@@ -14,7 +15,7 @@ using namespace std;
 
 namespace gimi {
 
-  class RawImage {
+  class RawImage : public Resource {
   public:
     // Constructor
     RawImage(uint32_t w, uint32_t h);
