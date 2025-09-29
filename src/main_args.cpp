@@ -182,6 +182,30 @@ double MainArgs::extract_scale_factor() {
   return 0;
 }
 
+MainArgsAction MainArgs::extract_action() {
+  if (action == "create_image") {
+    return MainArgsAction::CREATE_IMAGE;
+  } else if (action == "create_grid") {
+    return MainArgsAction::CREATE_GRID;
+  } else if (action == "create_sequence") {
+    return MainArgsAction::CREATE_SEQUENCE;
+  } else if (action == "image_to_gimi") {
+    return MainArgsAction::IMAGE_TO_GIMI;
+  } else if (action == "raw_to_gimi") {
+    return MainArgsAction::RAW_TO_GIMI;
+  } else if (action == "heif_to_gimi") {
+    return MainArgsAction::HEIF_TO_GIMI;
+  } else if (action == "write_image_with_rdf") {
+    return MainArgsAction::WRITE_IMAGE_WITH_RDF;
+  } else if (action == "tiles_to_grid") {
+    return MainArgsAction::TILES_TO_GRID;
+  } else if (action == "generate_sample_files") {
+    return MainArgsAction::GENERATE_SAMPLE_FILES;
+  } else {
+    return MainArgsAction::HEIF_TO_GIMI; // default action
+  }
+}
+
 void MainArgs::print() {
   cout << "input_filename = " << input_filename << endl;
   cout << "output_filename = " << output_filename << endl;

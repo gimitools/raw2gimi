@@ -12,7 +12,7 @@ using namespace gimi;
 // Constructor
 
 Raw2Gimi::Raw2Gimi(MainArgs args) {
-  m_action = args.action;
+  m_action = args.extract_action();
   m_width = args.extract_width();
   m_height = args.extract_height();
   m_rows = args.extract_rows();
@@ -28,24 +28,24 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
 // Primary API Function
 
 void Raw2Gimi::execute_action() {
-  if (m_action == "create_image" || m_action.empty()) {
-    create_image();
-  } else if (m_action == "create_grid") {
-    create_grid();
-  } else if (m_action == "create_sequence") {
-    create_sequence();
-  } else if (m_action == "image_to_gimi") {
-    image_to_gimi();
-  } else if (m_action == "raw_to_gimi") {
-    raw_to_gimi();
-  } else if (m_action == "heif_to_gimi") {
-    heif_to_gimi();
-  } else if (m_action == "write_image_with_rdf") {
-    write_image_with_rdf();
-  } else if (m_action == "generate_sample_files") {
-    generate_sample_files();
-  } else {
-    throw_error("Unrecognized action: %s", m_action);
+
+  switch (m_action) {
+  case MainArgsAction::CREATE_GRID:
+    return create_grid();
+  case MainArgsAction::CREATE_SEQUENCE:
+    return create_sequence();
+  case MainArgsAction::IMAGE_TO_GIMI:
+    return image_to_gimi();
+  case MainArgsAction::RAW_TO_GIMI:
+    return raw_to_gimi();
+  case MainArgsAction::HEIF_TO_GIMI:
+    return heif_to_gimi();
+  case MainArgsAction::WRITE_IMAGE_WITH_RDF:
+    return write_image_with_rdf();
+  case MainArgsAction::GENERATE_SAMPLE_FILES:
+    return generate_sample_files();
+  default:
+    throw_error("Unrecognized action: %d", m_action);
   }
 }
 
@@ -149,5 +149,7 @@ WriteOptions Raw2Gimi::create_write_options() {
   WriteOptions options;
   options.output_filename = m_output_filename;
   options.codec = m_codec;
+  options.rows = m_rows;
+  options.columns = m_columns;
   return options;
 }

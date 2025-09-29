@@ -7,15 +7,15 @@
 
 using namespace std;
 
-enum MainArgArctions {
-  // TODO: Use enum instead of string
-  CREATE_IMAGE,
-  CREATE_GRID,
-  CREATE_SEQUENCE,
-  IMAGE_TO_GIMI,
-  RAW_TO_GIMI,
-  HEIF_TO_GIMI,
-  WRITE_IMAGE_WITH_RDF,
+enum MainArgsAction {
+  CREATE_IMAGE,         // Create the image in-memory
+  CREATE_GRID,          // Create the image in-memory
+  CREATE_SEQUENCE,      // Create the images in-memory
+  IMAGE_TO_GIMI,        // TODO: combine: (image/heif/raw)_to_gimi
+  RAW_TO_GIMI,          // TODO: combine: (image/heif/raw)_to_gimi
+  HEIF_TO_GIMI,         // TODO: combine: (image/heif/raw)_to_gimi
+  WRITE_IMAGE_WITH_RDF, // TODO: make "with_rdf" an option, not an action
+  TILES_TO_GRID,        // Read tiles froma directory
   GENERATE_SAMPLE_FILES
 };
 
@@ -39,6 +39,7 @@ public:
   uint32_t extract_columns();
   uint32_t extract_layers();
   double extract_scale_factor();
+  MainArgsAction extract_action();
   void print();
 
 public:

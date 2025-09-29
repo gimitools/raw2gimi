@@ -21,7 +21,8 @@ namespace gimi {
     void create_sequence();
     void image_to_gimi();
     void raw_to_gimi();
-    void heif_to_gimi();
+    void heif_to_gimi(); // Simple heif to gimi. uniform tiles. no sequence. single image.
+    void tiles_to_grid();
     void write_image_with_rdf();
     void generate_sample_files();
 
@@ -36,7 +37,7 @@ namespace gimi {
 
   private:
     // Member Variables
-    string m_action;
+    MainArgsAction m_action;
     uint32_t m_width;
     uint32_t m_height;
     uint32_t m_rows;
