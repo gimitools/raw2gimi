@@ -193,6 +193,8 @@ MainArgsAction MainArgs::extract_action() {
     return MainArgsAction::IMAGE_TO_GIMI;
   } else if (action == "raw_to_gimi") {
     return MainArgsAction::RAW_TO_GIMI;
+  } else if (action == "image_to_tiles") {
+    return MainArgsAction::IMAGE_TO_TILES;
   } else if (action == "heif_to_gimi") {
     return MainArgsAction::HEIF_TO_GIMI;
   } else if (action == "write_image_with_rdf") {

@@ -3,6 +3,7 @@
 #include "file_reader.h"
 #include "gimifier.h"
 #include "image_factory.h"
+#include "image_processor.h"
 #include "main_args_generator.h"
 #include "model/iso_file.h"
 #include "model/pixel_formats.h"
@@ -42,6 +43,8 @@ void Raw2Gimi::execute_action() {
     return raw_to_gimi(options);
   case MainArgsAction::HEIF_TO_GIMI:
     return heif_to_gimi(options);
+  case MainArgsAction::IMAGE_TO_TILES:
+    return image_to_tiles(options);
   case MainArgsAction::WRITE_IMAGE_WITH_RDF:
     return write_image_with_rdf(options);
   case MainArgsAction::GENERATE_SAMPLE_FILES:
@@ -105,6 +108,13 @@ void Raw2Gimi::raw_to_gimi(WriteOptions options) {
 
 void Raw2Gimi::heif_to_gimi(WriteOptions options) {
   Raw2Gimi::heif_to_gimi(m_input_filename, options);
+}
+
+void Raw2Gimi::image_to_tiles(WriteOptions options) {
+  auto rawImage = FileReader::read_file(m_input_filename);
+  cout << "rows: " << options.rows << " columns: " << options.columns << endl;
+  ImageProcessor imageProcessor;
+  // TODO: cut into tiles
 }
 
 void Raw2Gimi::write_image_with_rdf(WriteOptions options) {

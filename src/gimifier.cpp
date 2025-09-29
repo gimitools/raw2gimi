@@ -44,6 +44,7 @@ void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
 
 void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
   LibheifWrapper libheif(options);
+
   libheif.add_image(image);
   libheif.write_to_heif();
 }

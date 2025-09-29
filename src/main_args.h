@@ -16,6 +16,7 @@ enum MainArgsAction {
   HEIF_TO_GIMI,         // TODO: combine: (image/heif/raw)_to_gimi
   WRITE_IMAGE_WITH_RDF, // TODO: make "with_rdf" an option, not an action
   TILES_TO_GRID,        // Read tiles froma directory
+  IMAGE_TO_TILES,       // Split image into tiles
   GENERATE_SAMPLE_FILES
 };
 

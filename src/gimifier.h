@@ -2,6 +2,7 @@
 
 #include "model/iso_file.h"
 #include "model/raw_image.h"
+#include "model/raw_image_grid.h"
 #include "model/write_options.h"
 #include <iostream>
 #include <vector>

@@ -1,6 +1,7 @@
 #pragma once
 #include "model/pixel_formats.h"
 #include "model/raw_image.h"
+#include "model/raw_image_grid.h"
 #include "model/write_options.h"
 #include <libheif/heif.h>
 #include <string>

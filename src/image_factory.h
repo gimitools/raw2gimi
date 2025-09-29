@@ -2,6 +2,7 @@
 
 #include "model/pixel_formats.h"
 #include "model/raw_image.h"
+#include "model/raw_image_grid.h"
 #include <iostream>
 #include <vector>
 

@@ -90,17 +90,18 @@ heif_item_id LibheifWrapper::add_mime_item(const string &mime_type, const string
   return item_id;
 }
 
-void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
+void LibheifWrapper::add_grid(const RawImageGrid &grid) {
   vector<heif_image *> tiles;
   heif_image *img;
   heif_image_handle *handle;
   heif_encoder *encoder;
   heif_compression_format compression = extract_compression(m_options.codec);
-  heif_chroma chroma = extract_chroma(rawImages[0][0]);
-  heif_colorspace colorspace = extract_colorspace(rawImages[0][0]);
+  RawImage first = grid.get_tile(0, 0);
+  heif_chroma chroma = extract_chroma(first);
+  heif_colorspace colorspace = extract_colorspace(first);
 
   // Convert Tiles
-  for (const vector<RawImage> &rows : rawImages) {
+  for (const vector<RawImage> &rows : grid.get_tiles()) {
     for (const RawImage &tile : rows) {
       img = convert_to_heif_image(tile, colorspace, chroma);
       tiles.push_back(img);
@@ -111,10 +112,10 @@ void LibheifWrapper::add_grid(const RawImageGrid &rawImages) {
   he(heif_context_get_encoder_for_format(m_ctx, compression, &encoder));
 
   // Add Grid Image
-  uint32_t tile_rows = rawImages.size();
-  uint32_t tile_columns = rawImages[0].size();
-  uint32_t tile_width = rawImages[0][0].get_width();
-  uint32_t tile_height = rawImages[0][0].get_height();
+  uint32_t tile_rows = grid.get_row_count();
+  uint32_t tile_columns = grid.get_column_count();
+  uint32_t tile_width = grid.get_tile_width();
+  uint32_t tile_height = grid.get_tile_height();
   uint32_t image_width = tile_width * tile_columns;
   uint32_t image_height = tile_height * tile_rows;
   heif_encoding_options *encoding_options = heif_encoding_options_alloc();

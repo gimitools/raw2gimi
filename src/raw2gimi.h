@@ -23,6 +23,7 @@ namespace gimi {
     void raw_to_gimi(WriteOptions);
     void heif_to_gimi(WriteOptions); // Simple heif to gimi. uniform tiles. no sequence. single image.
     void tiles_to_grid(WriteOptions);
+    void image_to_tiles(WriteOptions);
     void write_image_with_rdf(WriteOptions);
     void generate_sample_files(WriteOptions);
 

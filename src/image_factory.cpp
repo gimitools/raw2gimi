@@ -58,7 +58,7 @@ RawImageGrid ImageFactory::create_tiles(uint32_t tile_count_x, uint32_t tile_cou
       row.push_back(tile);
       shuffle_colors();
     }
-    grid.push_back(row);
+    grid.add_row(row);
   }
 
   return grid;
