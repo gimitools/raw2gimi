@@ -113,7 +113,9 @@ void Raw2Gimi::heif_to_gimi(WriteOptions options) {
 void Raw2Gimi::image_to_tiles(WriteOptions options) {
   auto rawImage = FileReader::read_file(m_input_filename);
   cout << "rows: " << options.rows << " columns: " << options.columns << endl;
-  ImageProcessor imageProcessor;
+  uint32_t rows = options.rows;
+  uint32_t columns = options.columns;
+  RawImageGrid grid = ImageProcessor::image_to_grid(rawImage, rows, columns);
   // TODO: cut into tiles
 }
 
