@@ -16,15 +16,15 @@ namespace gimi {
 
   public:
     // CLI API
-    void create_image();
-    void create_grid();
-    void create_sequence();
-    void image_to_gimi();
-    void raw_to_gimi();
-    void heif_to_gimi(); // Simple heif to gimi. uniform tiles. no sequence. single image.
-    void tiles_to_grid();
-    void write_image_with_rdf();
-    void generate_sample_files();
+    void create_image(WriteOptions);
+    void create_grid(WriteOptions);
+    void create_sequence(WriteOptions);
+    void image_to_gimi(WriteOptions);
+    void raw_to_gimi(WriteOptions);
+    void heif_to_gimi(WriteOptions); // Simple heif to gimi. uniform tiles. no sequence. single image.
+    void tiles_to_grid(WriteOptions);
+    void write_image_with_rdf(WriteOptions);
+    void generate_sample_files(WriteOptions);
 
   protected:
     // Primary Functions

@@ -29,21 +29,23 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
 
 void Raw2Gimi::execute_action() {
 
+  WriteOptions options = create_write_options();
+
   switch (m_action) {
   case MainArgsAction::CREATE_GRID:
-    return create_grid();
+    return create_grid(options);
   case MainArgsAction::CREATE_SEQUENCE:
-    return create_sequence();
+    return create_sequence(options);
   case MainArgsAction::IMAGE_TO_GIMI:
-    return image_to_gimi();
+    return image_to_gimi(options);
   case MainArgsAction::RAW_TO_GIMI:
-    return raw_to_gimi();
+    return raw_to_gimi(options);
   case MainArgsAction::HEIF_TO_GIMI:
-    return heif_to_gimi();
+    return heif_to_gimi(options);
   case MainArgsAction::WRITE_IMAGE_WITH_RDF:
-    return write_image_with_rdf();
+    return write_image_with_rdf(options);
   case MainArgsAction::GENERATE_SAMPLE_FILES:
-    return generate_sample_files();
+    return generate_sample_files(options);
   default:
     throw_error("Unrecognized action: %d", m_action);
   }
@@ -51,44 +53,38 @@ void Raw2Gimi::execute_action() {
 
 // CLI API
 
-void Raw2Gimi::create_image() {
+void Raw2Gimi::create_image(WriteOptions options) {
 
   // Create RawImage
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   gimi::RawImage image = imageFactory.create_image();
-
-  WriteOptions options = create_write_options();
 
   // Write to File
   Gimifier::write_to_file(image, options);
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::create_grid() {
+void Raw2Gimi::create_grid(WriteOptions options) {
   // Create tiles
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   RawImageGrid grid = imageFactory.create_tiles(m_columns, m_rows);
-
-  WriteOptions options = create_write_options();
 
   // Write to File
   Gimifier::write_grid_to_file(grid, options);
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::create_sequence() {
+void Raw2Gimi::create_sequence(WriteOptions options) {
   // Create sequence
   ImageFactory imageFactory(m_width, m_height, m_chroma, m_interleave, m_pixel_type);
   imageFactory.set_frame_count(60);
   vector<RawImage> sequence = imageFactory.create_sequence("solid");
 
-  WriteOptions options = create_write_options();
-
   Gimifier::write_video_to_file(sequence, options);
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::image_to_gimi() {
+void Raw2Gimi::image_to_gimi(WriteOptions options) {
   auto rawImage = FileReader::read_file(m_input_filename);
   string rdf_filename = "in/dataset_9_capture_1.ttl";
   const string rdf = FileReader::read_text_file(rdf_filename);
@@ -103,20 +99,19 @@ void Raw2Gimi::image_to_gimi() {
   cout << "Created: " << m_output_filename << endl;
 }
 
-void Raw2Gimi::raw_to_gimi() {
+void Raw2Gimi::raw_to_gimi(WriteOptions options) {
   Raw2Gimi::raw_to_gimi(m_input_filename, m_output_filename);
 }
 
-void Raw2Gimi::heif_to_gimi() {
-  WriteOptions writeOptions = create_write_options();
-  Raw2Gimi::heif_to_gimi(m_input_filename, writeOptions);
+void Raw2Gimi::heif_to_gimi(WriteOptions options) {
+  Raw2Gimi::heif_to_gimi(m_input_filename, options);
 }
 
-void Raw2Gimi::write_image_with_rdf() {
+void Raw2Gimi::write_image_with_rdf(WriteOptions options) {
   Gimifier::debug();
 }
 
-void Raw2Gimi::generate_sample_files() {
+void Raw2Gimi::generate_sample_files(WriteOptions options) {
 
   vector<MainArgs> all_args = MainArgsGenerator::generate_main_args();
   for (const MainArgs &args : all_args) {
