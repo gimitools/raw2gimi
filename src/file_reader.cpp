@@ -1,5 +1,6 @@
 #include "file_reader.h"
 #include "dependencies/libheif_wrapper.h"
+#include "dependencies/stb_image_wrapper.h"
 #include "error_handler.h"
 #include <libraw/libraw.h>
 
@@ -15,7 +16,8 @@ gimi::RawImage FileReader::read_file(string input_filename) {
   } else if (file_extension == "dng") {
     return libraw_decode(input_filename);
   } else if (file_extension == "png") {
-    throw_error("PNG reading not yet implemented");
+    return StbImageWrapper::load(input_filename);
+    // throw_error("PNG reading not yet implemented");
   } else if (file_extension == "jpg" || file_extension == "jpeg") {
     throw_error("JPEG reading not yet implemented");
   } else {

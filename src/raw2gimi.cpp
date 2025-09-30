@@ -89,12 +89,9 @@ void Raw2Gimi::create_sequence(WriteOptions options) {
 
 void Raw2Gimi::image_to_gimi(WriteOptions options) {
   auto rawImage = FileReader::read_file(m_input_filename);
-  string rdf_filename = "in/dataset_9_capture_1.ttl";
-  const string rdf = FileReader::read_text_file(rdf_filename);
 
   IsoFile isoFile;
   isoFile.add_image(rawImage);
-  isoFile.add_rdf_turtle(rdf);
 
   WriteOptions writeOptions = create_write_options();
 

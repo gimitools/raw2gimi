@@ -53,9 +53,9 @@ const vector<Plane> &RawImage::get_planes() const {
 void RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data) {
   const int band_count = 3;     // RGB
   const int bytes_per_band = 1; // 8-bit per channel
-  if (pixel_data.size() != m_width * m_height * band_count * bytes_per_band) {
-    cerr << "Error: Data size does not match image dimensions." << endl;
-    return;
+  uint64_t expected_size = m_width * m_height * band_count * bytes_per_band;
+  if (pixel_data.size() != expected_size) {
+    throw_error("\tExpected size: %d  actual size: %d\n", expected_size, pixel_data.size());
   }
 
   Plane plane(pixel_data, m_width, m_height, PixelType::uint8);
@@ -150,6 +150,20 @@ void RawImage::add_rgb_planar_16bit(const vector<uint8_t> &pixels_r,
   m_interleave = Interleave::planar;
   m_chroma = Chroma::rgb;
   m_pixel_type = PixelType::uint16;
+}
+
+void RawImage::add_rgba_interleaved_8bit(const vector<uint8_t> &rgba_pixels) {
+
+  // Quick Hack: Convert RGBA to RGB
+  vector<uint8_t> rgb_pixels;
+  for (size_t i = 0; i < rgba_pixels.size(); i += 4) {
+    rgb_pixels.push_back(rgba_pixels[i]);     // R
+    rgb_pixels.push_back(rgba_pixels[i + 1]); // G
+    rgb_pixels.push_back(rgba_pixels[i + 2]); // B
+    // Skip A (rgba_pixels[i + 3])
+  }
+
+  this->add_rgb_interleaved_8bit(rgb_pixels);
 }
 
 void RawImage::add_yuv_444_interleaved_8bit(const vector<uint8_t> &pixels) {
