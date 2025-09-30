@@ -112,11 +112,11 @@ void Raw2Gimi::heif_to_gimi(WriteOptions options) {
 
 void Raw2Gimi::image_to_tiles(WriteOptions options) {
   auto rawImage = FileReader::read_file(m_input_filename);
-  cout << "rows: " << options.rows << " columns: " << options.columns << endl;
   uint32_t rows = options.rows;
   uint32_t columns = options.columns;
   RawImageGrid grid = ImageProcessor::image_to_grid(rawImage, rows, columns);
-  // TODO: cut into tiles
+  Gimifier::write_grid_to_file(grid, options);
+  cout << "Created: " << options.output_filename << endl;
 }
 
 void Raw2Gimi::write_image_with_rdf(WriteOptions options) {
