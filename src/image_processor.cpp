@@ -10,7 +10,7 @@ RawImageGrid ImageProcessor::image_to_grid(const RawImage &image, uint32_t rows,
   if (image.get_chroma() == Chroma::yuv_444 &&
       image.get_pixel_type() == PixelType::uint8 &&
       image.get_interleave() == Interleave::planar) {
-    ImageProcessor::yuv_444_8bit_to_grid(image, rows, columns);
+    return ImageProcessor::yuv_444_8bit_to_grid(image, rows, columns);
   } else {
     throw_error("Unsupported image format for tiling");
   }
@@ -35,6 +35,7 @@ RawImageGrid ImageProcessor::yuv_444_8bit_to_grid(const RawImage &image, uint32_
   const vector<uint8_t> &plane_v = planes[2].m_pixels;
 
   for (uint32_t row = 0; row < rows; row++) {
+    vector<RawImage> tile_row;
     for (uint32_t column = 0; column < columns; column++) {
       uint32_t x_start = column * tile_width;
       uint32_t y_start = row * tile_height;
@@ -43,7 +44,10 @@ RawImageGrid ImageProcessor::yuv_444_8bit_to_grid(const RawImage &image, uint32_
       Plane tile_y = extract_tile(planes[0], x_start, y_start, tile_width, tile_height);
       Plane tile_u = extract_tile(planes[1], x_start, y_start, tile_width, tile_height);
       Plane tile_v = extract_tile(planes[2], x_start, y_start, tile_width, tile_height);
+      tile.add_yuv_444_planar_8bit(tile_y.m_pixels, tile_u.m_pixels, tile_v.m_pixels);
+      tile_row.push_back(tile);
     }
+    grid.add_row(tile_row);
   }
 
   return grid;
