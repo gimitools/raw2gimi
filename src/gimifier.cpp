@@ -73,6 +73,17 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   cout << "UR: (" << upper_right_latitude << ", " << upper_right_longitude << ")" << endl;
   cout << "LR: (" << lower_right_latitude << ", " << lower_right_longitude << ")" << endl;
   cout << "LL: (" << lower_left_latitude << ", " << lower_left_longitude << ")" << endl;
+
+  const string grid_iri = grid.get_iri();
+  cout << "Grid IRI: " << grid_iri << endl;
+
+  // iterate through all tiles and print their IRIs
+  for (uint32_t row = 0; row < grid.get_row_count(); row++) {
+    for (uint32_t col = 0; col < grid.get_column_count(); col++) {
+      RawImage tile = grid.get_tile(row, col);
+      cout << "Tile (" << row << "," << col << ") IRI: " << tile.get_iri() << endl;
+    }
+  }
 }
 
 void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions options) {
