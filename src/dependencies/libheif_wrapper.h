@@ -31,8 +31,8 @@ public:
 
 protected:
   // GIMI
-  void gimify(heif_item_id primary_id);
   void add_content_id(heif_item_id);
+  void add_content_id(heif_item_id, const string &content_id);
   void add_timestamp(heif_item_id);
   heif_item_id add_security_markings();
 

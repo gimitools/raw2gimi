@@ -19,6 +19,11 @@ using namespace gimi;
 LibheifWrapper::LibheifWrapper(WriteOptions options) {
   m_ctx = heif_context_alloc();
   add_security_markings();
+
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
+  heif_context_add_compatible_brand(m_ctx, heif_fourcc('s', 'm', '0', '1'));
+
   m_options = options;
 }
 
@@ -76,7 +81,11 @@ void LibheifWrapper::add_image(const RawImage &rawImage) {
 
   heif_item_set_item_name(m_ctx, primary_id, "Primary Image");
 
-  gimify(primary_id);
+  // Content Id
+  add_content_id(primary_id);
+
+  // Timestamp
+  add_timestamp(primary_id);
 }
 
 heif_item_id LibheifWrapper::add_mime_item(const string &mime_type, const string &data) {
@@ -130,8 +139,12 @@ void LibheifWrapper::add_grid(const RawImageGrid &grid, string grid_name) {
       &handle));
 
   heif_item_id primary_id = heif_image_handle_get_item_id(handle);
+  const string grid_iri = grid.get_iri();
+  cout << "Grid Content ID: " << grid_iri << endl;
   heif_item_set_item_name(m_ctx, primary_id, grid_name.c_str());
-  heif_context_set_primary_image(m_ctx, handle);
+  heif_context_set_primary_image(m_ctx, handle); // Grids are usually the primary item
+  add_content_id(primary_id, grid_iri);
+  add_timestamp(primary_id);
 
   // Add Each Tile
   for (uint32_t row = 0; row < tile_rows; row++) {
@@ -153,13 +166,13 @@ void LibheifWrapper::add_grid(const RawImageGrid &grid, string grid_name) {
           column,
           row,
           &out_tile_id);
-      add_content_id(out_tile_id);
+      // add_content_id(out_tile_id);
+      string tile_iri = grid.get_tile(column, row).get_iri();
+      add_content_id(out_tile_id, tile_iri);
       string tile_name = "Tile (" + to_string(column) + "," + to_string(row) + ")";
       heif_item_set_item_name(m_ctx, out_tile_id, tile_name.c_str());
     }
   }
-
-  gimify(primary_id);
 
   heif_encoding_options_free(encoding_options);
 }
@@ -261,31 +274,19 @@ void LibheifWrapper::write_to_heif() {
 
 // GIMI
 
-void LibheifWrapper::gimify(heif_item_id primary_id) {
-  heif_context_add_compatible_brand(m_ctx, heif_fourcc('g', 'e', 'o', '1'));
-  heif_context_add_compatible_brand(m_ctx, heif_fourcc('u', 'n', 'i', 'f'));
-  heif_context_add_compatible_brand(m_ctx, heif_fourcc('s', 'm', '0', '1'));
-
-  // Security Markings
-  // Warning! Uncomment when this PR is approved:
-  //  - https://github.com/strukturag/libheif/pull/1591
-  // add_security_markings();
-
-  // Content Id
-  add_content_id(primary_id);
-
-  // Timestamp
-  add_timestamp(primary_id);
+void LibheifWrapper::add_content_id(heif_item_id id) {
+  string content_id = generate_content_id();
+  add_content_id(id, content_id);
 }
 
-void LibheifWrapper::add_content_id(heif_item_id id) {
+void LibheifWrapper::add_content_id(heif_item_id id, const string &content_id) {
   // const char *extended_type_content_id = "0x261ef3741d975bbaacbd9d2c8ea73522";
   uint8_t extended_type_content_id[16] = {
       0x26, 0x1e, 0xf3, 0x74, 0x1d, 0x97, 0x5b, 0xba,
       0xac, 0xbd, 0x9d, 0x2c, 0x8e, 0xa7, 0x35, 0x22};
-  string content_id = generate_content_id();
 
   // Content Id
+  cout << "Adding Content ID: " << content_id << " to item ID: " << id << endl;
   he(heif_item_add_raw_property(
       m_ctx,
       id,
