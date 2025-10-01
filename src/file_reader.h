@@ -11,6 +11,7 @@ public:
   static gimi::RawImage read_file(string input_filename);
   static gimi::RawImage read_heif(string input_filename);
   static string read_text_file(string input_filename);
+  static void read_csv(string input_filename);
 
   // Helper Functions
 protected:
