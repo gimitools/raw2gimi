@@ -152,6 +152,8 @@ void LibheifWrapper::add_grid(const RawImageGrid &grid) {
           row,
           &out_tile_id);
       add_content_id(out_tile_id);
+      string name = "Tile (" + to_string(column) + "," + to_string(row) + ")";
+      heif_item_set_item_name(m_ctx, out_tile_id, name.c_str());
     }
   }
 
