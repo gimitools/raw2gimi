@@ -1,5 +1,6 @@
 #pragma once
 
+#include "csv_file.h"
 #include "model/raw_image.h"
 #include <iostream>
 #include <libraw/libraw.h> // TODO: delete - Move libraw to it's own adaptor class
@@ -11,7 +12,7 @@ public:
   static gimi::RawImage read_file(string input_filename);
   static gimi::RawImage read_heif(string input_filename);
   static string read_text_file(string input_filename);
-  static void read_csv(string input_filename);
+  static CsvFile read_csv(string input_filename);
 
   // Helper Functions
 protected:

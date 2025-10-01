@@ -123,7 +123,7 @@ void Raw2Gimi::image_to_tiles(WriteOptions options) {
     // Read sidecar
     cout << "Reading sidecar: " << m_sidecar_filename << endl;
     cout << "Sidecar type: " << m_sidecar_type << endl;
-    FileReader::read_csv(m_sidecar_filename);
+    CsvFile csv = FileReader::read_csv(m_sidecar_filename);
   }
 
   Gimifier::write_grid_to_file(grid, options);

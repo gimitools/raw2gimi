@@ -1,5 +1,5 @@
 #include "file_reader.h"
-#include "csv_reader.h"
+#include "csv_file.h"
 #include "dependencies/libheif_wrapper.h"
 #include "dependencies/stb_image_wrapper.h"
 #include "error_handler.h"
@@ -46,15 +46,9 @@ string FileReader::read_text_file(string input_filename) {
   return buffer.str();
 }
 
-void FileReader::read_csv(string input_filename) {
-  CSVReader csv(input_filename);
-  cout << "CSV has " << csv.get_row_count() << " rows and " << csv.get_column_count() << " columns." << endl;
-  vector<string> headers = csv.get_row(0);
-  cout << "Headers: ";
-  for (const auto &header : headers) {
-    cout << header << " ";
-  }
-  cout << endl;
+CsvFile FileReader::read_csv(string input_filename) {
+  CsvFile csv(input_filename);
+  return csv;
 }
 
 // Helper Functions

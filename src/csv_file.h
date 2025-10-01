@@ -5,10 +5,10 @@
 
 using namespace std;
 
-class CSVReader {
+class CsvFile {
 public:
   // Load and parse the entire CSV file
-  explicit CSVReader(const string &filename);
+  explicit CsvFile(const string &filename);
 
   // Getters
   vector<string> get_row(size_t row_index) const;

@@ -1,9 +1,9 @@
-#include "csv_reader.h"
+#include "csv_file.h"
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
 
-CSVReader::CSVReader(const string &filename) {
+CsvFile::CsvFile(const string &filename) {
   ifstream file(filename);
   if (!file.is_open()) {
     throw runtime_error("Could not open file: " + filename);
@@ -35,14 +35,14 @@ CSVReader::CSVReader(const string &filename) {
   }
 }
 
-vector<string> CSVReader::get_row(size_t row_index) const {
+vector<string> CsvFile::get_row(size_t row_index) const {
   if (row_index >= m_data.size()) {
     throw out_of_range("Row index out of range");
   }
   return m_data[row_index];
 }
 
-string CSVReader::get_cell(size_t row_index, const string &header) const {
+string CsvFile::get_cell(size_t row_index, const string &header) const {
   auto it = m_headerIndex.find(header);
   if (it == m_headerIndex.end()) {
     throw invalid_argument("Header not found: " + header);
@@ -54,7 +54,7 @@ string CSVReader::get_cell(size_t row_index, const string &header) const {
   return m_data[row_index][col];
 }
 
-vector<string> CSVReader::get_column(const string &header) const {
+vector<string> CsvFile::get_column(const string &header) const {
   auto it = m_headerIndex.find(header);
   if (it == m_headerIndex.end()) {
     throw invalid_argument("Header not found: " + header);
@@ -72,14 +72,14 @@ vector<string> CSVReader::get_column(const string &header) const {
   return column;
 }
 
-size_t CSVReader::get_row_count() const {
+size_t CsvFile::get_row_count() const {
   return m_data.size();
 }
 
-size_t CSVReader::get_column_count() const {
+size_t CsvFile::get_column_count() const {
   return m_headers.size();
 }
 
-bool CSVReader::has_header(const string &header) const {
+bool CsvFile::has_header(const string &header) const {
   return m_headerIndex.count(header) > 0;
 }
