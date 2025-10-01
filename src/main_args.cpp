@@ -14,10 +14,14 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   // Action
   option_handler.add("a", "action", &action, "The action to perform. Default = heif_to_gimi");
   option_handler.add("d", "debug", &debug, "Used for debugging");
+
+  // Input
   option_handler.add("i", "input", &input_filename, "Path to input file");
-  option_handler.add("o", "output", &output_filename, "Path to output file");
+  option_handler.add("", "sidecar", &sidecar_filename, "Path to sidecar metadata file");
+  option_handler.add("", "sidecar_type", &sidecar_type, "unreal. todo: wasabi, snip_rip, etc.");
 
   // Output
+  option_handler.add("o", "output", &output_filename, "Path to output file");
   option_handler.add("e", "codec", &codec, "raw (default), avc, hevc, j2k, av1");
   option_handler.add("", "chroma", &chroma, "rgb (default), mono, 444, 422, 420, 411");
   option_handler.add("", "interleave", &interleave, "interleaved (default) or planar");
@@ -215,6 +219,20 @@ string MainArgs::extract_image_name() {
   } else {
     return image_name;
   }
+}
+
+MainArgsSidecarType MainArgs::extract_sidecar_type() {
+  if (sidecar_type == "unreal") {
+    return SIDECAR_UNREAL;
+  } else if (sidecar_type == "wasabi") {
+    return SIDECAR_WASABI;
+  } else if (sidecar_type == "snip_rip") {
+    return SIDECAR_SNIP_RIP;
+  } else if (!sidecar_type.empty()) {
+    // User specified a sidecar type that is not recognized.
+    throw_error("Unsupported sidecar type: %s", sidecar_type.c_str());
+  }
+  return SIDECAR_UNSPECIFIED;
 }
 
 void MainArgs::print() {

@@ -13,6 +13,7 @@ using namespace gimi;
 // Constructor
 
 Raw2Gimi::Raw2Gimi(MainArgs args) {
+  // Decouple User input from the Raw2Gimi Class.
   m_action = args.extract_action();
   m_width = args.extract_width();
   m_height = args.extract_height();
@@ -24,6 +25,8 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
   m_codec = args.extract_codec();
   m_output_filename = args.extract_output_filename();
   m_image_name = args.extract_image_name();
+  m_sidecar_filename = args.sidecar_filename;
+  m_sidecar_type = args.extract_sidecar_type();
   m_input_filename = args.input_filename;
 }
 
@@ -113,6 +116,15 @@ void Raw2Gimi::image_to_tiles(WriteOptions options) {
   uint32_t rows = options.rows;
   uint32_t columns = options.columns;
   RawImageGrid grid = ImageProcessor::image_to_grid(rawImage, rows, columns);
+
+  if (!m_sidecar_filename.empty()) {
+    // There is a sidecar file to read
+
+    // Read sidecar
+    cout << "Reading sidecar: " << m_sidecar_filename << endl;
+    cout << "Sidecar type: " << m_sidecar_type << endl;
+  }
+
   Gimifier::write_grid_to_file(grid, options);
   cout << "Created: " << options.output_filename << endl;
 }

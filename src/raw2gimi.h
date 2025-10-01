@@ -50,6 +50,8 @@ namespace gimi {
     string m_input_filename;
     string m_output_filename;
     string m_image_name;
+    string m_sidecar_filename;
+    MainArgsSidecarType m_sidecar_type;
   };
 
 } // namespace gimi

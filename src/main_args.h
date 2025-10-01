@@ -17,7 +17,14 @@ enum MainArgsAction {
   WRITE_IMAGE_WITH_RDF, // TODO: make "with_rdf" an option, not an action
   TILES_TO_GRID,        // Read tiles froma directory
   IMAGE_TO_TILES,       // Split image into tiles
-  GENERATE_SAMPLE_FILES
+  GENERATE_SAMPLE_FILES,
+};
+
+enum MainArgsSidecarType {
+  SIDECAR_UNREAL,
+  SIDECAR_WASABI,
+  SIDECAR_SNIP_RIP,
+  SIDECAR_UNSPECIFIED,
 };
 
 struct MainArgs {
@@ -26,6 +33,10 @@ public:
   // Constructors
   MainArgs(int argc, const char *argv[]);
   MainArgs();
+
+public:
+  // Debug
+  void print();
 
 public:
   // Extractors
@@ -42,7 +53,7 @@ public:
   double extract_scale_factor();
   MainArgsAction extract_action();
   string extract_image_name();
-  void print();
+  MainArgsSidecarType extract_sidecar_type();
 
 public:
   // Setters
@@ -84,6 +95,8 @@ public:
   string scale_factor;
   string layers;
   string image_name;
+  string sidecar_filename;
+  string sidecar_type;
   bool flag1;
 
 public:
