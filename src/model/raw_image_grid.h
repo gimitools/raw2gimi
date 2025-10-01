@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/raw_image.h"
+#include "model/resource.h"
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -9,7 +10,7 @@ using namespace std;
 
 namespace gimi {
 
-  class RawImageGrid {
+  class RawImageGrid : public Resource {
 
   public:
     void add_row(const vector<RawImage> &row);
