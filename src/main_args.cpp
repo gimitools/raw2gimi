@@ -25,6 +25,7 @@ MainArgs::MainArgs(int argc, const char *argv[]) {
   option_handler.add("", "width", &width, "Specify width of image");
   option_handler.add("", "height", &height, "Specify height of image");
   option_handler.add("", "scale", &scale_factor, "Specify scale factor for scaling. e.g. .5 will scale the image in half.");
+  option_handler.add("", "image_name", &image_name, "Specify name for the image item in the HEIF file.");
 
   // Gridding
   option_handler.add("", "rows", &rows, "Number of rows for the grid");
@@ -205,6 +206,14 @@ MainArgsAction MainArgs::extract_action() {
     return MainArgsAction::GENERATE_SAMPLE_FILES;
   } else {
     return MainArgsAction::HEIF_TO_GIMI; // default action
+  }
+}
+
+string MainArgs::extract_image_name() {
+  if (image_name.empty()) {
+    return "Primary Image";
+  } else {
+    return image_name;
   }
 }
 

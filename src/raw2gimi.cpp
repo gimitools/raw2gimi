@@ -23,6 +23,7 @@ Raw2Gimi::Raw2Gimi(MainArgs args) {
   m_interleave = args.extract_interleave();
   m_codec = args.extract_codec();
   m_output_filename = args.extract_output_filename();
+  m_image_name = args.extract_image_name();
   m_input_filename = args.input_filename;
 }
 
@@ -155,5 +156,6 @@ WriteOptions Raw2Gimi::create_write_options() {
   options.codec = m_codec;
   options.rows = m_rows;
   options.columns = m_columns;
+  options.image_name = m_image_name;
   return options;
 }

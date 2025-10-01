@@ -41,6 +41,7 @@ public:
   uint32_t extract_layers();
   double extract_scale_factor();
   MainArgsAction extract_action();
+  string extract_image_name();
   void print();
 
 public:
@@ -82,6 +83,7 @@ public:
   string tile_directory;
   string scale_factor;
   string layers;
+  string image_name;
   bool flag1;
 
 public:

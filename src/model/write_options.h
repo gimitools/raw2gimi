@@ -15,5 +15,6 @@ namespace gimi {
     Codec codec;
     uint32_t rows;
     uint32_t columns;
+    string image_name;
   };
 } // namespace gimi

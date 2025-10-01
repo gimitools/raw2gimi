@@ -49,6 +49,7 @@ namespace gimi {
     Codec m_codec;
     string m_input_filename;
     string m_output_filename;
+    string m_image_name;
   };
 
 } // namespace gimi

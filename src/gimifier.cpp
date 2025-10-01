@@ -51,7 +51,7 @@ void Gimifier::write_to_file(const RawImage &image, WriteOptions options) {
 
 void Gimifier::write_grid_to_file(const RawImageGrid &images, WriteOptions options) {
   LibheifWrapper libheif(options);
-  libheif.add_grid(images);
+  libheif.add_grid(images, options.image_name);
   libheif.write_to_heif();
 }
 
