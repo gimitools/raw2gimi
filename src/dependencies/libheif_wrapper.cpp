@@ -18,6 +18,7 @@ using namespace gimi;
 
 LibheifWrapper::LibheifWrapper(WriteOptions options) {
   m_ctx = heif_context_alloc();
+  add_security_markings();
   m_options = options;
 }
 
