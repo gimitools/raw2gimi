@@ -124,6 +124,7 @@ void Raw2Gimi::image_to_tiles(WriteOptions options) {
     cout << "Reading sidecar: " << m_sidecar_filename << endl;
     cout << "Sidecar type: " << m_sidecar_type << endl;
     CsvFile csv = FileReader::read_csv(m_sidecar_filename);
+    Gimifier::write_unreal_to_rdf(grid, csv, options);
   }
 
   Gimifier::write_grid_to_file(grid, options);

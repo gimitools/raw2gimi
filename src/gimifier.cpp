@@ -55,6 +55,26 @@ void Gimifier::write_grid_to_file(const RawImageGrid &grid, WriteOptions options
   libheif.write_to_heif();
 }
 
+void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, WriteOptions options) {
+  string upper_left_latitude = csv.get_cell(0, "CornerPointUL_Lat(deg)");
+  string upper_left_longitude = csv.get_cell(0, "CornerPointUL_Lon(deg)");
+
+  string upper_right_latitude = csv.get_cell(0, "CornerPointUR_Lat(deg)");
+  string upper_right_longitude = csv.get_cell(0, "CornerPointUR_Lon(deg)");
+
+  string lower_right_latitude = csv.get_cell(0, "CornerPointLR_Lat(deg)");
+  string lower_right_longitude = csv.get_cell(0, "CornerPointLR_Lon(deg)");
+
+  string lower_left_latitude = csv.get_cell(0, "CornerPointLL_Lat(deg)");
+  string lower_left_longitude = csv.get_cell(0, "CornerPointLL_Lon(deg)");
+
+  // Print all values:
+  cout << "UL: (" << upper_left_latitude << ", " << upper_left_longitude << ")" << endl;
+  cout << "UR: (" << upper_right_latitude << ", " << upper_right_longitude << ")" << endl;
+  cout << "LR: (" << lower_right_latitude << ", " << lower_right_longitude << ")" << endl;
+  cout << "LL: (" << lower_left_latitude << ", " << lower_left_longitude << ")" << endl;
+}
+
 void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions options) {
   LibheifWrapper libheif(options);
   libheif.add_video(frames);
