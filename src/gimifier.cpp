@@ -59,11 +59,8 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   BoundingBox bbox = extract_unreal_bbox(csv);
 
-  uint32_t grid_width = grid.get_total_width();
-  uint32_t grid_height = grid.get_total_height();
-
-  cout << "Grid Width: " << grid_width << endl;
-  cout << "Grid Height: " << grid_height << endl;
+  uint32_t tile_width = grid.get_tile_width();
+  uint32_t tile_height = grid.get_tile_height();
 
   const string grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
@@ -73,6 +70,17 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
     for (uint32_t col = 0; col < grid.get_column_count(); col++) {
       RawImage tile = grid.get_tile(row, col);
       cout << "Tile (" << row << "," << col << ") IRI: " << tile.get_iri() << endl;
+      // Tile Pixel Coordinates
+      uint32_t tile_ul_x = col * tile_width;
+      uint32_t tile_ul_y = row * tile_height;
+      uint32_t tile_ur_x = tile_ul_x + tile_width;
+      uint32_t tile_ur_y = tile_ul_y;
+      uint32_t tile_ll_x = tile_ul_x;
+      uint32_t tile_ll_y = tile_ul_y + tile_height;
+      uint32_t tile_lr_x = tile_ul_x + tile_width;
+      uint32_t tile_lr_y = tile_ul_y + tile_height;
+
+      cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
     }
   }
 }
