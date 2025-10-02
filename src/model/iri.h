@@ -31,6 +31,9 @@ namespace cco {
   const IRI has_value = "https://www.commoncoreontologies.org/ont000";
   const IRI uses_reference_system = "https://www.commoncoreontologies.org/ont00001912";
   const IRI ecef = "https://www.commoncoreontologies.org/ont00001648";
+  const IRI lat = "https://www.commoncoreontologies.org/ont00001766";
+  const IRI lon = "https://www.commoncoreontologies.org/ont00001764";
+  const IRI height = "https://www.commoncoreontologies.org/ont000";
 } // namespace cco
 
 namespace imh {
@@ -46,6 +49,10 @@ namespace imh {
   const IRI wgs84_radians = "http://ontology.mil/foundry/IMH_0001400";
   const IRI raster_bounds_correspondence_group = "http://ontology.mil/foundry/IMH_0001634";
   const IRI ccs_coordinate = "http://ontology.mil/foundry/IMH_0001644";
+  const IRI column_number = "http://ontology.mil/foundry/IMH_0001630";
+  const IRI row_number = "http://ontology.mil/foundry/IMH_0001626";
+  const IRI correspondence_target = "http://ontology.mil/foundry/IMH_0001667";
+  const IRI correspondence_source = "http://ontology.mil/foundry/IMH_0001642";
 } // namespace imh
 
 namespace qunit {

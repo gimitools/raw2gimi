@@ -12,6 +12,11 @@ RDFLiteral::RDFLiteral(int value) {
   m_datatype = xsd::INTEGER;
 }
 
+RDFLiteral::RDFLiteral(uint32_t value) {
+  m_value = to_string(value);
+  m_datatype = xsd::INTEGER;
+}
+
 RDFLiteral::RDFLiteral(uint64_t value) {
   m_value = to_string(value);
   m_datatype = xsd::INTEGER;

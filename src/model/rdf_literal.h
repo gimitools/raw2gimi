@@ -10,6 +10,7 @@ class RDFLiteral {
 public: // Constructors
   RDFLiteral(const string &value);
   RDFLiteral(int value);
+  RDFLiteral(uint32_t);
   RDFLiteral(uint64_t value);
   RDFLiteral(double value);
   RDFLiteral(const string &value, const IRI &datatype);
