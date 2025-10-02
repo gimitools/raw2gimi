@@ -32,9 +32,35 @@ namespace ido {
     return timestamp_iri;
   }
 
-  IRI generate_correspondence(const Coordinate &geo, const ImageCoordinate &img) {
+  IRI RDFConverter::generate_correspondence(const Coordinate &ground_cord, const ImageCoordinate &image_cord) {
     IRI correspondence = Resource::generate_iri();
     cout << "TODO: Implement generate_correspondence()" << endl;
+
+    // Ground Coordinate
+    m_redland.add_triple(ground_cord.get_iri(), rdf::type, imh::wgs84_degrees);
+    add_label(ground_cord.get_iri(), "Ground Coordinate");
+
+    // Image Coordinate
+    m_redland.add_triple(image_cord.get_iri(), rdf::type, imh::ccs_coordinate);
+    add_label(image_cord.get_iri(), "Image Coordinate");
+
+    // Correspondence
+    m_redland.add_triple(correspondence, rdf::type, imh::raster_bounds_correspondence_group);
+    add_label(correspondence, "Correspondence");
+
+    // triples([[gcoordinate, 'rdf:type', ':wgs84-radians'],
+    //        [gcoordinate, 'rdfs:label', f'{label}: {lat}, {lon}'],
+    //        [gcoordinate, ':lat',  [lat, 'xsd:double']],
+    //        [gcoordinate, ':long', [lon, 'xsd:double']],
+    //        [icoordinate, 'rdf:type', ':ccs-coordinate'],
+    //        [icoordinate, 'rdfs:label', f'{label}: {row},{column}'],
+    //        [icoordinate, ':row-number', [row, 'xsd:integer']],
+    //        [icoordinate, ':column-number', [column, 'xsd:integer']],
+    //        [correspondence, 'rdf:type', correspondence_type],
+    //        [correspondence, ':corresponding-source', icoordinate],
+    //        [correspondence, ':corresponding-target', gcoordinate],
+    //        [correspondence, 'rdfs:label', f'{lat},{lon} -> {row},{column}']
+    //        ]
 
     return correspondence;
   }

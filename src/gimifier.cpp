@@ -97,6 +97,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       string tile_name = "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")";
       rdf.add_label(tile_iri, tile_name);
       // cout << "    " << coord_ul.to_string() << endl;
+      rdf.generate_correspondence(coord_ul, ImageCoordinate(tile_ul_x, tile_ul_y));
     }
   }
 

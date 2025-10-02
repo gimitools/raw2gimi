@@ -42,6 +42,10 @@ namespace imh {
   const IRI has_y = "http://ontology.mil/foundry/IMH_0001474";
   const IRI has_z = "http://ontology.mil/foundry/IMH_0001447";
   const IRI has_unit = "http://ontology.mil/foundry/IMH_0001159";
+  const IRI wgs84_degrees = "http://ontology.mil/foundry/IMH_0001081";
+  const IRI wgs84_radians = "http://ontology.mil/foundry/IMH_0001400";
+  const IRI raster_bounds_correspondence_group = "http://ontology.mil/foundry/IMH_0001634";
+  const IRI ccs_coordinate = "http://ontology.mil/foundry/IMH_0001644";
 } // namespace imh
 
 namespace qunit {
