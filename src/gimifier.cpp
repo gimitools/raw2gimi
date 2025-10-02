@@ -79,8 +79,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
     for (uint32_t col = 0; col < grid.get_column_count(); col++) {
       RawImage tile = grid.get_tile(row, col);
-      // cout << "Tile (" << row << "," << col << ")" << endl;
-      // cout << "  IRI: " << tile.get_iri() << endl;
+
       // Tile Pixel Coordinates
       uint32_t tile_ul_x = col * tile_width;
       uint32_t tile_ul_y = row * tile_height;
@@ -91,8 +90,8 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       uint32_t tile_lr_x = tile_ul_x + tile_width;
       uint32_t tile_lr_y = tile_ul_y + tile_height;
 
-      // cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
       const Coordinate coord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
+
       IRI tile_iri = tile.get_iri();
       rdf.add_image(tile_iri);
       string tile_name = "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")";

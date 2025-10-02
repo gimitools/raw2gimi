@@ -32,4 +32,11 @@ namespace ido {
     return timestamp_iri;
   }
 
+  IRI generate_correspondence(const Coordinate &geo, const ImageCoordinate &img) {
+    IRI correspondence = Resource::generate_iri();
+    cout << "TODO: Implement generate_correspondence()" << endl;
+
+    return correspondence;
+  }
+
 } // namespace ido
