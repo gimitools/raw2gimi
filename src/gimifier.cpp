@@ -93,6 +93,10 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
       // cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
       const Coordinate coord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
+      IRI tile_iri = tile.get_iri();
+      rdf.add_image(tile_iri);
+      string tile_name = "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")";
+      rdf.add_label(tile_iri, tile_name);
       // cout << "    " << coord_ul.to_string() << endl;
     }
   }
