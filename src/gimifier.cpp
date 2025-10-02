@@ -1,8 +1,8 @@
 #include "gimifier.h"
 #include "dependencies/lat_lon_interpolator.h"
 #include "dependencies/libheif_wrapper.h"
-#include "dependencies/redland_wrapper.h"
 #include "error_handler.h"
+#include "rdf_converter.h"
 #include <cstring> // memcpy()
 
 using namespace gimi;
@@ -70,8 +70,8 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   const IRI grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
 
-  RedlandWrapper redland;
-  redland.add_triple(grid_iri, rdf::type, imh::image);
+  ido::RDFConverter rdf;
+  rdf.add_image(grid_iri);
 
   // iterate through all tiles and print their IRIs
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
@@ -95,7 +95,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
     }
   }
 
-  redland.export_to_file(options.output_filename);
+  rdf.export_to_file(options.output_filename);
   cout << "Created: " << options.output_filename << endl;
 }
 
@@ -109,13 +109,6 @@ void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions option
 // Debugging
 
 void Gimifier::debug() {
-  RedlandWrapper redland;
-  IRI subject = "http://example.org/subject";
-  IRI predicate = "http://example.org/predicate";
-  IRI object = "http://example.org/object";
-  redland.add_triple(subject, predicate, object);
-  redland.export_to_file("out/debug_output.ttl");
-  cout << "Created: out/debug_output.ttl" << endl;
 }
 
 // Helper Functions
