@@ -1,8 +1,9 @@
 #pragma once
 
+#include "model/resource.h"
 #include <stdint.h>
 
-class ImageCoordinate {
+class ImageCoordinate : public Resource {
 public:
   // Constructors
   ImageCoordinate(uint32_t x, uint32_t y);

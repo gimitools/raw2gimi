@@ -1,11 +1,12 @@
 #pragma once
 
+#include "model/resource.h"
 #include <iostream>
 
 using namespace std;
 
 namespace gimi {
-  class Coordinate {
+  class Coordinate : public Resource {
   public:
     // Constructors
     Coordinate(double latitude, double longitude);
