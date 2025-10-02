@@ -67,14 +67,18 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
 
-  const string grid_iri = grid.get_iri();
+  const IRI grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
+
+  RedlandWrapper redland;
+  redland.add_triple(grid_iri, rdf::type, imh::image);
 
   // iterate through all tiles and print their IRIs
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
     for (uint32_t col = 0; col < grid.get_column_count(); col++) {
       RawImage tile = grid.get_tile(row, col);
-      cout << "Tile (" << row << "," << col << ") IRI: " << tile.get_iri() << endl;
+      // cout << "Tile (" << row << "," << col << ")" << endl;
+      // cout << "  IRI: " << tile.get_iri() << endl;
       // Tile Pixel Coordinates
       uint32_t tile_ul_x = col * tile_width;
       uint32_t tile_ul_y = row * tile_height;
@@ -85,11 +89,14 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       uint32_t tile_lr_x = tile_ul_x + tile_width;
       uint32_t tile_lr_y = tile_ul_y + tile_height;
 
-      cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
+      // cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
       const Coordinate coord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
-      cout << "    " << coord_ul.to_string() << endl;
+      // cout << "    " << coord_ul.to_string() << endl;
     }
   }
+
+  redland.export_to_file(options.output_filename);
+  cout << "Created: " << options.output_filename << endl;
 }
 
 void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions options) {
@@ -102,7 +109,13 @@ void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions option
 // Debugging
 
 void Gimifier::debug() {
-  RedlandWrapper::debug();
+  RedlandWrapper redland;
+  IRI subject = "http://example.org/subject";
+  IRI predicate = "http://example.org/predicate";
+  IRI object = "http://example.org/object";
+  redland.add_triple(subject, predicate, object);
+  redland.export_to_file("out/debug_output.ttl");
+  cout << "Created: out/debug_output.ttl" << endl;
 }
 
 // Helper Functions

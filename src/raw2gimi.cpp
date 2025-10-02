@@ -118,17 +118,16 @@ void Raw2Gimi::image_to_tiles(WriteOptions options) {
   RawImageGrid grid = ImageProcessor::image_to_grid(rawImage, rows, columns);
 
   if (!m_sidecar_filename.empty()) {
-    // There is a sidecar file to read
-
-    // Read sidecar
-    cout << "Reading sidecar: " << m_sidecar_filename << endl;
-    cout << "Sidecar type: " << m_sidecar_type << endl;
     CsvFile csv = FileReader::read_csv(m_sidecar_filename);
-    Gimifier::write_unreal_to_rdf(grid, csv, options);
+    WriteOptions rdf_options = create_write_options();
+    rdf_options.output_filename = "out/rdf_output.ttl";
+    Gimifier::write_unreal_to_rdf(grid, csv, rdf_options);
   }
 
-  Gimifier::write_grid_to_file(grid, options);
-  cout << "Created: " << options.output_filename << endl;
+  // Gimifier::write_grid_to_file(grid, options);
+  // cout << "Created: " << options.output_filename << endl;
+  cout << "Warning!: commented out writing the grid to file for testing purposes."
+       << endl;
 }
 
 void Raw2Gimi::write_image_with_rdf(WriteOptions options) {

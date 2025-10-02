@@ -6,7 +6,6 @@
 
 Resource::Resource() {
   m_iri = generate_iri();
-  cout << "Generated IRI: " << m_iri << endl;
 }
 
 Resource::Resource(const string &iri) {
