@@ -29,6 +29,8 @@ namespace gimi {
   protected:
     // Helper Functions
     static BoundingBox extract_unreal_bbox(const CsvFile &);
+    static double calculate_slope(double upper_left, double upper_right, uint32_t width);
+    static double interpolate_point(double slope, uint32_t point, double intercept);
   };
 
 } // namespace gimi

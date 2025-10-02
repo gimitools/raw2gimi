@@ -1,4 +1,5 @@
 #include "gimifier.h"
+#include "dependencies/lat_lon_interpolator.h"
 #include "dependencies/libheif_wrapper.h"
 #include "dependencies/redland_wrapper.h"
 #include "error_handler.h"
@@ -61,6 +62,10 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   uint32_t tile_width = grid.get_tile_width();
   uint32_t tile_height = grid.get_tile_height();
+  uint32_t total_width = grid.get_total_width();
+  uint32_t total_height = grid.get_total_height();
+
+  chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
 
   const string grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
@@ -81,6 +86,8 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       uint32_t tile_lr_y = tile_ul_y + tile_height;
 
       cout << "  ul: (" << tile_ul_x << "," << tile_ul_y << ")" << endl;
+      const Coordinate coord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
+      cout << "    " << coord_ul.to_string() << endl;
     }
   }
 }
@@ -133,4 +140,15 @@ BoundingBox Gimifier::extract_unreal_bbox(const CsvFile &csv) {
   BoundingBox bounding_box(top_left, top_right, bottom_left, bottom_right);
 
   return bounding_box;
+}
+
+double Gimifier::calculate_slope(double upper_left, double upper_right, uint32_t width) {
+  double slope = (upper_right - upper_left) / width;
+  return slope;
+}
+
+double Gimifier::interpolate_point(double slope, uint32_t point, double intercept) {
+  // y = mx + b
+  double y = slope * point + intercept;
+  return y;
 }

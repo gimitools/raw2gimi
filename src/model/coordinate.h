@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 using namespace std;
 
 namespace gimi {
@@ -12,6 +14,9 @@ namespace gimi {
     // Getters
     double get_latitude() const;
     double get_longitude() const;
+
+  public:
+    string to_string() const;
 
   private:
     double m_latitude;

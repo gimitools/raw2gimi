@@ -1,6 +1,7 @@
 #include "coordinate.h"
 
 using namespace gimi;
+using namespace std;
 
 // Constructors
 
@@ -16,4 +17,8 @@ double Coordinate::get_latitude() const {
 
 double Coordinate::get_longitude() const {
   return m_longitude;
+}
+
+string Coordinate::to_string() const {
+  return "(" + std::to_string(m_latitude) + ", " + std::to_string(m_longitude) + ")";
 }
