@@ -72,6 +72,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   ido::RDFConverter rdf;
   rdf.add_image(grid_iri);
+  rdf.add_label(grid_iri, options.image_name);
   rdf.add_timestamp(2138486400000000000); // October 7th, 2025
 
   // iterate through all tiles and print their IRIs

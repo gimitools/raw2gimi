@@ -23,4 +23,5 @@ public:
 
 protected:
   string m_iri; // Internationalized Resource Identifier (IRI)
+  string label; // RDFS Label
 };
