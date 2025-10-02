@@ -1,6 +1,7 @@
 #pragma once
 
 #include "csv_file.h"
+#include "model/bounding_box.h"
 #include "model/iso_file.h"
 #include "model/raw_image.h"
 #include "model/raw_image_grid.h"
@@ -26,6 +27,8 @@ namespace gimi {
     static void debug();
 
   protected:
+    // Helper Functions
+    static BoundingBox extract_unreal_bbox(const CsvFile &);
   };
 
 } // namespace gimi

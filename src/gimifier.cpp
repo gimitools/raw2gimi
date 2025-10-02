@@ -56,23 +56,8 @@ void Gimifier::write_grid_to_file(const RawImageGrid &grid, WriteOptions options
 }
 
 void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, WriteOptions options) {
-  string upper_left_latitude = csv.get_cell(0, "CornerPointUL_Lat(deg)");
-  string upper_left_longitude = csv.get_cell(0, "CornerPointUL_Lon(deg)");
 
-  string upper_right_latitude = csv.get_cell(0, "CornerPointUR_Lat(deg)");
-  string upper_right_longitude = csv.get_cell(0, "CornerPointUR_Lon(deg)");
-
-  string lower_right_latitude = csv.get_cell(0, "CornerPointLR_Lat(deg)");
-  string lower_right_longitude = csv.get_cell(0, "CornerPointLR_Lon(deg)");
-
-  string lower_left_latitude = csv.get_cell(0, "CornerPointLL_Lat(deg)");
-  string lower_left_longitude = csv.get_cell(0, "CornerPointLL_Lon(deg)");
-
-  // Print all values:
-  cout << "UL: (" << upper_left_latitude << ", " << upper_left_longitude << ")" << endl;
-  cout << "UR: (" << upper_right_latitude << ", " << upper_right_longitude << ")" << endl;
-  cout << "LR: (" << lower_right_latitude << ", " << lower_right_longitude << ")" << endl;
-  cout << "LL: (" << lower_left_latitude << ", " << lower_left_longitude << ")" << endl;
+  BoundingBox bbox = extract_unreal_bbox(csv);
 
   const string grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
@@ -97,4 +82,41 @@ void Gimifier::write_video_to_file(vector<RawImage> &frames, WriteOptions option
 
 void Gimifier::debug() {
   RedlandWrapper::debug();
+}
+
+// Helper Functions
+
+BoundingBox Gimifier::extract_unreal_bbox(const CsvFile &csv) {
+  string upper_left_latitude = csv.get_cell(0, "CornerPointUL_Lat(deg)");
+  string upper_left_longitude = csv.get_cell(0, "CornerPointUL_Lon(deg)");
+
+  string upper_right_latitude = csv.get_cell(0, "CornerPointUR_Lat(deg)");
+  string upper_right_longitude = csv.get_cell(0, "CornerPointUR_Lon(deg)");
+
+  string lower_right_latitude = csv.get_cell(0, "CornerPointLR_Lat(deg)");
+  string lower_right_longitude = csv.get_cell(0, "CornerPointLR_Lon(deg)");
+
+  string lower_left_latitude = csv.get_cell(0, "CornerPointLL_Lat(deg)");
+  string lower_left_longitude = csv.get_cell(0, "CornerPointLL_Lon(deg)");
+
+  double ul_lat = stod(upper_left_latitude);
+  double ul_lon = stod(upper_left_longitude);
+
+  double ur_lat = stod(upper_right_latitude);
+  double ur_lon = stod(upper_right_longitude);
+
+  double ll_lat = stod(lower_left_latitude);
+  double ll_lon = stod(lower_left_longitude);
+
+  double lr_lat = stod(lower_right_latitude);
+  double lr_lon = stod(lower_right_longitude);
+
+  Coordinate top_left(ul_lat, ul_lon);
+  Coordinate top_right(ur_lat, ur_lon);
+  Coordinate bottom_left(ll_lat, ll_lon);
+  Coordinate bottom_right(lr_lat, lr_lon);
+
+  BoundingBox bounding_box(top_left, top_right, bottom_left, bottom_right);
+
+  return bounding_box;
 }
