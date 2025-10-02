@@ -10,6 +10,10 @@ namespace rdf {
   const IRI type = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 } // namespace rdf
 
+namespace rdfs {
+  const IRI label = "http://www.w3.org/2000/01/rdf-schema#label";
+}
+
 namespace xsd {
   const IRI STRING = "http://www.w3.org/2001/XMLSchema#string";
   const IRI BOOLEAN = "http://www.w3.org/2001/XMLSchema#boolean";

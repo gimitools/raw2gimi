@@ -70,6 +70,8 @@ void RedlandWrapper::export_to_file(const string &filename) {
 // Helpers
 
 void RedlandWrapper::register_namespaces(librdf_serializer *serializer) {
+  register_namespace(serializer, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+  register_namespace(serializer, "rdfs", "http://www.w3.org/2000/01/rdf-schema#");
   register_namespace(serializer, "cco", "https://www.commoncoreontologies.org/");
   register_namespace(serializer, "xsd", "http://www.w3.org/2001/XMLSchema#");
   // register_namespace(serializer, "imh", "http://ontology.mil/foundry/");
