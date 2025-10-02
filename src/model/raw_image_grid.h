@@ -18,6 +18,8 @@ namespace gimi {
     uint32_t get_column_count() const;
     uint32_t get_tile_width() const;
     uint32_t get_tile_height() const;
+    uint32_t get_total_width() const;
+    uint32_t get_total_height() const;
     RawImage get_tile(uint32_t row, uint32_t column) const;
     vector<vector<RawImage>> get_tiles() const;
 

@@ -59,6 +59,12 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   BoundingBox bbox = extract_unreal_bbox(csv);
 
+  uint32_t grid_width = grid.get_total_width();
+  uint32_t grid_height = grid.get_total_height();
+
+  cout << "Grid Width: " << grid_width << endl;
+  cout << "Grid Height: " << grid_height << endl;
+
   const string grid_iri = grid.get_iri();
   cout << "Grid IRI: " << grid_iri << endl;
 

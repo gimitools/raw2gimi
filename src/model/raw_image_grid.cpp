@@ -39,6 +39,14 @@ RawImage RawImageGrid::get_tile(uint32_t row, uint32_t column) const {
   return m_tiles[row][column];
 }
 
+uint32_t RawImageGrid::get_total_width() const {
+  return get_column_count() * get_tile_width();
+}
+
+uint32_t RawImageGrid::get_total_height() const {
+  return get_row_count() * get_tile_height();
+}
+
 vector<vector<RawImage>> RawImageGrid::get_tiles() const {
   return m_tiles;
 }
