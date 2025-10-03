@@ -18,6 +18,8 @@ namespace gimi {
 
   public:
     string to_string() const;
+    bool operator==(const Coordinate &other) const;
+    bool operator!=(const Coordinate &other) const;
 
   private:
     double m_latitude;

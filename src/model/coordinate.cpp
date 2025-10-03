@@ -1,4 +1,5 @@
 #include "coordinate.h"
+#include <cmath> // std::fabs
 
 using namespace gimi;
 using namespace std;
@@ -21,4 +22,14 @@ double Coordinate::get_longitude() const {
 
 string Coordinate::to_string() const {
   return "(" + std::to_string(m_latitude) + ", " + std::to_string(m_longitude) + ")";
+}
+
+bool Coordinate::operator==(const Coordinate &other) const {
+  double EPS = 1e-12;
+  return std::fabs(m_latitude - other.m_latitude) < EPS &&
+         std::fabs(m_longitude - other.m_longitude) < EPS;
+}
+
+bool Coordinate::operator!=(const Coordinate &other) const {
+  return !(*this == other);
 }

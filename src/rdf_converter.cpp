@@ -77,8 +77,16 @@ namespace ido {
     }
 
     // For GeoSPARQL:
+    add_triple(correspondence_group, rdf::type, geosparql::geometry);
+    // make_wkt_crs84_polygon()
+    add_triple(correspondence_group, geosparql::asWKT, "TODO");
 
     return correspondence_group;
+  }
+
+  string RDFConverter::make_wkt_crs84_polygon(vector<Coordinate> &cords) {
+    // if first coordiante != last coordinate, close the polygon
+    return "TODO";
   }
 
   // Protected

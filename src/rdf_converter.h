@@ -29,6 +29,7 @@ namespace ido {
     IRI generate_correspondence_group(IRI content_id,
                                       vector<IRI> correspondences,
                                       IRI timestamp);
+    string make_wkt_crs84_polygon(vector<Coordinate> &);
 
   protected:
     void add_triple(const IRI &subject, const IRI &predicate, const IRI &object);

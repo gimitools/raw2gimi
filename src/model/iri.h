@@ -59,3 +59,8 @@ namespace imh {
 namespace qunit {
   const IRI meter = "http://qudt.org/vocab/unit/M";
 }
+
+namespace geosparql {
+  const IRI geometry = "http://www.opengis.net/ont/geosparql#geometry";
+  const IRI asWKT = "http://www.opengis.net/ont/geosparql#asWKT";
+} // namespace geosparql
