@@ -63,4 +63,5 @@ namespace qunit {
 namespace geosparql {
   const IRI geometry = "http://www.opengis.net/ont/geosparql#geometry";
   const IRI asWKT = "http://www.opengis.net/ont/geosparql#asWKT";
+  const IRI wktLiteral = "http://www.opengis.net/ont/geosparql#wktLiteral";
 } // namespace geosparql

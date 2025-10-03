@@ -79,6 +79,7 @@ void RedlandWrapper::register_namespaces(librdf_serializer *serializer) {
   register_namespace(serializer, "imh", "http://ontology.mil/foundry/IMH");
   register_namespace(serializer, "obi", "http://purl.obolibrary.org/obo/");
   register_namespace(serializer, "qunit", "http://qudt.org/vocab/unit/");
+  register_namespace(serializer, "geosparql", "http://www.opengis.net/ont/geosparql#");
 }
 
 void RedlandWrapper::register_namespace(librdf_serializer *serializer, string prefix, string ns) {

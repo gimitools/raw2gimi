@@ -64,8 +64,13 @@ namespace ido {
     return correspondence;
   }
 
-  IRI RDFConverter::generate_correspondence_group(IRI content_id, vector<IRI> correspondences, IRI timestamp) {
+  IRI RDFConverter::generate_correspondence_group(IRI content_id,
+                                                  vector<IRI> correspondences,
+                                                  vector<Coordinate> ground_coordinates,
+                                                  IRI timestamp) {
     IRI correspondence_group = Resource::generate_iri();
+    string wkt_polygon = make_wkt_crs84_polygon(ground_coordinates);
+    RDFLiteral wkt_literal(wkt_polygon, geosparql::wktLiteral);
 
     add_triple(correspondence_group, rdf::type, imh::raster_bounds_correspondence_group);
     add_triple(correspondence_group, imh::at, timestamp);
@@ -78,8 +83,7 @@ namespace ido {
 
     // For GeoSPARQL:
     add_triple(correspondence_group, rdf::type, geosparql::geometry);
-    // string polygoc = make_wkt_crs84_polygon()
-    add_triple(correspondence_group, geosparql::asWKT, "TODO");
+    add_triple(correspondence_group, geosparql::asWKT, wkt_literal);
 
     return correspondence_group;
   }

@@ -101,6 +101,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       const Coordinate gcord_ur = interpolator.interpolate(tile_ur_x, tile_ur_y);
       const Coordinate gcord_ll = interpolator.interpolate(tile_ll_x, tile_ll_y);
       const Coordinate gcord_lr = interpolator.interpolate(tile_lr_x, tile_lr_y);
+      vector<Coordinate> ground_coordinates = {gcord_ul, gcord_ur, gcord_lr, gcord_ll};
 
       // Create Correspondences
       IRI correspondence_ul = rdf.generate_correspondence(gcord_ul, icord_ul);
@@ -110,7 +111,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
       // Correspondence Group
       vector<IRI> correspondences = {correspondence_ul, correspondence_ur, correspondence_ll, correspondence_lr};
-      IRI correspondence_group = rdf.generate_correspondence_group(tile.get_iri(), correspondences, timestamp);
+      IRI correspondence_group = rdf.generate_correspondence_group(tile.get_iri(), correspondences, ground_coordinates, timestamp);
 
       IRI tile_iri = tile.get_iri();
       rdf.add_image(tile_iri);

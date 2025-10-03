@@ -28,6 +28,7 @@ namespace ido {
     IRI generate_correspondence(const Coordinate &, const ImageCoordinate &);
     IRI generate_correspondence_group(IRI content_id,
                                       vector<IRI> correspondences,
+                                      vector<Coordinate> ground_coordinates,
                                       IRI timestamp);
     string make_wkt_crs84_polygon(const vector<Coordinate> &);
 
