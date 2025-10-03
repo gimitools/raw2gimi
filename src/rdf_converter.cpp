@@ -1,7 +1,7 @@
 #include "rdf_converter.h"
 #include "model/rdf_literal.h"
 #include "model/resource.h"
-// #include "dependencies/redland_wrapper.h"
+#include <sstream>
 
 using namespace gimi;
 
@@ -78,15 +78,53 @@ namespace ido {
 
     // For GeoSPARQL:
     add_triple(correspondence_group, rdf::type, geosparql::geometry);
-    // make_wkt_crs84_polygon()
+    // string polygoc = make_wkt_crs84_polygon()
     add_triple(correspondence_group, geosparql::asWKT, "TODO");
 
     return correspondence_group;
   }
 
-  string RDFConverter::make_wkt_crs84_polygon(vector<Coordinate> &cords) {
-    // if first coordiante != last coordinate, close the polygon
-    return "TODO";
+  string RDFConverter::make_wkt_crs84_polygon(const vector<Coordinate> &coords) {
+    if (coords.size() < 3) {
+      throw std::invalid_argument("WKT polygon requires at least 3 coordinates");
+    }
+
+    const Coordinate &first = coords.front();
+    const Coordinate &last = coords.back();
+    const bool is_closed = (first == last);
+
+    std::string wkt;
+    wkt.reserve(32 * coords.size()); // rough preallocate
+    wkt += "POLYGON((";
+
+    auto append_pair = [&](const Coordinate &c, bool need_comma) {
+      wkt += std::to_string(c.get_longitude());
+      wkt += ' ';
+      wkt += std::to_string(c.get_latitude());
+      if (need_comma)
+        wkt += ',';
+    };
+
+    const std::size_t n = coords.size();
+    for (std::size_t i = 0; i < n; ++i) {
+      append_pair(coords[i], true);
+    }
+
+    if (!is_closed) {
+      append_pair(first, false);
+    } else {
+      // we already added commas after each of the n items; remove the extra comma
+      if (!wkt.empty() && wkt.back() == ',')
+        wkt.pop_back();
+    }
+
+    wkt += "))";
+    return wkt;
+  }
+
+  // Getters
+  Coordinate RDFConverter::get_ground_coordinate(const IRI &correspondence) {
+    return Coordinate(0, 0); // TODO
   }
 
   // Protected
