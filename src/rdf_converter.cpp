@@ -78,7 +78,7 @@ namespace ido {
     add_label(correspondence_group, "Correspondence Group");
 
     for (const auto &correspondence : correspondences) {
-      add_triple(correspondence_group, imh::ccs_coordinate, correspondence);
+      add_triple(correspondence_group, imh::has_correspondence, correspondence);
     }
 
     // For GeoSPARQL:

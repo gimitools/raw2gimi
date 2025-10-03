@@ -48,6 +48,7 @@ namespace imh {
   const IRI wgs84_degrees = "http://ontology.mil/foundry/IMH_0001081";
   const IRI wgs84_radians = "http://ontology.mil/foundry/IMH_0001400";
   const IRI raster_bounds_correspondence_group = "http://ontology.mil/foundry/IMH_0001634";
+  const IRI has_correspondence = "http://ontology.mil/foundry/IMH_0001678";
   const IRI ccs_coordinate = "http://ontology.mil/foundry/IMH_0001644";
   const IRI column_number = "http://ontology.mil/foundry/IMH_0001630";
   const IRI row_number = "http://ontology.mil/foundry/IMH_0001626";
