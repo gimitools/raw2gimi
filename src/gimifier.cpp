@@ -58,24 +58,24 @@ void Gimifier::write_grid_to_file(const RawImageGrid &grid, WriteOptions options
 
 void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, WriteOptions options) {
 
+  // Get Corner Points
   BoundingBox bbox = extract_unreal_bbox(csv);
 
-  uint32_t tile_width = grid.get_tile_width();
-  uint32_t tile_height = grid.get_tile_height();
+  // Create Interpolator
   uint32_t total_width = grid.get_total_width();
   uint32_t total_height = grid.get_total_height();
-
   chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
 
+  // Create RDFConverter
   const IRI grid_iri = grid.get_iri();
-  cout << "Grid IRI: " << grid_iri << endl;
-
   ido::RDFConverter rdf;
   rdf.add_image(grid_iri);
   rdf.add_label(grid_iri, options.image_name);
-  rdf.add_timestamp(2138486400000000000); // October 7th, 2025
+  IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
 
-  // iterate through all tiles and print their IRIs
+  // ????????????????
+  uint32_t tile_width = grid.get_tile_width();
+  uint32_t tile_height = grid.get_tile_height();
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
     for (uint32_t col = 0; col < grid.get_column_count(); col++) {
       RawImage tile = grid.get_tile(row, col);
@@ -90,14 +90,32 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       uint32_t tile_lr_x = tile_ul_x + tile_width;
       uint32_t tile_lr_y = tile_ul_y + tile_height;
 
-      const Coordinate coord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
+      // Image Coordinates
+      const ImageCoordinate icord_ul(tile_ul_x, tile_ul_y);
+      const ImageCoordinate icord_ur(tile_ur_x, tile_ur_y);
+      const ImageCoordinate icord_ll(tile_ll_x, tile_ll_y);
+      const ImageCoordinate icord_lr(tile_lr_x, tile_lr_y);
+
+      // Ground Coordinates
+      const Coordinate gcord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
+      const Coordinate gcord_ur = interpolator.interpolate(tile_ur_x, tile_ur_y);
+      const Coordinate gcord_ll = interpolator.interpolate(tile_ll_x, tile_ll_y);
+      const Coordinate gcord_lr = interpolator.interpolate(tile_lr_x, tile_lr_y);
+
+      // Create Correspondences
+      IRI correspondence_ul = rdf.generate_correspondence(gcord_ul, icord_ul);
+      IRI correspondence_ur = rdf.generate_correspondence(gcord_ur, icord_ur);
+      IRI correspondence_ll = rdf.generate_correspondence(gcord_ll, icord_ll);
+      IRI correspondence_lr = rdf.generate_correspondence(gcord_lr, icord_lr);
+
+      // Correspondence Group
+      vector<IRI> correspondences = {correspondence_ul, correspondence_ur, correspondence_ll, correspondence_lr};
+      IRI correspondence_group = rdf.generate_correspondence_group(tile.get_iri(), correspondences, timestamp);
 
       IRI tile_iri = tile.get_iri();
       rdf.add_image(tile_iri);
       string tile_name = "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")";
       rdf.add_label(tile_iri, tile_name);
-      // cout << "    " << coord_ul.to_string() << endl;
-      rdf.generate_correspondence(coord_ul, ImageCoordinate(tile_ul_x, tile_ul_y));
     }
   }
 

@@ -42,7 +42,6 @@ namespace ido {
     RDFLiteral lon(ground_cord.get_longitude());
     RDFLiteral row(image_cord.get_y());
     RDFLiteral column(image_cord.get_x());
-    cout << "TODO: Implement generate_correspondence()" << endl;
 
     // Ground Coordinate
     m_redland.add_triple(gcord, rdf::type, imh::wgs84_degrees);
@@ -62,23 +61,21 @@ namespace ido {
     m_redland.add_triple(correspondence, imh::correspondence_target, gcord);
     add_label(correspondence, "Correspondence");
 
-    // triples([[gcoordinate, 'rdf:type', ':wgs84-radians'],
-    //        [gcoordinate, 'rdfs:label', f'{label}: {lat}, {lon}'],
-    //        [gcoordinate, ':lat',  [lat, 'xsd:double']],
-    //        [gcoordinate, ':long', [lon, 'xsd:double']],
-
-    //        [icoordinate, 'rdf:type', ':ccs-coordinate'],
-    //        [icoordinate, 'rdfs:label', f'{label}: {row},{column}'],
-    //        [icoordinate, ':row-number', [row, 'xsd:integer']],
-    //        [icoordinate, ':column-number', [column, 'xsd:integer']],
-
-    //        [correspondence, 'rdf:type', correspondence_type],
-    //        [correspondence, ':corresponding-source', icoordinate],
-    //        [correspondence, ':corresponding-target', gcoordinate],
-    //        [correspondence, 'rdfs:label', f'{lat},{lon} -> {row},{column}']
-    //        ]
-
     return correspondence;
   }
 
+  IRI RDFConverter::generate_correspondence_group(IRI content_id, vector<IRI> correspondences, IRI timestamp) {
+    IRI correspondence_group = Resource::generate_iri();
+
+    m_redland.add_triple(correspondence_group, rdf::type, imh::raster_bounds_correspondence_group);
+    m_redland.add_triple(correspondence_group, imh::at, timestamp);
+    m_redland.add_triple(correspondence_group, cco::about, content_id);
+    add_label(correspondence_group, "Correspondence Group");
+
+    for (const auto &correspondence : correspondences) {
+      m_redland.add_triple(correspondence_group, imh::ccs_coordinate, correspondence);
+    }
+
+    return correspondence_group;
+  }
 } // namespace ido
