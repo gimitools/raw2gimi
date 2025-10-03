@@ -9,6 +9,7 @@
 using namespace std;
 using namespace gimi;
 
+// TODO: move to libido
 namespace ido {
 
   // Rename to TripleStore? RdfStore? IDO?
@@ -28,6 +29,10 @@ namespace ido {
     IRI generate_correspondence_group(IRI content_id,
                                       vector<IRI> correspondences,
                                       IRI timestamp);
+
+  protected:
+    void add_triple(const IRI &subject, const IRI &predicate, const IRI &object);
+    void add_triple(const IRI &subject, const IRI &predicate, const RDFLiteral &object);
 
   private:
     gimi::RedlandWrapper m_redland;
