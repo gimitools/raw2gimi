@@ -1,5 +1,6 @@
 #pragma once
 
+#include "model/corner_points.h"
 #include "model/pixel_formats.h"
 #include "model/plane.h"
 #include "model/resource.h"
@@ -29,8 +30,9 @@ namespace gimi {
     Interleave get_interleave() const;
     PixelType get_pixel_type() const;
     Chroma get_chroma() const;
-    bool is_little_endian() const;
     const vector<Plane> &get_planes() const;
+    CornerPoints create_corner_points() const;
+    bool is_little_endian() const;
 
   public:
     // API

@@ -29,6 +29,11 @@ namespace ido {
     void add_image(const IRI &);
     IRI add_timestamp(uint64_t tai_time);
     IRI generate_correspondence(const Coordinate &, const Point &);
+    void add_coordinate(const Coordinate &);
+    void add_coordinates(const BoundingBox &);
+    void add_points(const CornerPoints &);
+    void add_point(const Point &);
+    void add_correspondence(const Correspondence &);
     void add_correspondence_group(IRI content_id,
                                   const CorrespondenceGroup &);
     IRI generate_correspondence_group(IRI content_id,

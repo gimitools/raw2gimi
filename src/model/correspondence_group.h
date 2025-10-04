@@ -16,6 +16,11 @@ namespace ido {
     CorrespondenceGroup(const CornerPoints &, const BoundingBox &);
 
   public:
+    // Getters
+    vector<Coordinate> get_coordinates() const;
+
+  public:
+    // Member Variables
     vector<Correspondence> correspondences;
   };
 

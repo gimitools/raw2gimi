@@ -14,3 +14,12 @@ CorrespondenceGroup::CorrespondenceGroup(const CornerPoints &corners, const Boun
   correspondences.push_back(bottom_left);
   correspondences.push_back(bottom_right);
 }
+
+// Getters
+vector<Coordinate> CorrespondenceGroup::get_coordinates() const {
+  vector<Coordinate> cords;
+  for (const auto &correspondence : correspondences) {
+    cords.push_back(correspondence.coordinate);
+  }
+  return cords;
+}

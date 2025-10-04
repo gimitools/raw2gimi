@@ -29,6 +29,10 @@ namespace gimi {
   protected:
     // Helper Functions
     static BoundingBox extract_unreal_bbox(const CsvFile &);
+    static BoundingBox create_tile_bbox(
+        RawImageGrid grid,
+        BoundingBox &grid_bbox,
+        uint32_t tile_start_x, uint32_t tile_start_y);
     static double calculate_slope(double upper_left, double upper_right, uint32_t width);
     static double interpolate_point(double slope, uint32_t point, double intercept);
   };

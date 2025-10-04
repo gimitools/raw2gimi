@@ -63,15 +63,72 @@ IRI RDFConverter::generate_correspondence(const Coordinate &ground_cord,
   return correspondence;
 }
 
+void RDFConverter::add_coordinate(const Coordinate &coordinate) {
+  IRI cord = coordinate.get_iri();
+  RDFLiteral lat(coordinate.get_latitude());
+  RDFLiteral lon(coordinate.get_longitude());
+
+  add_triple(cord, rdf::type, imh::wgs84_degrees);
+  add_triple(cord, cco::lat, lat);
+  add_triple(cord, cco::lon, lon);
+  add_label(cord, "Ground Coordinate");
+}
+
+void RDFConverter::add_coordinates(const BoundingBox &bbox) {
+  add_coordinate(bbox.get_top_left());
+  add_coordinate(bbox.get_top_right());
+  add_coordinate(bbox.get_bottom_left());
+  add_coordinate(bbox.get_bottom_right());
+}
+
+void RDFConverter::add_points(const CornerPoints &corners) {
+  add_point(corners.top_left);
+  add_point(corners.top_right);
+  add_point(corners.bottom_left);
+  add_point(corners.bottom_right);
+}
+
+void RDFConverter::add_point(const Point &point_object) {
+  IRI point = point_object.get_iri();
+  RDFLiteral x(point_object.get_x());
+  RDFLiteral y(point_object.get_y());
+
+  add_triple(point, rdf::type, imh::ccs_coordinate);
+  add_triple(point, imh::row_number, y);
+  add_triple(point, imh::column_number, x);
+  add_label(point, "Image Coordinate");
+}
+
+void RDFConverter::add_correspondence(const Correspondence &correspondence) {
+  IRI correspondence_iri = correspondence.get_iri();
+  IRI ground_cord = correspondence.coordinate.get_iri();
+  IRI image_cord = correspondence.point.get_iri();
+
+  // Correspondence
+  add_triple(correspondence_iri, rdf::type, imh::raster_bounds_correspondence_group);
+  add_triple(correspondence_iri, imh::correspondence_source, image_cord);
+  add_triple(correspondence_iri, imh::correspondence_target, ground_cord);
+  add_label(correspondence_iri, "Correspondence");
+}
+
 void RDFConverter::add_correspondence_group(IRI content_id,
                                             const CorrespondenceGroup &group) {
+  IRI group_i = group.iri();
+  vector<Coordinate> coordinates = group.get_coordinates();
+  string wkt_polygon_string = make_wkt_crs84_polygon(coordinates);
+  RDFLiteral wkt_polygon(wkt_polygon_string, geosparql::wktLiteral);
 
   for (const auto &correspondence : group.correspondences) {
-    add_triple(group.iri(), imh::has_correspondence, correspondence.iri());
+    add_triple(group_i, imh::has_correspondence, correspondence.iri());
   }
 
-  add_triple(group.iri(), rdf::type, imh::raster_bounds_correspondence_group);
-  add_triple(group.iri(), cco::about, content_id);
+  add_triple(group_i, rdf::type, imh::raster_bounds_correspondence_group);
+  add_triple(group_i, cco::about, content_id);
+
+  add_triple(group_i, rdf::type, geosparql::geometry);
+  add_triple(group_i, geosparql::asWKT, wkt_polygon);
+
+  // TODO: link corerespondences so they can be queried in the correct order.
 }
 
 IRI RDFConverter::generate_correspondence_group(IRI content_id,

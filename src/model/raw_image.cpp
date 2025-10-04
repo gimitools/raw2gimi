@@ -48,6 +48,15 @@ const vector<Plane> &RawImage::get_planes() const {
   return planes;
 }
 
+CornerPoints RawImage::create_corner_points() const {
+  const Point top_left(0, 0);
+  const Point top_right(m_width - 1, 0);
+  const Point bottom_left(0, m_height - 1);
+  const Point bottom_right(m_width - 1, m_height - 1);
+  CornerPoints corners_points(top_left, top_right, bottom_left, bottom_right);
+  return corners_points;
+}
+
 // API
 
 void RawImage::add_rgb_interleaved_8bit(const vector<uint8_t> &pixel_data) {

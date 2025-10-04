@@ -70,63 +70,49 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   // Ground Coordinates
   BoundingBox bbox = extract_unreal_bbox(csv);
+  rdf.add_coordinates(bbox);
 
-  // Pixel Coordinates
+  // Image Points
   const CornerPoints grid_corners = grid.create_corner_points();
+  rdf.add_points(grid_corners);
 
   // Correspondence Group
   CorrespondenceGroup grid_correspondences(grid_corners, bbox);
   rdf.add_correspondence_group(grid_iri, grid_correspondences);
+  rdf.add_label(grid_correspondences.iri(), "Image Grid Correspondence Group");
 
   // Create Interpolator
   uint32_t total_width = grid.get_total_width();
   uint32_t total_height = grid.get_total_height();
-  chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
 
   // Add Tiles
   uint32_t tile_width = grid.get_tile_width();
   uint32_t tile_height = grid.get_tile_height();
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
     for (uint32_t col = 0; col < grid.get_column_count(); col++) {
-      RawImage tile = grid.get_tile(row, col);
 
-      // Tile Pixel Coordinates
-      uint32_t tile_ul_x = col * tile_width;
-      uint32_t tile_ul_y = row * tile_height;
-      uint32_t tile_ur_x = tile_ul_x + tile_width;
-      uint32_t tile_ur_y = tile_ul_y;
-      uint32_t tile_ll_x = tile_ul_x;
-      uint32_t tile_ll_y = tile_ul_y + tile_height;
-      uint32_t tile_lr_x = tile_ul_x + tile_width;
-      uint32_t tile_lr_y = tile_ul_y + tile_height;
+      // Local Variables
+      RawImage tile_image = grid.get_tile(row, col);
+      IRI tile_iri = tile_image.get_iri();
+      uint32_t tile_start_x = col * tile_width;
+      uint32_t tile_start_y = row * tile_height;
+
+      // Add Tile Image
+      rdf.add_image(tile_iri);
+      rdf.add_label(tile_iri, "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")");
 
       // Image Coordinates
-      const Point icord_ul(tile_ul_x, tile_ul_y);
-      const Point icord_ur(tile_ur_x, tile_ur_y);
-      const Point icord_ll(tile_ll_x, tile_ll_y);
-      const Point icord_lr(tile_lr_x, tile_lr_y);
+      CornerPoints tile_corners = tile_image.create_corner_points();
+      rdf.add_points(tile_corners);
 
       // Ground Coordinates
-      const Coordinate gcord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);
-      const Coordinate gcord_ur = interpolator.interpolate(tile_ur_x, tile_ur_y);
-      const Coordinate gcord_ll = interpolator.interpolate(tile_ll_x, tile_ll_y);
-      const Coordinate gcord_lr = interpolator.interpolate(tile_lr_x, tile_lr_y);
-      vector<Coordinate> ground_coordinates = {gcord_ul, gcord_ur, gcord_lr, gcord_ll};
-
-      // Create Correspondences
-      IRI correspondence_ul = rdf.generate_correspondence(gcord_ul, icord_ul);
-      IRI correspondence_ur = rdf.generate_correspondence(gcord_ur, icord_ur);
-      IRI correspondence_ll = rdf.generate_correspondence(gcord_ll, icord_ll);
-      IRI correspondence_lr = rdf.generate_correspondence(gcord_lr, icord_lr);
+      BoundingBox tile_bbox = create_tile_bbox(grid, bbox, tile_start_x, tile_start_y);
+      rdf.add_coordinates(tile_bbox);
 
       // Correspondence Group
-      vector<IRI> correspondences = {correspondence_ul, correspondence_ur, correspondence_ll, correspondence_lr};
-      IRI correspondence_group = rdf.generate_correspondence_group(tile.get_iri(), correspondences, ground_coordinates, timestamp);
-
-      IRI tile_iri = tile.get_iri();
-      rdf.add_image(tile_iri);
-      string tile_name = "tile: (" + std::to_string(col) + "," + std::to_string(row) + ")";
-      rdf.add_label(tile_iri, tile_name);
+      CorrespondenceGroup tile_correspondences(tile_corners, tile_bbox);
+      rdf.add_correspondence_group(tile_iri, tile_correspondences);
+      rdf.add_label(tile_iri, "Tile Correspondence Group");
     }
   }
 
@@ -181,6 +167,24 @@ BoundingBox Gimifier::extract_unreal_bbox(const CsvFile &csv) {
   BoundingBox bounding_box(top_left, top_right, bottom_left, bottom_right);
 
   return bounding_box;
+}
+
+BoundingBox Gimifier::create_tile_bbox(RawImageGrid grid, BoundingBox &grid_bbox, uint32_t tile_start_x, uint32_t tile_start_y) {
+  uint32_t tile_width = grid.get_tile_width();
+  uint32_t tile_height = grid.get_tile_height();
+  uint32_t grid_width = grid.get_total_width();
+  uint32_t grid_height = grid.get_total_height();
+
+  chatgpt::LatLonInterpolator interpolator(grid_width, grid_height, grid_bbox);
+
+  Coordinate top_left = interpolator.interpolate(tile_start_x, tile_start_y);
+  Coordinate top_right = interpolator.interpolate(tile_start_x + tile_width, tile_start_y);
+  Coordinate bottom_left = interpolator.interpolate(tile_start_x, tile_start_y + tile_height);
+  Coordinate bottom_right = interpolator.interpolate(tile_start_x + tile_width, tile_start_y + tile_height);
+
+  BoundingBox bbox(top_left, top_right, bottom_left, bottom_right);
+
+  return bbox;
 }
 
 double Gimifier::calculate_slope(double upper_left, double upper_right, uint32_t width) {
