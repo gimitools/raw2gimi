@@ -14,15 +14,20 @@ Resource::Resource(const string &iri) {
 
 // API
 
-string Resource::get_iri() const {
+IRI Resource::get_iri() const {
   return m_iri;
+}
+
+IRI Resource::iri() const {
+  // shorthand for get_iri()
+  return get_iri();
 }
 
 void Resource::set_iri(const string &iri) {
   m_iri = iri;
 }
 
-string Resource::generate_iri() {
+IRI Resource::generate_iri() {
   uint64_t part5 = (static_cast<uint64_t>(rand()) << 32) | rand();
 
   std::ostringstream oss;

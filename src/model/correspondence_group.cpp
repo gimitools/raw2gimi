@@ -9,8 +9,8 @@ CorrespondenceGroup::CorrespondenceGroup(const CornerPoints &corners, const Boun
   Correspondence bottom_left(bbox.get_bottom_left(), corners.bottom_left);
   Correspondence bottom_right(bbox.get_bottom_right(), corners.bottom_right);
 
-  m_correspondences.push_back(top_left);
-  m_correspondences.push_back(top_right);
-  m_correspondences.push_back(bottom_left);
-  m_correspondences.push_back(bottom_right);
+  correspondences.push_back(top_left);
+  correspondences.push_back(top_right);
+  correspondences.push_back(bottom_left);
+  correspondences.push_back(bottom_right);
 }

@@ -10,13 +10,13 @@ using namespace std;
 
 namespace ido {
 
-  class CorrespondenceGroup : public Resource {
+  struct CorrespondenceGroup : public Resource {
   public:
     // Constructors
     CorrespondenceGroup(const CornerPoints &, const BoundingBox &);
 
-  private:
-    vector<Correspondence> m_correspondences;
+  public:
+    vector<Correspondence> correspondences;
   };
 
 } // namespace ido

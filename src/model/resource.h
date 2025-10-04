@@ -1,5 +1,6 @@
 #pragma once
 
+#include "model/iri.h"
 #include <iostream>
 
 using namespace std;
@@ -15,8 +16,9 @@ public:
 
 public:
   // API
-  string get_iri() const;
-  void set_iri(const string &iri);
+  IRI get_iri() const;
+  IRI iri() const;
+  void set_iri(const IRI &);
 
 public:
   static string generate_iri();

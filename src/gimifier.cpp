@@ -63,6 +63,11 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   const IRI grid_iri = grid.get_iri();
   ido::RDFConverter rdf;
 
+  // Add Grid
+  rdf.add_image(grid_iri);
+  rdf.add_label(grid_iri, options.image_name);
+  IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
+
   // Ground Coordinates
   BoundingBox bbox = extract_unreal_bbox(csv);
 
@@ -71,22 +76,12 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
 
   // Correspondence Group
   CorrespondenceGroup grid_correspondences(grid_corners, bbox);
+  rdf.add_correspondence_group(grid_iri, grid_correspondences);
 
   // Create Interpolator
   uint32_t total_width = grid.get_total_width();
   uint32_t total_height = grid.get_total_height();
   chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
-
-  // Create RDFConverter
-  rdf.add_image(grid_iri);
-  rdf.add_label(grid_iri, options.image_name);
-  IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
-
-  // TODO - add correspondence group for entire image
-
-  // IRI correspondence_group = rdf.generate_correspondence_group(grid_iri, correspondences, ground_coordinates, timestamp);
-
-  // TODO - remove duplicate points
 
   // Add Tiles
   uint32_t tile_width = grid.get_tile_width();
