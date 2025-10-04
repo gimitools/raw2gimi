@@ -2,10 +2,12 @@
 #include "dependencies/lat_lon_interpolator.h"
 #include "dependencies/libheif_wrapper.h"
 #include "error_handler.h"
+#include "model/correspondence_group.h"
 #include "rdf_converter.h"
 #include <cstring> // memcpy()
 
 using namespace gimi;
+using namespace ido;
 
 void Gimifier::write_to_file(const IsoFile &isoFile, WriteOptions options) {
   InfeItems items = isoFile.get_items();
@@ -58,8 +60,17 @@ void Gimifier::write_grid_to_file(const RawImageGrid &grid, WriteOptions options
 
 void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, WriteOptions options) {
 
-  // Get Corner Points
+  const IRI grid_iri = grid.get_iri();
+  ido::RDFConverter rdf;
+
+  // Ground Coordinates
   BoundingBox bbox = extract_unreal_bbox(csv);
+
+  // Pixel Coordinates
+  const CornerPoints grid_corners = grid.create_corner_points();
+
+  // Correspondence Group
+  CorrespondenceGroup grid_correspondences(grid_corners, bbox);
 
   // Create Interpolator
   uint32_t total_width = grid.get_total_width();
@@ -67,13 +78,17 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   chatgpt::LatLonInterpolator interpolator(total_width, total_height, bbox);
 
   // Create RDFConverter
-  const IRI grid_iri = grid.get_iri();
-  ido::RDFConverter rdf;
   rdf.add_image(grid_iri);
   rdf.add_label(grid_iri, options.image_name);
   IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
 
-  // ????????????????
+  // TODO - add correspondence group for entire image
+
+  // IRI correspondence_group = rdf.generate_correspondence_group(grid_iri, correspondences, ground_coordinates, timestamp);
+
+  // TODO - remove duplicate points
+
+  // Add Tiles
   uint32_t tile_width = grid.get_tile_width();
   uint32_t tile_height = grid.get_tile_height();
   for (uint32_t row = 0; row < grid.get_row_count(); row++) {
@@ -91,10 +106,10 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       uint32_t tile_lr_y = tile_ul_y + tile_height;
 
       // Image Coordinates
-      const ImageCoordinate icord_ul(tile_ul_x, tile_ul_y);
-      const ImageCoordinate icord_ur(tile_ur_x, tile_ur_y);
-      const ImageCoordinate icord_ll(tile_ll_x, tile_ll_y);
-      const ImageCoordinate icord_lr(tile_lr_x, tile_lr_y);
+      const Point icord_ul(tile_ul_x, tile_ul_y);
+      const Point icord_ur(tile_ur_x, tile_ur_y);
+      const Point icord_ll(tile_ll_x, tile_ll_y);
+      const Point icord_lr(tile_lr_x, tile_lr_y);
 
       // Ground Coordinates
       const Coordinate gcord_ul = interpolator.interpolate(tile_ul_x, tile_ul_y);

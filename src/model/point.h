@@ -3,10 +3,10 @@
 #include "model/resource.h"
 #include <stdint.h>
 
-class ImageCoordinate : public Resource {
+class Point : public Resource {
 public:
   // Constructors
-  ImageCoordinate(uint32_t x, uint32_t y);
+  Point(uint32_t x, uint32_t y);
 
 public:
   // Getters

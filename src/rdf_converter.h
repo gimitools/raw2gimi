@@ -1,9 +1,12 @@
 #pragma once
 
 #include "dependencies/redland_wrapper.h"
+#include "model/bounding_box.h"
 #include "model/coordinate.h"
-#include "model/image_coordinate.h"
+#include "model/corner_points.h"
+#include "model/correspondence_group.h"
 #include "model/iri.h"
+#include "model/point.h"
 #include <vector>
 
 using namespace std;
@@ -25,7 +28,9 @@ namespace ido {
     void add_label(const IRI &, const string &label);
     void add_image(const IRI &);
     IRI add_timestamp(uint64_t tai_time);
-    IRI generate_correspondence(const Coordinate &, const ImageCoordinate &);
+    IRI generate_correspondence(const Coordinate &, const Point &);
+    IRI add_correspondence_group(IRI content_id,
+                                 const CorrespondenceGroup &);
     IRI generate_correspondence_group(IRI content_id,
                                       vector<IRI> correspondences,
                                       vector<Coordinate> ground_coordinates,

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "model/corner_points.h"
 #include "model/raw_image.h"
 #include "model/resource.h"
 #include <cstdint>
@@ -22,6 +23,7 @@ namespace gimi {
     uint32_t get_total_height() const;
     RawImage get_tile(uint32_t row, uint32_t column) const;
     vector<vector<RawImage>> get_tiles() const;
+    CornerPoints create_corner_points() const;
 
   private:
     vector<vector<RawImage>> m_tiles;

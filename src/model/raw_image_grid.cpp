@@ -50,3 +50,19 @@ uint32_t RawImageGrid::get_total_height() const {
 vector<vector<RawImage>> RawImageGrid::get_tiles() const {
   return m_tiles;
 }
+
+CornerPoints RawImageGrid::create_corner_points() const {
+  if (m_tiles.empty() || m_tiles[0].empty()) {
+    throw_error("No tiles in grid to create corner points");
+  }
+
+  uint32_t total_width = get_total_width();
+  uint32_t total_height = get_total_height();
+
+  Point top_left(0, 0);
+  Point top_right(total_width - 1, 0);
+  Point bottom_left(0, total_height - 1);
+  Point bottom_right(total_width - 1, total_height - 1);
+
+  return CornerPoints(top_left, top_right, bottom_left, bottom_right);
+}

@@ -34,7 +34,7 @@ namespace ido {
   }
 
   IRI RDFConverter::generate_correspondence(const Coordinate &ground_cord,
-                                            const ImageCoordinate &image_cord) {
+                                            const Point &image_cord) {
     IRI correspondence = Resource::generate_iri();
     IRI gcord = ground_cord.get_iri();
     IRI icord = image_cord.get_iri();
@@ -62,6 +62,12 @@ namespace ido {
     add_label(correspondence, "Correspondence");
 
     return correspondence;
+  }
+
+  IRI add_correspondence_group(IRI content_id,
+                               const CorrespondenceGroup &group) {
+    // TODO
+    return Resource::generate_iri();
   }
 
   IRI RDFConverter::generate_correspondence_group(IRI content_id,
