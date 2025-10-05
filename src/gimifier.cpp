@@ -137,7 +137,8 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   // Timestamp
   Timestamp ts(2138486400000000000); // October 7th, 2025
   rdf.add_timestamp(ts);
-  rdf.add_label(ts);
+  // rdf.add_label(ts);
+  rdf.add_label(ts, "Timestamp: October 7th, 2025"); // TODO: don't hardcode!!
   rdf.add_timestamp_to_resource(ts, grid);
 
   BoundingBox bbox = extract_unreal_bbox(csv);

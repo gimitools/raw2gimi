@@ -26,6 +26,7 @@ namespace ido {
   public:
     // Adders
     void export_to_file(const string &filename);
+    void add_label(const Resource &, const string &label);
     void add_label(const IRI &, const string &label);
     void add_label(const Resource &);
     void add_image(const IRI &);

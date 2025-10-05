@@ -14,6 +14,10 @@ void RDFConverter::export_to_file(const string &filename) {
   m_redland.export_to_file(filename);
 }
 
+void RDFConverter::add_label(const Resource &resource, const string &label) {
+  add_label(resource.get_iri(), label);
+}
+
 void RDFConverter::add_label(const IRI &subject, const string &label) {
   add_triple(subject, rdfs::label, RDFLiteral(label));
 }
@@ -32,7 +36,6 @@ void RDFConverter::add_timestamp(const Timestamp &timestamp) {
   uint64_t tai_time = timestamp.get_tai();
   add_triple(timestamp_iri, rdf::type, imh::tai_timestamp);
   add_triple(timestamp_iri, cco::has_value, RDFLiteral(tai_time));
-  add_label(timestamp);
 }
 
 void RDFConverter::add_timestamp_to_resource(const Timestamp &timestamp, const Resource &resource) {
