@@ -3,6 +3,7 @@
 #include "dependencies/libheif_wrapper.h"
 #include "error_handler.h"
 #include "model/correspondence_group.h"
+#include "model/timestamp.h"
 #include "rdf_converter.h"
 #include <cstring> // memcpy()
 
@@ -66,7 +67,7 @@ void Gimifier::write_unreal_to_rdf_redundant(const RawImageGrid &grid, CsvFile &
   // Add Grid
   rdf.add_image(grid_iri);
   rdf.add_label(grid_iri, options.image_name);
-  IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
+  // IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
 
   // Ground Coordinates
   BoundingBox bbox = extract_unreal_bbox(csv);
@@ -134,8 +135,10 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   rdf.add_label(grid_iri, options.image_name);
 
   // Timestamp
-  IRI timestamp = rdf.add_timestamp(2138486400000000000); // October 7th, 2025
-  // TODO: link timestamp to grid
+  Timestamp ts(2138486400000000000); // October 7th, 2025
+  rdf.add_timestamp(ts);
+  rdf.add_label(ts);
+  rdf.add_timestamp_to_resource(ts, grid);
 
   BoundingBox bbox = extract_unreal_bbox(csv);
 

@@ -27,13 +27,18 @@ void RDFConverter::add_image(const IRI &image_iri) {
   add_triple(image_iri, rdf::type, imh::image);
 }
 
-IRI RDFConverter::add_timestamp(uint64_t tai_time) {
-  IRI timestamp_iri = Resource::generate_iri();
+void RDFConverter::add_timestamp(const Timestamp &timestamp) {
+  IRI timestamp_iri = timestamp.get_iri();
+  uint64_t tai_time = timestamp.get_tai();
   add_triple(timestamp_iri, rdf::type, imh::tai_timestamp);
   add_triple(timestamp_iri, cco::has_value, RDFLiteral(tai_time));
-  add_label(timestamp_iri, "TAI Timestamp");
-  // TODO: add human readable date as label
-  return timestamp_iri;
+  add_label(timestamp);
+}
+
+void RDFConverter::add_timestamp_to_resource(const Timestamp &timestamp, const Resource &resource) {
+  IRI timestamp_iri = timestamp.get_iri();
+  IRI resource_iri = resource.get_iri();
+  add_triple(resource_iri, imh::at, timestamp_iri);
 }
 
 void RDFConverter::add_coordinate(const Coordinate &coordinate) {

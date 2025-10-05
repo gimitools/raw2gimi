@@ -7,6 +7,7 @@
 #include "model/correspondence_group.h"
 #include "model/iri.h"
 #include "model/point.h"
+#include "model/timestamp.h"
 #include <vector>
 
 using namespace std;
@@ -28,7 +29,8 @@ namespace ido {
     void add_label(const IRI &, const string &label);
     void add_label(const Resource &);
     void add_image(const IRI &);
-    IRI add_timestamp(uint64_t tai_time);
+    void add_timestamp(const Timestamp &);
+    void add_timestamp_to_resource(const Timestamp &, const Resource &);
     void add_coordinate(const Coordinate &);
     void add_coordinates(const BoundingBox &);
     void add_coordinates(const vector<vector<Coordinate>> &);
