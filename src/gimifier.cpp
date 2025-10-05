@@ -112,7 +112,7 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       // Correspondence Group
       CorrespondenceGroup tile_correspondences(tile_corners, tile_bbox);
       rdf.add_correspondence_group(tile_iri, tile_correspondences);
-      rdf.add_label(tile_iri, "Tile Correspondence Group");
+      rdf.add_label(tile_correspondences);
     }
   }
 

@@ -13,6 +13,8 @@ CorrespondenceGroup::CorrespondenceGroup(const CornerPoints &corners, const Boun
   correspondences.push_back(top_right);
   correspondences.push_back(bottom_left);
   correspondences.push_back(bottom_right);
+
+  set_label("Correspondence Group");
 }
 
 // Getters
