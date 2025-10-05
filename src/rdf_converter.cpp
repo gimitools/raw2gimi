@@ -54,11 +54,27 @@ void RDFConverter::add_coordinates(const BoundingBox &bbox) {
   add_coordinate(bbox.get_bottom_right());
 }
 
+void RDFConverter::add_coordinates(const vector<vector<Coordinate>> &coordinates) {
+  for (const auto &row : coordinates) {
+    for (const auto &coordinate : row) {
+      add_coordinate(coordinate);
+    }
+  }
+}
+
 void RDFConverter::add_points(const CornerPoints &corners) {
   add_point(corners.top_left);
   add_point(corners.top_right);
   add_point(corners.bottom_left);
   add_point(corners.bottom_right);
+}
+
+void RDFConverter::add_points(const vector<vector<Point>> &points) {
+  for (const auto &row : points) {
+    for (const auto &point : row) {
+      add_point(point);
+    }
+  }
 }
 
 void RDFConverter::add_point(const Point &point_object) {
@@ -87,6 +103,14 @@ void RDFConverter::add_correspondence(const Correspondence &correspondence) {
 void RDFConverter::add_correspondences(const vector<Correspondence> &correspondences) {
   for (const auto &correspondence : correspondences) {
     add_correspondence(correspondence);
+  }
+}
+
+void RDFConverter::add_correspondences(const vector<vector<Correspondence>> &correspondences) {
+  for (const auto &row : correspondences) {
+    for (const auto &correspondence : row) {
+      add_correspondence(correspondence);
+    }
   }
 }
 

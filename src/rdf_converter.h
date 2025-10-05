@@ -31,10 +31,13 @@ namespace ido {
     IRI add_timestamp(uint64_t tai_time);
     void add_coordinate(const Coordinate &);
     void add_coordinates(const BoundingBox &);
+    void add_coordinates(const vector<vector<Coordinate>> &);
     void add_points(const CornerPoints &);
+    void add_points(const vector<vector<Point>> &);
     void add_point(const Point &);
     void add_correspondence(const Correspondence &);
     void add_correspondences(const vector<Correspondence> &);
+    void add_correspondences(const vector<vector<Correspondence>> &);
     void add_correspondence_group(IRI content_id,
                                   const CorrespondenceGroup &);
 
