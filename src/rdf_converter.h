@@ -23,7 +23,7 @@ namespace ido {
     RDFConverter();
 
   public:
-    // API
+    // Adders
     void export_to_file(const string &filename);
     void add_label(const IRI &, const string &label);
     void add_label(const Resource &);
@@ -34,8 +34,13 @@ namespace ido {
     void add_points(const CornerPoints &);
     void add_point(const Point &);
     void add_correspondence(const Correspondence &);
+    void add_correspondences(const vector<Correspondence> &);
     void add_correspondence_group(IRI content_id,
                                   const CorrespondenceGroup &);
+
+  public:
+    // Generators
+    vector<Correspondence> create_correspondences(const CornerPoints &, const BoundingBox &);
     IRI generate_correspondence_group(IRI content_id,
                                       vector<IRI> correspondences,
                                       vector<Coordinate> ground_coordinates,

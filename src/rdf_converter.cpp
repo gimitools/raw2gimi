@@ -84,6 +84,12 @@ void RDFConverter::add_correspondence(const Correspondence &correspondence) {
   add_label(correspondence_iri, "Correspondence");
 }
 
+void RDFConverter::add_correspondences(const vector<Correspondence> &correspondences) {
+  for (const auto &correspondence : correspondences) {
+    add_correspondence(correspondence);
+  }
+}
+
 void RDFConverter::add_correspondence_group(IRI content_id,
                                             const CorrespondenceGroup &group) {
   IRI group_i = group.iri();
@@ -102,6 +108,25 @@ void RDFConverter::add_correspondence_group(IRI content_id,
   add_triple(group_i, geosparql::asWKT, wkt_polygon);
 
   // TODO: link corerespondences so they can be queried in the correct order.
+}
+
+// Generators
+
+vector<Correspondence> RDFConverter::create_correspondences(const CornerPoints &image_corners,
+                                                            const BoundingBox &ground_bbox) {
+  vector<Correspondence> correspondences;
+
+  Correspondence top_left(ground_bbox.get_top_left(), image_corners.top_left);
+  Correspondence top_right(ground_bbox.get_top_right(), image_corners.top_right);
+  Correspondence bottom_left(ground_bbox.get_bottom_left(), image_corners.bottom_left);
+  Correspondence bottom_right(ground_bbox.get_bottom_right(), image_corners.bottom_right);
+
+  correspondences.push_back(top_left);
+  correspondences.push_back(top_right);
+  correspondences.push_back(bottom_left);
+  correspondences.push_back(bottom_right);
+
+  return correspondences;
 }
 
 IRI RDFConverter::generate_correspondence_group(IRI content_id,

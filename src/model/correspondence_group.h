@@ -13,7 +13,7 @@ namespace ido {
   struct CorrespondenceGroup : public Resource {
   public:
     // Constructors
-    CorrespondenceGroup(const CornerPoints &, const BoundingBox &);
+    CorrespondenceGroup(const vector<Correspondence> &);
 
   public:
     // Getters

@@ -76,8 +76,12 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
   const CornerPoints grid_corners = grid.create_corner_points();
   rdf.add_points(grid_corners);
 
+  // Correspondences
+  vector<Correspondence> correspondences = rdf.create_correspondences(grid_corners, bbox);
+  rdf.add_correspondences(correspondences);
+
   // Correspondence Group
-  CorrespondenceGroup grid_correspondences(grid_corners, bbox);
+  CorrespondenceGroup grid_correspondences(correspondences);
   rdf.add_correspondence_group(grid_iri, grid_correspondences);
   rdf.add_label(grid_correspondences.iri(), "Image Grid Correspondence Group");
 
@@ -109,10 +113,14 @@ void Gimifier::write_unreal_to_rdf(const RawImageGrid &grid, CsvFile &csv, Write
       BoundingBox tile_bbox = create_tile_bbox(grid, bbox, tile_start_x, tile_start_y);
       rdf.add_coordinates(tile_bbox);
 
+      // Correspondences
+      vector<Correspondence> tile_correspondences = rdf.create_correspondences(tile_corners, tile_bbox);
+      rdf.add_correspondences(tile_correspondences);
+
       // Correspondence Group
-      CorrespondenceGroup tile_correspondences(tile_corners, tile_bbox);
-      rdf.add_correspondence_group(tile_iri, tile_correspondences);
-      rdf.add_label(tile_correspondences);
+      CorrespondenceGroup tile_correspondence_group(tile_correspondences);
+      rdf.add_correspondence_group(tile_iri, tile_correspondence_group);
+      rdf.add_label(tile_correspondence_group);
     }
   }
 
