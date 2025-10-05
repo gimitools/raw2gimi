@@ -164,6 +164,11 @@ BoundingBox Gimifier::extract_unreal_bbox(const CsvFile &csv) {
   Coordinate bottom_left(ll_lat, ll_lon);
   Coordinate bottom_right(lr_lat, lr_lon);
 
+  top_left.set_label("Grid: Upper Left Ground Coordinate");
+  top_right.set_label("Grid: Upper Right Ground Coordinate");
+  bottom_left.set_label("Grid: Lower Left Ground Coordinate");
+  bottom_right.set_label("Grid: Lower Right Ground Coordinate");
+
   BoundingBox bounding_box(top_left, top_right, bottom_left, bottom_right);
 
   return bounding_box;

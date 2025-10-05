@@ -23,8 +23,16 @@ IRI Resource::iri() const {
   return get_iri();
 }
 
-void Resource::set_iri(const string &iri) {
+string Resource::get_label() const {
+  return m_label;
+}
+
+void Resource::set_iri(const IRI &iri) {
   m_iri = iri;
+}
+
+void Resource::set_label(const string &label) {
+  m_label = label;
 }
 
 IRI Resource::generate_iri() {

@@ -18,12 +18,14 @@ public:
   // API
   IRI get_iri() const;
   IRI iri() const;
+  string get_label() const;
   void set_iri(const IRI &);
+  void set_label(const string &);
 
 public:
   static string generate_iri();
 
 protected:
-  string m_iri; // Internationalized Resource Identifier (IRI)
-  string label; // RDFS Label
+  string m_iri;   // Internationalized Resource Identifier (IRI)
+  string m_label; // RDFS Label
 };

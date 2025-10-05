@@ -9,6 +9,7 @@ using namespace std;
 Coordinate::Coordinate(double latitude, double longitude) {
   m_latitude = latitude;
   m_longitude = longitude;
+  set_label("Ground Coordinate");
 }
 
 // Getters

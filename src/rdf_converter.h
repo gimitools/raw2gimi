@@ -26,9 +26,9 @@ namespace ido {
     // API
     void export_to_file(const string &filename);
     void add_label(const IRI &, const string &label);
+    void add_label(const Resource &);
     void add_image(const IRI &);
     IRI add_timestamp(uint64_t tai_time);
-    IRI generate_correspondence(const Coordinate &, const Point &);
     void add_coordinate(const Coordinate &);
     void add_coordinates(const BoundingBox &);
     void add_points(const CornerPoints &);

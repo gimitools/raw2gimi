@@ -1,7 +1,9 @@
 #include "point.h"
 
 // Constructors
-Point::Point(uint32_t x, uint32_t y) : m_x(x), m_y(y) {}
+Point::Point(uint32_t x, uint32_t y) : m_x(x), m_y(y) {
+  set_label("Image Coordinate");
+}
 
 // Getters
 
